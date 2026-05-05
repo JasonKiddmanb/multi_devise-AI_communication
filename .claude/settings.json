@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -NoProfile -Command ' *)",
+      "Bash(powershell -NoProfile -Command \"Get-Command 'winget' -ErrorAction SilentlyContinue; if \\(\\\\$?\\) { Write-Host 'winget available' } else { Write-Host 'winget not available' }\")",
+      "Bash(powershell -NoProfile -Command \"Start-Process -FilePath 'winget' -ArgumentList 'install --id Tailscale.Tailscale --silent --accept-package-agreements' -Verb RunAs -Wait\")",
+      "Bash(powershell -NoProfile -Command '$env:Path += \\\\\";$env:ProgramFiles\\\\\\\\Tailscale\\\\\"; tailscale status 2>&1')",
+      "Bash(powershell -NoProfile -File \"e:/my_1st_claudeCode_prjt/scripts/check-ts.ps1\")",
+      "Bash(powershell -NoProfile -Command 'try { $r = Invoke-WebRequest -Uri '\\\\''http://localhost:8080'\\\\'' -TimeoutSec 5 -UseBasicParsing; Write-Host '\\\\''Status: '\\\\'' $r.StatusCode; Write-Host '\\\\''Content length: '\\\\'' $r.Content.Length } catch { Write-Host '\\\\''Failed: '\\\\'' $_.Exception.Message }')",
+      "Bash(powershell -NoProfile -Command \"Start-Process -FilePath 'netsh' -ArgumentList 'http add urlacl url=http://+:8080/ user=ALL APPLICATION PACKAGES' -Verb RunAs -Wait\")",
+      "Bash(powershell -NoProfile -Command 'Start-Job -FilePath '\\\\''e:/my_1st_claudeCode_prjt/scripts/start-server.ps1'\\\\'' | Out-Null; Start-Sleep 2; try { $r = Invoke-WebRequest -Uri '\\\\''http://127.0.0.1:8080'\\\\'' -TimeoutSec 5 -UseBasicParsing; Write-Host '\\\\''✅ HTTP '\\\\'' $r.StatusCode '\\\\'' - '\\\\'' $r.Content.Length '\\\\'' bytes'\\\\''; if \\($r.Content.Length -gt 100\\) { Write-Host '\\\\''✅ Web UI loaded OK'\\\\'' } } catch { Write-Host '\\\\''❌ '\\\\'' $_.Exception.Message }')",
+      "Bash(powershell -NoProfile -Command \"tailscale ip -4 2>&1\")",
+      "Bash(powershell -NoProfile -Command \"Start-Process 'tailscale' -ArgumentList 'up'\")",
+      "Bash(powershell -NoProfile -Command \"Start-Process -FilePath 'e:\\\\my_1st_claudeCode_prjt\\\\app\\\\start.bat' -Verb RunAs\")",
+      "Bash(powershell -NoProfile -Command 'Start-Sleep 5; try { $r = Invoke-WebRequest -Uri '\\\\''http://100.118.175.65:8080'\\\\'' -TimeoutSec 5 -UseBasicParsing; Write-Host '\\\\''✅ Server accessible on Tailscale IP'\\\\''; Write-Host '\\\\''Content: '\\\\'' $r.Content.Length '\\\\''bytes'\\\\'' } catch { Write-Host '\\\\''⚠ Server not ready yet: '\\\\'' $_.Exception.Message }')",
+      "Bash(powershell -NoProfile -Command \"Start-Process -FilePath 'powershell' -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File \\\\\"e:\\\\my_1st_claudeCode_prjt\\\\app\\\\start-server-only.ps1\\\\\"' -Verb RunAs\")",
+      "Bash(powershell -NoProfile -Command 'Start-Sleep 4; try { $r = Invoke-WebRequest -Uri '\\\\''http://100.118.175.65:8080'\\\\'' -TimeoutSec 5 -UseBasicParsing; Write-Host '\\\\''✅ Server OK - '\\\\'' $r.StatusCode '\\\\'' '\\\\'' $r.Content.Length '\\\\''bytes'\\\\'' } catch { Write-Host '\\\\''⚠ '\\\\'' $_.Exception.Message }')",
+      "Bash(powershell -NoProfile -Command \"Get-Command python,node,php -ErrorAction SilentlyContinue | Select-Object Name,Source\")",
+      "Bash(powershell -NoProfile -Command 'try { $r = Invoke-WebRequest -Uri '\\\\''http://127.0.0.1:8080'\\\\'' -TimeoutSec 5 -UseBasicParsing; Write-Host '\\\\''✅ Server running: '\\\\'' $r.StatusCode } catch { Write-Host '\\\\''Failed: '\\\\'' $_.Exception.Message }')"
+    ]
+  }
+}

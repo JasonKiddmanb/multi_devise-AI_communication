@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>AI Remote</title>
+<style>
+  :root { --hdr: 52px; --btm: 72px; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #111; color: #e0e0e0; height: 100dvh; overflow: hidden;
+  }
+  /* === 顶部栏 (固定) === */
+  .topbar {
+    position: fixed; top:0; left:0; right:0; height: var(--hdr);
+    background: #1a1a1a; display: flex; align-items: center; gap: 8px;
+    padding: 0 10px; z-index: 20; border-bottom: 1px solid #333;
+  }
+  .menu-btn { background: none; border: none; color: #aaa; font-size: 20px; padding: 6px; cursor: pointer; line-height: 1; }
+  .menu-btn:hover { color: #fff; }
+  .topbar h1 { font-size: 15px; font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .topbar select {
+    background: #222; color: #ddd; border: 1px solid #444; border-radius: 6px;
+    padding: 5px 8px; font-size: 12px; max-width: 130px;
+  }
+  .topbar .refresh-btn {
+    background: #222; color: #4ade80; border: 1px solid #444; border-radius: 6px;
+    font-size: 16px; padding: 4px 8px; cursor: pointer;
+  }
+
+  /* === 底部输入栏 (固定) === */
+  .bottombar {
+    position: fixed; bottom:0; left:0; right:0;
+    padding: 10px 10px calc(10px + env(safe-area-inset-bottom,0px));
+    background: #1a1a1a; border-top: 1px solid #333;
+    display: flex; gap: 8px; align-items: flex-end; z-index: 20;
+  }
+  .bottombar textarea {
+    flex: 1; background: #222; border: 1px solid #444; border-radius: 10px;
+    padding: 10px 14px; color: #eee; font-size: 15px; font-family: inherit;
+    resize: none; outline: none; min-height: 42px; max-height: 120px;
+  }
+  .bottombar textarea:focus { border-color: #4ade80; }
+  .bottombar button {
+    background: #4ade80; color: #111; border: none; border-radius: 10px;
+    padding: 11px 18px; font-size: 15px; font-weight: 600; cursor: pointer;
+  }
+  .bottombar button:disabled { opacity: 0.4; cursor: default; }
+
+  /* === 消息区域 (中间滚动) === */
+  .chat-area {
+    position: fixed; top: var(--hdr); bottom: var(--btm);
+    left:0; right:0; overflow-y: auto; padding: 16px 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .msg { max-width: 88%; padding: 10px 14px; border-radius: 12px; line-height: 1.5; font-size: 15px; word-break: break-word; }
+  .msg.user { background: #1a5276; align-self: flex-end; border-bottom-right-radius: 4px; }
+  .msg.assistant { background: #222; align-self: flex-start; border-bottom-left-radius: 4px; }
+  .msg .model-tag { font-size: 10px; color: #4ade80; margin-top: 5px; padding-top: 4px; border-top: 1px solid #333; }
+  .msg.system { color: #666; font-size: 12px; text-align: center; padding: 4px; background: none; }
+  .msg-wrapper { display: flex; margin-bottom: 10px; }
+  .msg-wrapper.user { justify-content: flex-end; }
+  .msg-wrapper.assistant { justify-content: flex-start; }
+  .msg-wrapper.system { justify-content: center; }
+  .msg pre { background: #0d0d0d; padding: 10px; border-radius: 8px; overflow-x: auto; margin: 6px 0; font-size: 13px; }
+  .msg code { background: #0d0d0d; padding: 2px 4px; border-radius: 4px; font-size: 13px; }
+
+  .welcome { text-align: center; padding: 30px 16px; color: #555; margin-top: 30px; }
+  .welcome h2 { color: #777; font-size: 18px; margin-bottom: 6px; }
+
+  .typing { display: inline-flex; gap: 4px; padding: 2px 0; }
+  .typing span { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; animation: t 1.4s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; }
+  .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes t { 0%,60%,100% { opacity:.3; transform:scale(.8); } 30% { opacity:1; transform:scale(1); } }
+
+  /* === 侧边栏 (滑入) === */
+  .overlay { position: fixed; inset:0; background: rgba(0,0,0,.5); z-index: 25; display: none; }
+  .overlay.show { display: block; }
+  .sidebar {
+    position: fixed; top:0; left: 0; bottom:0; width: 280px; max-width: 85vw;
+    background: #1a1a1a; z-index: 30; display: flex; flex-direction: column;
+    transform: translateX(-100%); transition: transform .25s ease;
+    border-right: 1px solid #333;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-header {
+    padding: 14px 16px; border-bottom: 1px solid #333;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .sidebar-header h2 { font-size: 16px; font-weight: 600; }
+  .new-chat-btn {
+    background: #4ade80; color: #111; border: none; border-radius: 8px;
+    padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  .conv-list { flex: 1; overflow-y: auto; padding: 8px; }
+  .conv-item {
+    padding: 12px 14px; margin-bottom: 4px; border-radius: 8px;
+    cursor: pointer; border: 1px solid transparent; transition: background .15s;
+  }
+  .conv-item:hover { background: #252525; }
+  .conv-item.active { background: #0f3460; border-color: #1a5276; }
+  .conv-item .conv-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .conv-item .conv-meta { font-size: 11px; color: #666; display: flex; justify-content: space-between; }
+  .conv-item .del-btn {
+    background: none; border: none; color: #555; cursor: pointer; font-size: 16px; padding: 0 4px;
+  }
+  .conv-item .del-btn:hover { color: #e74c3c; }
+  .conv-empty { text-align: center; color: #555; padding: 30px 16px; font-size: 13px; }
+
+  /* 移动端适配 */
+  @media (max-width: 480px) {
+    .topbar h1 { font-size: 13px; }
+    .topbar select { max-width: 100px; font-size: 11px; }
+    .chat-area { padding: 10px 8px; }
+    .msg { max-width: 92%; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 遮罩层 -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h2>历史对话</h2>
+    <button class="new-chat-btn" onclick="newChat()">+ 新建</button>
+  </div>
+  <div class="conv-list" id="conv-list">
+    <div class="conv-empty">加载中...</div>
+  </div>
+</nav>
+
+<!-- 顶部栏 -->
+<header class="topbar">
+  <button class="menu-btn" onclick="toggleSidebar()" title="历史">&#x2630;</button>
+  <h1 id="conv-title">AI Remote</h1>
+  <select id="model-select"><option value="">加载中...</option></select>
+  <button class="refresh-btn" onclick="refreshModels()" title="扫描模型">&#x21bb;</button>
+</header>
+
+<!-- 消息区 -->
+<div class="chat-area" id="chat-area">
+  <div class="welcome" id="welcome">
+    <h2>AI Remote Compute</h2>
+    <p>选择模型，开始对话</p>
+  </div>
+</div>
+
+<!-- 底部输入栏 -->
+<footer class="bottombar">
+  <textarea id="prompt" rows="1" placeholder="输入消息..." disabled></textarea>
+  <button id="send-btn" disabled>发送</button>
+</footer>
+
+<script>
+// ==================== 全局状态 ====================
+const HOST = '';                         // API 同源，不需要代理
+const OLLAMA = location.protocol + '//' + location.hostname + ':11434';
+
+let currentConvId = null;
+let messages = [];                       // [{role, content}, ...]
+let loading = false;
+let currentModel = '';
+let convLoaded = false;                  // 是否已从 DB 加载过对话
+
+// ==================== DOM ====================
+const el = id => document.getElementById(id);
+const chatArea  = el('chat-area');
+const promptEl  = el('prompt');
+const sendBtn   = el('send-btn');
+const modelSel  = el('model-select');
+const convList  = el('conv-list');
+const overlay   = el('overlay');
+const sidebar   = el('sidebar');
+const convTitle = el('conv-title');
+const welcome   = el('welcome');
+
+// ==================== Ollama ====================
+async function checkOllama() {
+  try {
+    const r = await fetch(`${OLLAMA}/api/tags`);
+    if (!r.ok) throw new Error('offline');
+    const data = await r.json();
+    modelSel.innerHTML = (data.models || []).map(m =>
+      `<option value="${m.name}">${m.name}</option>`
+    ).join('');
+    if (!currentModel && data.models.length > 0) {
+      currentModel = data.models.length > 0 ? data.models[0].name : '';
+      modelSel.value = currentModel;
+    }
+    promptEl.disabled = false;
+    sendBtn.disabled = false;
+    promptEl.placeholder = '输入消息...';
+    return true;
+  } catch {
+    modelSel.innerHTML = '<option value="">离线</option>';
+    return false;
+  }
+}
+
+function refreshModels() {
+  checkOllama().then(ok => {
+    if (ok) addSysMsg('已扫描模型列表');
+    else addSysMsg('Ollama 离线');
+  });
+}
+
+modelSel.addEventListener('change', () => { currentModel = modelSel.value; });
+
+// ==================== 聊天 ====================
+function scrollBottom() { chatArea.scrollTop = chatArea.scrollHeight; }
+
+function addMsg(role, content, model) {
+  const wrapper = document.createElement('div');
+  wrapper.className = `msg-wrapper ${role}`;
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  div.textContent = content;
+  if (model && role === 'assistant') {
+    const tag = document.createElement('div');
+    tag.className = 'model-tag';
+    tag.textContent = model;
+    div.appendChild(tag);
+  }
+  wrapper.appendChild(div);
+  chatArea.appendChild(wrapper);
+  scrollBottom();
+  return div;
+}
+
+function addSysMsg(text) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'msg-wrapper system';
+  const div = document.createElement('div');
+  div.className = 'msg system';
+  div.textContent = text;
+  wrapper.appendChild(div);
+  chatArea.appendChild(wrapper);
+  scrollBottom();
+}
+
+function hideWelcome() { if (welcome) welcome.style.display = 'none'; }
+
+function showTyping() {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'msg-wrapper assistant';
+  wrapper.id = 'typing-wrapper';
+  wrapper.innerHTML = '<div class="msg assistant"><div class="typing"><span></span><span></span><span></span></div></div>';
+  chatArea.appendChild(wrapper);
+  scrollBottom();
+}
+
+function hideTyping() {
+  const w = document.getElementById('typing-wrapper');
+  if (w) w.remove();
+}
+
+// ==================== 流式响应 ====================
+async function streamChat(contentDiv) {
+  const body = JSON.stringify({
+    model: currentModel,
+    messages: messages.slice(-20),
+    stream: true
+  });
+  const r = await fetch(`${OLLAMA}/api/chat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body
+  });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const reader = r.body.getReader();
+  const decoder = new TextDecoder();
+  let text = '';
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const lines = decoder.decode(value, { stream: true }).split('\n').filter(Boolean);
+    for (const line of lines) {
+      try {
+        const json = JSON.parse(line);
+        if (json.message?.content) {
+          text += json.message.content;
+          contentDiv.textContent = text;
+          scrollBottom();
+        }
+      } catch {}
+    }
+  }
+  return text;
+}
+
+// ==================== 发送消息 ====================
+async function send() {
+  const text = promptEl.value.trim();
+  if (!text || loading || !currentModel) return;
+  promptEl.value = '';
+  promptEl.style.height = 'auto';
+  hideWelcome();
+
+  loading = true;
+  sendBtn.disabled = true;
+  promptEl.disabled = true;
+
+  // 没有当前对话则自动创建
+  if (!currentConvId) await createConv(text);
+
+  addMsg('user', text);
+  messages.push({ role: 'user', content: text, model: currentModel });
+
+  showTyping();
+  try {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'msg assistant';
+    const wrapper = document.createElement('div');
+    wrapper.className = 'msg-wrapper assistant';
+    wrapper.appendChild(contentDiv);
+    const typingWrapper = document.getElementById('typing-wrapper');
+    if (typingWrapper) typingWrapper.replaceWith(wrapper);
+    else chatArea.appendChild(wrapper);
+
+    const reply = await streamChat(contentDiv);
+    messages.push({ role: 'assistant', content: reply, model: currentModel });
+    // 在 assistant 消息上添加模型标签
+    const tag = document.createElement('div');
+    tag.className = 'model-tag';
+    tag.textContent = currentModel;
+    contentDiv.appendChild(tag);
+    await saveConv();
+    await refreshConvList();
+    scrollBottom();
+  } catch (err) {
+    hideTyping();
+    addSysMsg('错误: ' + err.message);
+  }
+  loading = false;
+  sendBtn.disabled = false;
+  promptEl.disabled = false;
+  promptEl.focus();
+}
+
+sendBtn.addEventListener('click', send);
+promptEl.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+});
+promptEl.addEventListener('input', () => {
+  promptEl.style.height = 'auto';
+  promptEl.style.height = Math.min(promptEl.scrollHeight, 120) + 'px';
+});
+
+// ==================== 对话管理 (DB) ====================
+async function api(url, opts = {}) {
+  const r = await fetch(HOST + url, {
+    headers: { 'Content-Type': 'application/json' },
+    ...opts,
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+  if (!r.ok && r.status !== 201 && r.status !== 200) return null;
+  return r.json();
+}
+
+async function refreshConvList() {
+  const convs = await api('/api/conversations') || [];
+  convList.innerHTML = convs.length === 0
+    ? '<div class="conv-empty">暂无历史对话</div>'
+    : convs.map(c => `
+      <div class="conv-item${c.id === currentConvId ? ' active' : ''}" onclick="loadConv(${c.id})">
+        <div class="conv-title">${escHtml(c.title)}</div>
+        <div class="conv-meta">
+          <span>${c.model || '--'}</span>
+          <span>${c.created_at?.slice(5,16) || ''}</span>
+          <button class="del-btn" onclick="event.stopPropagation();deleteConv(${c.id})" title="删除">&#x1d5eb;</button>
+        </div>
+      </div>
+    `).join('');
+}
+
+async function createConv(firstMsg) {
+  const title = firstMsg.slice(0, 30) + (firstMsg.length > 30 ? '...' : '');
+  const r = await api('/api/conversations', {
+    method: 'POST',
+    body: { title, model: currentModel }
+  });
+  if (r) {
+    currentConvId = r.id;
+    convTitle.textContent = title;
+    convLoaded = true;
+    await refreshConvList();
+  }
+}
+
+async function saveConv() {
+  if (!currentConvId) return;
+  // 只保存 sent 之后新增的消息（最后 2 条）
+  const newMsgs = messages.slice(-2);
+  await api(`/api/conversations/${currentConvId}`, {
+    method: 'POST',
+    body: { messages: newMsgs, model: currentModel }
+  });
+}
+
+async function loadConv(id) {
+  const conv = await api(`/api/conversations/${id}`);
+  if (!conv) return;
+  currentConvId = conv.id;
+  currentModel = conv.model || currentModel;
+  modelSel.value = currentModel || '';
+  messages = conv.messages || [];
+  convTitle.textContent = conv.title;
+  convLoaded = true;
+
+  // 渲染消息
+  chatArea.innerHTML = '';
+  if (messages.length === 0) {
+    chatArea.innerHTML = '<div class="welcome" id="welcome"><h2>空对话</h2><p>发送消息开始</p></div>';
+  } else {
+    for (const m of messages) addMsg(m.role, m.content, m.model);
+  }
+  closeSidebar();
+  scrollBottom();
+}
+
+async function deleteConv(id) {
+  if (!confirm('删除此对话？')) return;
+  await api(`/api/conversations/${id}`, { method: 'DELETE' });
+  if (currentConvId === id) newChat();
+  await refreshConvList();
+}
+
+function newChat() {
+  currentConvId = null;
+  messages = [];
+  convTitle.textContent = '新对话';
+  chatArea.innerHTML = '<div class="welcome" id="welcome"><h2>新对话</h2><p>选择模型，开始对话</p></div>';
+  closeSidebar();
+  convLoaded = false;
+}
+
+// ==================== 侧边栏 ====================
+function toggleSidebar() { sidebar.classList.toggle('open'); overlay.classList.toggle('show'); }
+function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('show'); }
+
+// ==================== 工具 ====================
+function escHtml(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ==================== 初始化 ====================
+(async () => {
+  await checkOllama();
+  await refreshConvList();
+  promptEl.focus();
+  // 后台轮询模型
+  setInterval(() => checkOllama(), 60000);
+  // 后台刷新对话列表
+  setInterval(() => refreshConvList(), 30000);
+})();
+</script>
+</body>
+</html>
