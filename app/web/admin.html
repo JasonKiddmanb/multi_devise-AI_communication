@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Admin Panel</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #111; color: #e0e0e0; min-height: 100dvh;
+  }
+
+  .topbar {
+    background: #1a1a1a; border-bottom: 1px solid #333;
+    padding: 12px 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .topbar h1 { font-size: 16px; font-weight: 600; flex: 1; }
+  .topbar .user-tag { font-size: 12px; color: #888; }
+  .topbar a { color: #4ade80; text-decoration: none; font-size: 13px; }
+  .topbar a:hover { text-decoration: underline; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+  .tabs { display: flex; gap: 2px; margin-bottom: 20px; }
+  .tab-btn {
+    padding: 8px 20px; background: #222; color: #888; border: 1px solid #333;
+    border-radius: 8px 8px 0 0; font-size: 13px; cursor: pointer;
+  }
+  .tab-btn.active { background: #0f3460; color: #e0e0e0; border-color: #1a5276; }
+
+  .section { margin-bottom: 32px; }
+  .section h2 { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #ccc; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #222; font-size: 14px; }
+  th { color: #888; font-size: 12px; font-weight: 500; text-transform: uppercase; }
+  td .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500;
+  }
+  .badge.approved { background: #152d1f; color: #4ade80; }
+  .badge.pending { background: #2d2515; color: #f59e0b; }
+  .badge.admin { background: #1a1a3e; color: #818cf8; }
+
+  .action-btn {
+    padding: 5px 12px; border-radius: 6px; border: none; font-size: 12px;
+    font-weight: 500; cursor: pointer; margin-right: 4px;
+  }
+  .approve-btn { background: #4ade80; color: #111; }
+  .approve-btn:hover { opacity: 0.85; }
+  .delete-btn { background: #3d1515; color: #f87171; border: 1px solid #5a2020; }
+  .delete-btn:hover { background: #5a2020; }
+
+  .empty { text-align: center; color: #555; padding: 40px 16px; font-size: 14px; }
+
+  .refresh-row { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+  .refresh-row button {
+    background: #222; color: #4ade80; border: 1px solid #444; border-radius: 6px;
+    padding: 6px 12px; font-size: 12px; cursor: pointer;
+  }
+
+  .warn-banner {
+    background: #2d1515; color: #f87171; text-align: center;
+    padding: 8px; font-size: 12px; display: none;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 12px 8px; }
+    th, td { padding: 8px 6px; font-size: 12px; }
+    .action-btn { padding: 4px 8px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="warn-banner" id="warn-banner">此页面仅限本机 localhost 访问</div>
+
+<header class="topbar">
+  <h1>管理面板</h1>
+  <span class="user-tag" id="user-tag"></span>
+  <a href="/chat.html">聊天</a>
+  <a href="#" onclick="doLogout()">退出</a>
+</header>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('users')">用户管理</button>
+    <button class="tab-btn" onclick="switchTab('logs')">系统日志</button>
+  </div>
+
+  <div class="section" id="tab-users">
+    <div class="refresh-row">
+      <button onclick="loadUsers()">刷新</button>
+    </div>
+    <h2>所有用户</h2>
+    <table>
+      <thead>
+        <tr><th>用户名</th><th>角色</th><th>状态</th><th>注册时间</th><th>操作</th></tr>
+      </thead>
+      <tbody id="user-table">
+        <tr><td colspan="5" class="empty">加载中...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section" id="tab-logs" style="display:none">
+    <div class="refresh-row">
+      <button onclick="loadLogs()">刷新</button>
+    </div>
+    <h2>系统日志（最近 200 行）</h2>
+    <pre id="log-viewer" style="background:#0d0d0d;border:1px solid #333;border-radius:8px;padding:12px;overflow-x:auto;font-size:12px;line-height:1.6;max-height:70vh;overflow-y:auto;white-space:pre-wrap;word-break:break-all;">加载中...</pre>
+    <p style="color:#555;font-size:11px;margin-top:6px;">日志仅记录操作（登录/注册/审批/删除等），不含聊天消息内容。聊天内容仅存储在本地 SQLite 数据库。</p>
+  </div>
+</div>
+
+<script>
+const TOKEN = localStorage.getItem('token');
+const USER = JSON.parse(localStorage.getItem('user') || '{}');
+
+if (!TOKEN || USER.role !== 'admin') { window.location.href = '/login.html'; }
+if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+  document.getElementById('warn-banner').style.display = 'block';
+}
+
+document.getElementById('user-tag').textContent = USER.username || '';
+
+async function adminApi(url, opts = {}) {
+  const r = await fetch(url, {
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+    ...opts,
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+  if (r.status === 401 || r.status === 403) {
+    alert('访问被拒绝');
+    window.location.href = '/chat.html';
+    return null;
+  }
+  return r.json();
+}
+
+async function loadUsers() {
+  const users = await adminApi('/api/admin/users');
+  if (!users) return;
+  const tbody = document.getElementById('user-table');
+  if (users.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty">暂无用户</td></tr>';
+    return;
+  }
+  tbody.innerHTML = users.map(u => {
+    const statusCls = u.approved ? 'approved' : 'pending';
+    const statusText = u.approved ? '已通过' : '待审批';
+    const roleBadge = u.role === 'admin'
+      ? '<span class="badge admin">管理员</span>'
+      : '';
+    const approveBtn = !u.approved
+      ? `<button class="action-btn approve-btn" onclick="approveUser(${u.id})">通过</button>`
+      : '';
+    const deleteBtn = u.role !== 'admin'
+      ? `<button class="action-btn delete-btn" onclick="deleteUser(${u.id}, '${escHtml(u.username)}')">删除</button>`
+      : '';
+    return `<tr>
+      <td>${escHtml(u.username)} ${roleBadge}</td>
+      <td>${u.role}</td>
+      <td><span class="badge ${statusCls}">${statusText}</span></td>
+      <td>${u.created_at?.slice(0,16) || ''}</td>
+      <td>${approveBtn}${deleteBtn}</td>
+    </tr>`;
+  }).join('');
+}
+
+async function approveUser(id) {
+  const r = await adminApi(`/api/admin/users/${id}/approve`, { method: 'POST' });
+  if (r && r.ok) loadUsers();
+  else alert('操作失败');
+}
+
+async function deleteUser(id, name) {
+  if (!confirm(`确定要删除用户 "${name}" 吗？此操作不可撤销。`)) return;
+  const r = await adminApi(`/api/admin/users/${id}`, { method: 'DELETE' });
+  if (r && r.ok) loadUsers();
+  else alert('操作失败');
+}
+
+function doLogout() {
+  fetch('/api/auth/logout', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN } });
+  localStorage.clear();
+  window.location.href = '/login.html';
+}
+
+function escHtml(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+let currentTab = 'users';
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === (tab === 'users' ? 0 : 1)));
+  document.getElementById('tab-users').style.display = tab === 'users' ? 'block' : 'none';
+  document.getElementById('tab-logs').style.display = tab === 'logs' ? 'block' : 'none';
+  if (tab === 'logs') loadLogs();
+}
+
+async function loadLogs() {
+  const pre = document.getElementById('log-viewer');
+  pre.textContent = '加载中...';
+  const data = await adminApi('/api/admin/logs');
+  if (!data) { pre.textContent = '加载失败'; return; }
+  if (data.lines.length === 0) { pre.textContent = '(日志为空)'; return; }
+  pre.textContent = data.lines.join('\n');
+}
+
+loadUsers();
+</script>
+</body>
+</html>

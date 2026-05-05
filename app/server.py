@@ -1,99 +1,69 @@
 #!/usr/bin/env python3
 """AI Remote Compute Mesh — Python 后端
-   静态文件服务器 + SQLite 聊天历史 API
+   认证 + 管理员审批 + MAC 限制 + 日志
 """
 import http.server
 import json
-import sqlite3
 import os
-import urllib.parse
 import re
+import urllib.parse
 import mimetypes
+import uuid
+import subprocess
+import platform
 
-WEB_DIR  = os.path.join(os.path.dirname(__file__), "web")
-DB_PATH  = os.path.join(os.path.dirname(__file__), "history.db")
-PORT     = 8080
+from config import PORT, WEB_DIR, LOG_PATH, ADMIN_MAC_WHITELIST
+from logger import log
+from db import init_db, create_user, get_user_by_username, get_user_by_id
+from db import list_users, approve_user, delete_user
+from db import create_session, validate_session, delete_session
+from db import list_conversations, get_conversation, create_conversation, save_messages, delete_conversation
+from auth import hash_password, verify_password, generate_token, make_expires_at
 
-# --------------------------------------------------
-def init_db():
-    db = sqlite3.connect(DB_PATH)
-    db.execute("PRAGMA journal_mode=WAL")
-    db.execute("PRAGMA foreign_keys=ON")
-    db.executescript("""
-        CREATE TABLE IF NOT EXISTS conversations (
-            id    INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            model TEXT NOT NULL DEFAULT '',
-            created_at TEXT NOT NULL DEFAULT (datetime('now','localtime'))
-        );
-        CREATE TABLE IF NOT EXISTS messages (
-            id              INTEGER PRIMARY KEY AUTOINCREMENT,
-            conversation_id INTEGER NOT NULL,
-            role            TEXT NOT NULL,
-            content         TEXT NOT NULL,
-            model           TEXT NOT NULL DEFAULT '',
-            created_at      TEXT NOT NULL DEFAULT (datetime('now','localtime')),
-            FOREIGN KEY (conversation_id) REFERENCES conversations(id) ON DELETE CASCADE
-        );
-    """)
-    # Migration: add model column if missing (for DBs created before this change)
-    try:
-        db.execute("ALTER TABLE messages ADD COLUMN model TEXT NOT NULL DEFAULT ''")
-    except sqlite3.OperationalError:
-        pass  # column already exists
-    db.commit()
-    return db
+# ==================== 管理员 MAC 验证 ====================
 
-# --------------------------------------------------
-class APIHandler:
-    def __init__(self):
-        self.db = init_db()
+def _get_local_macs():
+    """返回本机所有 MAC 地址（小写十六进制，无分隔符）"""
+    macs = set()
+    node = uuid.getnode()
+    if node not in (0, 0x00005E0053FF):
+        macs.add(f"{node:012x}")
+    if platform.system() == "Windows":
+        try:
+            r = subprocess.run(["getmac", "/v", "/fo", "csv"],
+                               capture_output=True, text=True, timeout=5)
+            for line in r.stdout.strip().split("\n")[1:]:
+                parts = line.replace('"', '').split(",")
+                if len(parts) >= 3:
+                    addr = parts[2].strip().replace("-", "").lower()
+                    if len(addr) == 12:
+                        macs.add(addr)
+        except Exception:
+            pass
+    return macs
 
-    def list_conversations(self):
-        cur = self.db.execute(
-            "SELECT id, title, model, created_at FROM conversations ORDER BY created_at DESC"
-        )
-        return [{"id": r[0], "title": r[1], "model": r[2], "created_at": r[3]} for r in cur]
+def is_admin_allowed(client_ip: str) -> bool:
+    if client_ip != "127.0.0.1":
+        return False
+    if ADMIN_MAC_WHITELIST:
+        local_macs = _get_local_macs()
+        if not (local_macs & set(ADMIN_MAC_WHITELIST)):
+            log.warning("Admin MAC check failed: local=%s, whitelist=%s", local_macs, ADMIN_MAC_WHITELIST)
+            return False
+    return True
 
-    def get_conversation(self, conv_id):
-        cur = self.db.execute("SELECT role, content, model FROM messages WHERE conversation_id=? ORDER BY id ASC", (conv_id,))
-        msgs = [{"role": r[0], "content": r[1], "model": r[2]} for r in cur]
-        meta = self.db.execute("SELECT title, model FROM conversations WHERE id=?", (conv_id,)).fetchone()
-        return {"id": int(conv_id), "title": meta[0], "model": meta[1], "messages": msgs} if meta else None
+# ==================== 请求处理 ====================
 
-    def create_conversation(self, title, model):
-        cur = self.db.execute("INSERT INTO conversations (title, model) VALUES (?, ?)", (title, model))
-        self.db.commit()
-        return cur.lastrowid
-
-    def save_messages(self, conv_id, msgs, title=None, model=None):
-        for msg in msgs:
-            self.db.execute(
-                "INSERT INTO messages (conversation_id, role, content, model) VALUES (?, ?, ?, ?)",
-                (conv_id, msg.get("role"), msg.get("content"), msg.get("model", ""))
-            )
-        if title:
-            self.db.execute("UPDATE conversations SET title=? WHERE id=?", (title, conv_id))
-        if model:
-            self.db.execute("UPDATE conversations SET model=? WHERE id=?", (model, conv_id))
-        self.db.commit()
-
-    def delete_conversation(self, conv_id):
-        self.db.execute("DELETE FROM conversations WHERE id=?", (conv_id,))
-        self.db.commit()
-
-# --------------------------------------------------
 class RequestHandler(http.server.BaseHTTPRequestHandler):
-    api = APIHandler()
     server_version = "AI-Remote/1.0"
 
     def log_message(self, format, *args):
-        pass
+        log.info("%s - %s", self.client_address[0], format % args)
 
     def _add_cors(self):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET,POST,DELETE,OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type,Authorization")
 
     def _json(self, code, data):
         body = json.dumps(data, ensure_ascii=False).encode("utf-8")
@@ -103,6 +73,44 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def _read_body(self) -> dict:
+        length = int(self.headers.get("Content-Length", 0))
+        if length == 0:
+            return {}
+        return json.loads(self.rfile.read(length))
+
+    # ==================== Auth Helpers ====================
+
+    def _get_user(self) -> dict | None:
+        auth = self.headers.get("Authorization", "")
+        if not auth.startswith("Bearer "):
+            return None
+        return validate_session(self.db, auth[7:])
+
+    def _require_auth(self) -> dict | None:
+        user = self._get_user()
+        if not user:
+            self._json(401, {"error": "unauthorized"})
+            return None
+        if not user["approved"]:
+            self._json(403, {"error": "account pending approval"})
+            return None
+        return user
+
+    def _require_admin(self) -> dict | None:
+        user = self._require_auth()
+        if not user:
+            return None
+        if user["role"] != "admin":
+            self._json(403, {"error": "admin required"})
+            return None
+        if not is_admin_allowed(self.client_address[0]):
+            self._json(403, {"error": "admin panel only accessible from localhost"})
+            return None
+        return user
+
+    # ==================== 静态文件 ====================
+
     def _serve_file(self, path):
         file_path = path.lstrip("/") or "index.html"
         full_path = os.path.abspath(os.path.join(WEB_DIR, file_path))
@@ -111,11 +119,23 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
             self._add_cors()
             self.end_headers()
             return
+
+        # admin.html 仅限 localhost（+ MAC白名单）
+        if "admin" in os.path.basename(full_path).lower():
+            if not is_admin_allowed(self.client_address[0]):
+                self.send_response(403)
+                self._add_cors()
+                self.end_headers()
+                self.wfile.write(b"Forbidden - localhost only")
+                return
+
         if not os.path.isfile(full_path):
+            # SPA fallback: /chat.html or /login.html
             self.send_response(404)
             self._add_cors()
             self.end_headers()
             return
+
         ct, _ = mimetypes.guess_type(full_path)
         self.send_response(200)
         self._add_cors()
@@ -125,6 +145,8 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
         with open(full_path, "rb") as f:
             self.wfile.write(f.read())
 
+    # ==================== HTTP 方法 ====================
+
     def do_OPTIONS(self):
         self.send_response(204)
         self._add_cors()
@@ -133,59 +155,205 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         path = urllib.parse.urlparse(self.path).path
 
-        # API
+        # --- Auth API ---
+        if path == "/api/auth/me":
+            user = self._require_auth()
+            if not user:
+                return
+            return self._json(200, {"id": user["id"], "username": user["username"], "role": user["role"]})
+
+        # --- Admin API ---
+        if path == "/api/admin/users":
+            user = self._require_admin()
+            if not user:
+                return
+            users = list_users(self.db)
+            return self._json(200, users)
+
+        if path == "/api/admin/logs":
+            user = self._require_admin()
+            if not user:
+                return
+            try:
+                with open(LOG_PATH, "r", encoding="utf-8") as f:
+                    lines = f.readlines()[-200:]  # 最后 200 行
+                return self._json(200, {"lines": [l.rstrip("\n") for l in lines]})
+            except FileNotFoundError:
+                return self._json(200, {"lines": []})
+
+        # --- Conversations ---
         m = re.match(r'^/api/conversations/(\d+)$', path)
         if m:
-            conv = self.api.get_conversation(int(m.group(1)))
-            return self._json(200, conv) if conv else self._json(404, {"error": "not found"})
-        elif path == "/api/conversations":
-            convs = self.api.list_conversations()
+            user = self._require_auth()
+            if not user:
+                return
+            conv = get_conversation(self.db, int(m.group(1)))
+            if not conv:
+                return self._json(404, {"error": "not found"})
+            conv_owner = conv.get("user_id")
+            if conv_owner != user["id"] and user["role"] != "admin":
+                return self._json(404, {"error": "not found"})
+            return self._json(200, conv)
+
+        if path == "/api/conversations":
+            user = self._require_auth()
+            if not user:
+                return
+            convs = list_conversations(self.db, user["id"])
             return self._json(200, convs)
 
-        # Static
+        # --- Static ---
         self._serve_file(path)
 
     def do_POST(self):
         path   = urllib.parse.urlparse(self.path).path
-        length = int(self.headers.get("Content-Length", 0))
-        body   = json.loads(self.rfile.read(length)) if length > 0 else {}
+        body   = self._read_body()
 
-        # API
+        # --- Auth API ---
+        if path == "/api/auth/register":
+            username = (body.get("username") or "").strip()
+            password = (body.get("password") or "").strip()
+            if not username or not password:
+                return self._json(400, {"error": "username and password required"})
+            if len(username) < 2 or len(password) < 4:
+                return self._json(400, {"error": "username >=2 chars, password >=4 chars"})
+            pwhash = hash_password(password)
+            uid = create_user(self.db, username, pwhash)
+            if uid is None:
+                return self._json(409, {"error": "username already exists"})
+            log.info("New user '%s' registered from %s", username, self.client_address[0])
+            return self._json(201, {"ok": True, "message": "registration submitted, pending approval"})
+
+        if path == "/api/auth/login":
+            username = (body.get("username") or "").strip()
+            password = (body.get("password") or "").strip()
+            if not username or not password:
+                return self._json(400, {"error": "username and password required"})
+            user = get_user_by_username(self.db, username)
+            if not user or not verify_password(password, user["password"]):
+                log.warning("Failed login for '%s' from %s", username, self.client_address[0])
+                return self._json(401, {"error": "invalid username or password"})
+            if not user["approved"]:
+                return self._json(403, {"error": "account pending approval"})
+            token = generate_token()
+            create_session(self.db, user["id"], token, make_expires_at())
+            log.info("User '%s' logged in from %s", username, self.client_address[0])
+            return self._json(200, {
+                "token": token,
+                "user": {"id": user["id"], "username": user["username"], "role": user["role"]}
+            })
+
+        if path == "/api/auth/logout":
+            auth = self.headers.get("Authorization", "")
+            if auth.startswith("Bearer "):
+                delete_session(self.db, auth[7:])
+            return self._json(200, {"ok": True})
+
+        # --- Admin API ---
+        m = re.match(r'^/api/admin/users/(\d+)/approve$', path)
+        if m:
+            user = self._require_admin()
+            if not user:
+                return
+            ok = approve_user(self.db, int(m.group(1)))
+            if ok:
+                log.info("Admin '%s' approved user id=%s", user["username"], m.group(1))
+                return self._json(200, {"ok": True})
+            return self._json(404, {"error": "user not found or already approved"})
+
+        # --- Conversations ---
         m = re.match(r'^/api/conversations/(\d+)$', path)
         if m:
-            self.api.save_messages(
-                int(m.group(1)),
+            user = self._require_auth()
+            if not user:
+                return
+            conv_id = int(m.group(1))
+            conv = get_conversation(self.db, conv_id)
+            if not conv:
+                return self._json(404, {"error": "not found"})
+            conv_owner = conv.get("user_id")
+            if conv_owner != user["id"] and user["role"] != "admin":
+                return self._json(404, {"error": "not found"})
+            save_messages(
+                self.db, conv_id,
                 body.get("messages", []),
                 body.get("title"),
                 body.get("model"),
             )
             return self._json(200, {"ok": True})
-        elif path == "/api/conversations":
-            cid = self.api.create_conversation(
+
+        if path == "/api/conversations":
+            user = self._require_auth()
+            if not user:
+                return
+            cid = create_conversation(
+                self.db,
                 body.get("title", "新对话"),
                 body.get("model", ""),
+                user["id"],
             )
+            log.info("User '%s' created conversation %d", user["username"], cid)
             return self._json(201, {"id": cid})
 
         self._json(404, {"error": "not found"})
 
     def do_DELETE(self):
         path = urllib.parse.urlparse(self.path).path
+
+        # --- Admin API ---
+        m = re.match(r'^/api/admin/users/(\d+)$', path)
+        if m:
+            user = self._require_admin()
+            if not user:
+                return
+            target_id = int(m.group(1))
+            if target_id == user["id"]:
+                return self._json(400, {"error": "cannot delete yourself"})
+            ok = delete_user(self.db, target_id)
+            if ok:
+                log.warning("Admin '%s' deleted user id=%d", user["username"], target_id)
+                return self._json(200, {"ok": True})
+            return self._json(404, {"error": "user not found"})
+
+        # --- Conversations ---
         m = re.match(r'^/api/conversations/(\d+)$', path)
         if m:
-            self.api.delete_conversation(int(m.group(1)))
+            user = self._require_auth()
+            if not user:
+                return
+            conv = get_conversation(self.db, int(m.group(1)))
+            if not conv:
+                return self._json(404, {"error": "not found"})
+            conv_owner = conv.get("user_id")
+            if conv_owner != user["id"] and user["role"] != "admin":
+                return self._json(404, {"error": "not found"})
+            delete_conversation(self.db, int(m.group(1)))
+            log.info("User '%s' deleted conversation %s", user["username"], m.group(1))
             return self._json(200, {"ok": True})
+
         self._json(404, {"error": "not found"})
 
-# --------------------------------------------------
-if __name__ == "__main__":
+
+# ==================== 启动 ====================
+
+def main():
+    db = init_db()
+    # 将 db 注入到 RequestHandler 类（每个请求共享同一连接）
+    RequestHandler.db = db
+
     server = http.server.HTTPServer(("0.0.0.0", PORT), RequestHandler)
-    print(f"AI Remote Mesh — 服务器已启动")
-    print(f"  本机: http://localhost:{PORT}")
-    print(f"  数据库: {DB_PATH}")
-    print(f"  Ctrl+C 停止")
+    log.info("============================================")
+    log.info("AI Remote Mesh — 服务器已启动")
+    log.info("  本机: http://localhost:%d", PORT)
+    log.info("  数据库: %s", os.path.abspath(os.path.join(os.path.dirname(__file__), "history.db")))
+    log.info("  日志: %s", os.path.join(os.path.dirname(__file__), "server.log"))
+    log.info("  Ctrl+C 停止")
+    log.info("============================================")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        print("\n服务器已停止")
+        log.info("服务器已停止")
         server.server_close()
+
+if __name__ == "__main__":
+    main()

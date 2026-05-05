@@ -1,0 +1,483 @@
+2026-05-05 19:33:29 [WARNING] ============================================
+2026-05-05 19:33:29 [WARNING]   已创建默认管理员账号:
+2026-05-05 19:33:29 [WARNING]   用户名: admin
+2026-05-05 19:33:29 [WARNING]   密码:   admin123
+2026-05-05 19:33:29 [WARNING]   请登录后立即修改密码！
+2026-05-05 19:33:29 [WARNING] ============================================
+2026-05-05 19:33:29 [INFO] ============================================
+2026-05-05 19:33:29 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-05 19:33:29 [INFO]   本机: http://localhost:8080
+2026-05-05 19:33:29 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-05 19:33:29 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-05 19:33:29 [INFO]   Ctrl+C 停止
+2026-05-05 19:33:29 [INFO] ============================================
+2026-05-05 19:36:57 [INFO] ============================================
+2026-05-05 19:36:57 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-05 19:36:57 [INFO]   本机: http://localhost:8080
+2026-05-05 19:36:57 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-05 19:36:57 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-05 19:36:57 [INFO]   Ctrl+C 停止
+2026-05-05 19:36:57 [INFO] ============================================
+2026-05-05 19:37:03 [INFO] DEBUG do_POST: path='/api/auth/register', body={'username': 'testuser', 'password': 'test1234'}
+2026-05-05 19:37:04 [INFO] New user 'testuser' registered from 127.0.0.1
+2026-05-05 19:37:04 [INFO] 127.0.0.1 - "POST /api/auth/register HTTP/1.1" 201 -
+2026-05-05 19:37:21 [INFO] DEBUG do_POST: path='/api/auth/login', body={'username': 'testuser', 'password': 'test1234'}
+2026-05-05 19:37:22 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 403 -
+2026-05-05 19:37:22 [INFO] DEBUG do_POST: path='/api/auth/login', body={'username': 'admin', 'password': 'admin123'}
+2026-05-05 19:37:22 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 19:37:22 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 19:37:43 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 19:37:43 [INFO] DEBUG do_POST: path='/api/admin/users/2/approve', body={}
+2026-05-05 19:37:43 [INFO] Admin 'admin' approved user id=2
+2026-05-05 19:37:43 [INFO] 127.0.0.1 - "POST /api/admin/users/2/approve HTTP/1.1" 200 -
+2026-05-05 19:37:43 [INFO] DEBUG do_POST: path='/api/auth/login', body={'username': 'testuser', 'password': 'test1234'}
+2026-05-05 19:37:44 [INFO] User 'testuser' logged in from 127.0.0.1
+2026-05-05 19:37:44 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 19:37:44 [INFO] 127.0.0.1 - "GET /api/auth/me HTTP/1.1" 200 -
+2026-05-05 19:37:44 [INFO] DEBUG do_POST: path='/api/conversations', body={'title': 'test', 'model': 'demo'}
+2026-05-05 19:37:44 [INFO] User 'testuser' created conversation 2
+2026-05-05 19:37:44 [INFO] 127.0.0.1 - "POST /api/conversations HTTP/1.1" 201 -
+2026-05-05 19:38:07 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 19:38:07 [INFO] 127.0.0.1 - "GET /api/conversations/1 HTTP/1.1" 200 -
+2026-05-05 19:38:08 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 403 -
+2026-05-05 19:38:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 401 -
+2026-05-05 19:38:08 [INFO] DEBUG do_POST: path='/api/conversations/2', body={'messages': [{'role': 'user', 'content': 'hello', 'model': 'test'}]}
+2026-05-05 19:38:08 [INFO] 127.0.0.1 - "POST /api/conversations/2 HTTP/1.1" 200 -
+2026-05-05 19:38:08 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
+2026-05-05 19:38:57 [INFO] ============================================
+2026-05-05 19:38:57 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-05 19:38:57 [INFO]   本机: http://localhost:8080
+2026-05-05 19:38:57 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-05 19:38:57 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-05 19:38:57 [INFO]   Ctrl+C 停止
+2026-05-05 19:38:57 [INFO] ============================================
+2026-05-05 19:39:08 [INFO] 127.0.0.1 - "GET /api/conversations/1 HTTP/1.1" 404 -
+2026-05-05 19:39:08 [INFO] 127.0.0.1 - "GET /api/conversations/1 HTTP/1.1" 200 -
+2026-05-05 19:39:23 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
+2026-05-05 19:39:24 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 19:39:24 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-05 19:39:24 [INFO] 127.0.0.1 - "GET /api/auth/me HTTP/1.1" 401 -
+2026-05-05 19:40:37 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
+2026-05-05 19:40:38 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 19:41:02 [INFO] 100.89.124.123 - "GET /admin.html HTTP/1.1" 403 -
+2026-05-05 19:41:08 [INFO] 100.89.124.123 - "GET /admin.html HTTP/1.1" 403 -
+2026-05-05 19:41:34 [INFO] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+2026-05-05 19:41:35 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 19:41:35 [INFO] 127.0.0.1 - "GET /favicon.ico HTTP/1.1" 404 -
+2026-05-05 19:41:46 [WARNING] Failed login for 'admin' from 127.0.0.1
+2026-05-05 19:41:46 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 401 -
+2026-05-05 19:41:57 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 19:41:57 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 19:41:57 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 19:41:57 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 19:42:27 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 19:42:54 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 19:42:54 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-05 19:42:55 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 19:42:55 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 19:42:56 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 19:42:56 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 19:43:00 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 19:43:00 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 19:43:06 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 19:43:31 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 19:43:32 [INFO] New user 'Young' registered from 100.89.124.123
+2026-05-05 19:43:32 [INFO] 100.89.124.123 - "POST /api/auth/register HTTP/1.1" 201 -
+2026-05-05 19:43:32 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 19:43:32 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 19:43:44 [INFO] New user 'young' registered from 100.89.124.123
+2026-05-05 19:43:44 [INFO] 100.89.124.123 - "POST /api/auth/register HTTP/1.1" 201 -
+2026-05-05 19:43:47 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 19:43:47 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 19:43:48 [INFO] Admin 'admin' approved user id=4
+2026-05-05 19:43:48 [INFO] 127.0.0.1 - "POST /api/admin/users/4/approve HTTP/1.1" 200 -
+2026-05-05 19:43:48 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 19:45:44 [INFO] User 'young' logged in from 100.89.124.123
+2026-05-05 19:45:44 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 19:45:44 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 19:45:44 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 19:45:44 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 19:45:44 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 19:45:44 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 19:47:37 [INFO] User 'young' logged in from 100.89.124.123
+2026-05-05 19:47:37 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 19:47:37 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 19:47:37 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 19:58:46 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 19:58:46 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 19:59:47 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
+2026-05-05 19:59:47 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
+2026-05-05 19:59:48 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:00:02 [INFO] 100.89.124.123 - "POST /api/auth/register HTTP/1.1" 409 -
+2026-05-05 20:00:15 [INFO] Admin 'admin' approved user id=3
+2026-05-05 20:00:15 [INFO] 127.0.0.1 - "POST /api/admin/users/3/approve HTTP/1.1" 200 -
+2026-05-05 20:00:15 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 20:01:18 [INFO] User 'young' logged in from 100.89.124.123
+2026-05-05 20:01:18 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:01:18 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:01:18 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
+2026-05-05 20:02:41 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:02:41 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:02:41 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
+2026-05-05 20:02:43 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:02:48 [INFO] User 'young' logged in from 100.89.124.123
+2026-05-05 20:02:48 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:02:49 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:02:52 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:03:17 [INFO] User 'young' created conversation 3
+2026-05-05 20:03:17 [INFO] 100.89.124.123 - "POST /api/conversations HTTP/1.1" 201 -
+2026-05-05 20:03:19 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:03:24 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:03:53 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:04:23 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:04:26 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:04:30 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:04:31 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:04:35 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:04:35 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:04:36 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:04:36 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:04:36 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:04:36 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:04:36 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:04:57 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:05:00 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:05:01 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:05:18 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:05:27 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:05:57 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:06:28 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:06:57 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:07:29 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:08:00 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:08:18 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:08:18 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 20:08:20 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 20:08:22 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 20:08:22 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 20:08:22 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 20:09:55 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:09:56 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:10:00 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:10:03 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:10:06 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:10:07 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:10:34 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:11:05 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:11:30 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:11:37 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:12:06 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:12:36 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:12:39 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:12:42 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:12:44 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:12:45 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:12:45 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:12:47 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:12:49 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:12:49 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:12:56 [INFO] User 'young' created conversation 4
+2026-05-05 20:12:56 [INFO] 100.89.124.123 - "POST /api/conversations HTTP/1.1" 201 -
+2026-05-05 20:12:57 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:13:13 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:13:43 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:15:07 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:15:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:15:18 [INFO] User 'admin' created conversation 5
+2026-05-05 20:15:18 [INFO] 127.0.0.1 - "POST /api/conversations HTTP/1.1" 201 -
+2026-05-05 20:15:18 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:15:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:16:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:16:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:17:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:17:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:18:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:18:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:19:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:19:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:20:24 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:20:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:20:52 [WARNING] ============================================
+2026-05-05 20:20:52 [WARNING]   已创建默认管理员账号:
+2026-05-05 20:20:52 [WARNING]   用户名: admin
+2026-05-05 20:20:52 [WARNING]   密码:   admin123
+2026-05-05 20:20:52 [WARNING]   请登录后立即修改密码！
+2026-05-05 20:20:52 [WARNING] ============================================
+2026-05-05 20:20:52 [INFO] ============================================
+2026-05-05 20:20:52 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-05 20:20:52 [INFO]   本机: http://localhost:8080
+2026-05-05 20:20:52 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-05 20:20:52 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-05 20:20:52 [INFO]   Ctrl+C 停止
+2026-05-05 20:20:52 [INFO] ============================================
+2026-05-05 20:21:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 401 -
+2026-05-05 20:21:09 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:22:10 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 20:22:10 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:22:10 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 20:22:10 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:22:11 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
+2026-05-05 20:23:35 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:23:38 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 20:23:38 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:23:38 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:23:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:23:58 [INFO] User 'admin' created conversation 1
+2026-05-05 20:23:58 [INFO] 127.0.0.1 - "POST /api/conversations HTTP/1.1" 201 -
+2026-05-05 20:23:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:24:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:24:36 [INFO] 127.0.0.1 - "POST /api/conversations/1 HTTP/1.1" 200 -
+2026-05-05 20:24:37 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:24:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:24:43 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:25:03 [INFO] User 'admin' created conversation 2
+2026-05-05 20:25:03 [INFO] 127.0.0.1 - "POST /api/conversations HTTP/1.1" 201 -
+2026-05-05 20:25:04 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:25:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:25:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:26:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:26:17 [INFO] 127.0.0.1 - "POST /api/conversations/2 HTTP/1.1" 200 -
+2026-05-05 20:26:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:26:39 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:27:08 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:27:09 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:27:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:27:58 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:27:58 [INFO] 100.89.124.123 - "GET /api/auth/me HTTP/1.1" 401 -
+2026-05-05 20:27:58 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:28:49 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 401 -
+2026-05-05 20:28:51 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:28:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:29:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:29:58 [WARNING] Failed login for 'young' from 100.89.124.123
+2026-05-05 20:29:58 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 401 -
+2026-05-05 20:30:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:30:11 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-05 20:30:12 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:14 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 20:30:14 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:30:14 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:30:14 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:30:16 [INFO] 127.0.0.1 - "GET /api/conversations/1 HTTP/1.1" 200 -
+2026-05-05 20:30:17 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
+2026-05-05 20:30:19 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-05 20:30:19 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:20 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:21 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:22 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:22 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:23 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:24 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:24 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 20:30:24 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:30:25 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:30:25 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:30:26 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-05 20:30:26 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:27 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:27 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:28 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:28 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:28 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:29 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:30 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:30 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:30 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:31 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:31 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:32 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:32 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:32 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:33 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:34 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 20:30:34 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:30:35 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:30:35 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:30:36 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-05 20:30:36 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:39 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:39 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:39 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:40 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:30:40 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:30:40 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:31:42 [WARNING] Failed login for 'young' from 100.89.124.123
+2026-05-05 20:31:42 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 401 -
+2026-05-05 20:31:42 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:31:52 [INFO] New user 'young' registered from 100.89.124.123
+2026-05-05 20:31:52 [INFO] 100.89.124.123 - "POST /api/auth/register HTTP/1.1" 201 -
+2026-05-05 20:32:02 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:32:02 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:32:03 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:32:04 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:32:04 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 20:32:04 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:32:05 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:32:05 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:32:09 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-05 20:32:09 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:32:11 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 20:32:11 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:32:11 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:32:11 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:32:14 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
+2026-05-05 20:32:15 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 20:32:16 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 20:32:16 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:32:16 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:32:16 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:32:22 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
+2026-05-05 20:32:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:33:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:33:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:34:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:34:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:35:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:35:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:36:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:36:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:37:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:37:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:38:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:38:47 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:39:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:39:47 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:40:48 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:41:49 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:42:50 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:43:51 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:44:52 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:44:52 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:44:52 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 20:44:52 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:45:53 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:45:53 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:46:54 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:47:55 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:48:56 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:49:57 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:50:57 [INFO] ============================================
+2026-05-05 20:50:57 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-05 20:50:57 [INFO]   本机: http://localhost:8080
+2026-05-05 20:50:57 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-05 20:50:57 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-05 20:50:57 [INFO]   Ctrl+C 停止
+2026-05-05 20:50:57 [INFO] ============================================
+2026-05-05 20:50:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:51:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:51:58 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-05 20:51:58 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:51:58 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:51:59 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:52:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:53:14 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:53:15 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:53:20 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:53:20 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 20:53:21 [INFO] Admin 'admin' approved user id=2
+2026-05-05 20:53:21 [INFO] 127.0.0.1 - "POST /api/admin/users/2/approve HTTP/1.1" 200 -
+2026-05-05 20:53:22 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 20:53:36 [INFO] User 'admin' created conversation 3
+2026-05-05 20:53:36 [INFO] 127.0.0.1 - "POST /api/conversations HTTP/1.1" 201 -
+2026-05-05 20:53:36 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:53:45 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:54:06 [INFO] 127.0.0.1 - "POST /api/conversations/3 HTTP/1.1" 200 -
+2026-05-05 20:54:06 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:54:15 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:54:45 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:54:56 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
+2026-05-05 20:55:15 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:55:45 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:55:45 [WARNING] Failed login for 'young' from 100.89.124.123
+2026-05-05 20:55:45 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 401 -
+2026-05-05 20:56:06 [INFO] User 'young' logged in from 100.89.124.123
+2026-05-05 20:56:06 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 20:56:07 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:56:10 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:56:10 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
+2026-05-05 20:56:10 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
+2026-05-05 20:56:15 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
+2026-05-05 20:56:27 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 20:56:27 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:56:30 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
+2026-05-05 20:56:41 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:56:44 [INFO] User 'young' created conversation 4
+2026-05-05 20:56:44 [INFO] 100.89.124.123 - "POST /api/conversations HTTP/1.1" 201 -
+2026-05-05 20:56:46 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:56:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:57:27 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:57:27 [INFO] 100.89.124.123 - "POST /api/conversations/4 HTTP/1.1" 200 -
+2026-05-05 20:57:27 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:57:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:58:28 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:58:34 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:58:34 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:58:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:59:28 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 20:59:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:00:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:01:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:02:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:02:58 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
+2026-05-05 21:02:58 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:02:58 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
+2026-05-05 21:02:58 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
+2026-05-05 21:02:58 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:03:04 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:03:04 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
+2026-05-05 21:03:04 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 21:03:04 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
+2026-05-05 21:03:04 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
+2026-05-05 21:03:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:04:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:05:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:06:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:07:20 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:07:27 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
+2026-05-05 21:07:28 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
+2026-05-05 21:07:28 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
+2026-05-05 21:07:28 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
+2026-05-05 21:07:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:08:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:08:58 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:08:58 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
+2026-05-05 21:08:58 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
+2026-05-05 21:08:58 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
+2026-05-05 21:09:21 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:09:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:10:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:11:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:12:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:13:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:14:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
+2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
+2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /favicon.ico HTTP/1.1" 404 -
+2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /login.html HTTP/1.1" 200 -
+2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /favicon.ico HTTP/1.1" 404 -
+2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
+2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
+2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /favicon.ico HTTP/1.1" 404 -
+2026-05-05 21:15:54 [INFO] User 'young' logged in from 100.125.82.117
+2026-05-05 21:15:54 [INFO] 100.125.82.117 - "POST /api/auth/login HTTP/1.1" 200 -
+2026-05-05 21:15:54 [INFO] 100.125.82.117 - "GET /chat.html HTTP/1.1" 200 -
+2026-05-05 21:15:54 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:15:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
+2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:17:23 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
+2026-05-05 21:17:24 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:17:54 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
+2026-05-05 21:17:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -

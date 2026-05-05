@@ -16,7 +16,11 @@
       "Bash(powershell -NoProfile -Command \"Start-Process -FilePath 'powershell' -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File \\\\\"e:\\\\my_1st_claudeCode_prjt\\\\app\\\\start-server-only.ps1\\\\\"' -Verb RunAs\")",
       "Bash(powershell -NoProfile -Command 'Start-Sleep 4; try { $r = Invoke-WebRequest -Uri '\\\\''http://100.118.175.65:8080'\\\\'' -TimeoutSec 5 -UseBasicParsing; Write-Host '\\\\''✅ Server OK - '\\\\'' $r.StatusCode '\\\\'' '\\\\'' $r.Content.Length '\\\\''bytes'\\\\'' } catch { Write-Host '\\\\''⚠ '\\\\'' $_.Exception.Message }')",
       "Bash(powershell -NoProfile -Command \"Get-Command python,node,php -ErrorAction SilentlyContinue | Select-Object Name,Source\")",
-      "Bash(powershell -NoProfile -Command 'try { $r = Invoke-WebRequest -Uri '\\\\''http://127.0.0.1:8080'\\\\'' -TimeoutSec 5 -UseBasicParsing; Write-Host '\\\\''✅ Server running: '\\\\'' $r.StatusCode } catch { Write-Host '\\\\''Failed: '\\\\'' $_.Exception.Message }')"
+      "Bash(powershell -NoProfile -Command 'try { $r = Invoke-WebRequest -Uri '\\\\''http://127.0.0.1:8080'\\\\'' -TimeoutSec 5 -UseBasicParsing; Write-Host '\\\\''✅ Server running: '\\\\'' $r.StatusCode } catch { Write-Host '\\\\''Failed: '\\\\'' $_.Exception.Message }')",
+      "Bash(curl -s \"http://localhost:8080/login.html\")",
+      "Bash(curl -s -X POST \"http://localhost:8080/api/auth/register\" -H \"Content-Type: application/json\" -d '{\"username\":\"testuser\",\"password\":\"test1234\"}')",
+      "Bash(curl -s -X POST \"http://localhost:8080/api/auth/login\" -H \"Content-Type: application/json\" -d '{\"username\":\"testuser\",\"password\":\"test1234\"}')",
+      "Bash(curl -v -X POST \"http://localhost:8080/api/auth/register\" -H \"Content-Type: application/json\" -d '{\"username\":\"testuser\",\"password\":\"test1234\"}')"
     ]
   }
 }

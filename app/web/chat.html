@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>AI Remote Chat</title>
+<style>
+  :root { --hdr: 52px; --btm: 72px; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #111; color: #e0e0e0; height: 100dvh; overflow: hidden;
+  }
+  /* === 顶部栏 (固定) === */
+  .topbar {
+    position: fixed; top:0; left:0; right:0; height: var(--hdr);
+    background: #1a1a1a; display: flex; align-items: center; gap: 8px;
+    padding: 0 10px; z-index: 20; border-bottom: 1px solid #333;
+  }
+  .menu-btn { background: none; border: none; color: #aaa; font-size: 20px; padding: 6px; cursor: pointer; line-height: 1; }
+  .menu-btn:hover { color: #fff; }
+  .topbar h1 { font-size: 15px; font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .topbar select {
+    background: #222; color: #ddd; border: 1px solid #444; border-radius: 6px;
+    padding: 5px 8px; font-size: 12px; max-width: 130px;
+  }
+  .topbar .refresh-btn {
+    background: #222; color: #4ade80; border: 1px solid #444; border-radius: 6px;
+    font-size: 16px; padding: 4px 8px; cursor: pointer;
+  }
+  .topbar .user-tag {
+    font-size: 11px; color: #aaa; background: #252525; border-radius: 5px;
+    padding: 3px 8px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .topbar .logout-btn {
+    background: none; border: none; color: #aaa; font-size: 16px; padding: 4px 6px; cursor: pointer;
+  }
+  .topbar .logout-btn:hover { color: #e74c3c; }
+  .topbar .admin-link {
+    color: #f59e0b; text-decoration: none; font-size: 11px; font-weight: 600;
+    padding: 3px 8px; border: 1px solid #5a4a1a; border-radius: 5px; background: #252015;
+  }
+  .topbar .admin-link:hover { background: #3a3015; }
+
+  /* === 底部输入栏 (固定) === */
+  .bottombar {
+    position: fixed; bottom:0; left:0; right:0;
+    padding: 10px 10px calc(10px + env(safe-area-inset-bottom,0px));
+    background: #1a1a1a; border-top: 1px solid #333;
+    display: flex; gap: 8px; align-items: flex-end; z-index: 20;
+  }
+  .bottombar textarea {
+    flex: 1; background: #222; border: 1px solid #444; border-radius: 10px;
+    padding: 10px 14px; color: #eee; font-size: 15px; font-family: inherit;
+    resize: none; outline: none; min-height: 42px; max-height: 120px;
+  }
+  .bottombar textarea:focus { border-color: #4ade80; }
+  .bottombar button {
+    background: #4ade80; color: #111; border: none; border-radius: 10px;
+    padding: 11px 18px; font-size: 15px; font-weight: 600; cursor: pointer;
+  }
+  .bottombar button:disabled { opacity: 0.4; cursor: default; }
+
+  /* === 消息区域 (中间滚动) === */
+  .chat-area {
+    position: fixed; top: var(--hdr); bottom: var(--btm);
+    left:0; right:0; overflow-y: auto; padding: 16px 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .msg { max-width: 88%; padding: 10px 14px; border-radius: 12px; line-height: 1.5; font-size: 15px; word-break: break-word; }
+  .msg.user { background: #1a5276; align-self: flex-end; border-bottom-right-radius: 4px; }
+  .msg.assistant { background: #222; align-self: flex-start; border-bottom-left-radius: 4px; }
+  .msg .model-tag { font-size: 10px; color: #4ade80; margin-top: 5px; padding-top: 4px; border-top: 1px solid #333; }
+  .msg.system { color: #666; font-size: 12px; text-align: center; padding: 4px; background: none; }
+  .msg-wrapper { display: flex; margin-bottom: 10px; }
+  .msg-wrapper.user { justify-content: flex-end; }
+  .msg-wrapper.assistant { justify-content: flex-start; }
+  .msg-wrapper.system { justify-content: center; }
+  .msg pre { background: #0d0d0d; padding: 10px; border-radius: 8px; overflow-x: auto; margin: 6px 0; font-size: 13px; }
+  .msg code { background: #0d0d0d; padding: 2px 4px; border-radius: 4px; font-size: 13px; }
+  .msg table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 13px; }
+  .msg th, .msg td { border: 1px solid #333; padding: 6px 10px; text-align: left; }
+  .msg th { background: #1a1a1a; color: #ccc; font-weight: 600; }
+  .msg td { background: #151515; }
+  .msg h2, .msg h3, .msg h4, .msg h5 { margin: 8px 0 4px; line-height: 1.3; }
+  .msg h2 { font-size: 17px; }
+  .msg h3 { font-size: 15px; }
+  .msg h4 { font-size: 14px; }
+  .msg hr { border: none; border-top: 1px solid #333; margin: 10px 0; }
+  .msg p { margin: 4px 0; }
+  .msg .latex-block, .msg .latex-inline { font-family: 'Courier New', monospace; color: #f59e0b; }
+
+  .welcome { text-align: center; padding: 30px 16px; color: #555; margin-top: 30px; }
+  .welcome h2 { color: #777; font-size: 18px; margin-bottom: 6px; }
+
+  .typing { display: inline-flex; gap: 4px; padding: 2px 0; }
+  .typing span { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; animation: t 1.4s infinite; }
+  .typing span:nth-child(2) { animation-delay: .2s; }
+  .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes t { 0%,60%,100% { opacity:.3; transform:scale(.8); } 30% { opacity:1; transform:scale(1); } }
+
+  /* === 侧边栏 (滑入) === */
+  .overlay { position: fixed; inset:0; background: rgba(0,0,0,.5); z-index: 25; display: none; }
+  .overlay.show { display: block; }
+  .sidebar {
+    position: fixed; top:0; left: 0; bottom:0; width: 280px; max-width: 85vw;
+    background: #1a1a1a; z-index: 30; display: flex; flex-direction: column;
+    transform: translateX(-100%); transition: transform .25s ease;
+    border-right: 1px solid #333;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-header {
+    padding: 14px 16px; border-bottom: 1px solid #333;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .sidebar-header h2 { font-size: 16px; font-weight: 600; }
+  .new-chat-btn {
+    background: #4ade80; color: #111; border: none; border-radius: 8px;
+    padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  .conv-list { flex: 1; overflow-y: auto; padding: 8px; }
+  .conv-item {
+    padding: 12px 14px; margin-bottom: 4px; border-radius: 8px;
+    cursor: pointer; border: 1px solid transparent; transition: background .15s;
+  }
+  .conv-item:hover { background: #252525; }
+  .conv-item.active { background: #0f3460; border-color: #1a5276; }
+  .conv-item .conv-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .conv-item .conv-meta { font-size: 11px; color: #666; display: flex; justify-content: space-between; }
+  .conv-item .del-btn {
+    background: none; border: none; color: #555; cursor: pointer; font-size: 16px; padding: 0 4px;
+  }
+  .conv-item .del-btn:hover { color: #e74c3c; }
+  .conv-empty { text-align: center; color: #555; padding: 30px 16px; font-size: 13px; }
+
+  /* 移动端适配 */
+  @media (max-width: 480px) {
+    .topbar h1 { font-size: 13px; }
+    .topbar select { max-width: 100px; font-size: 11px; }
+    .chat-area { padding: 10px 8px; }
+    .msg { max-width: 92%; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 遮罩层 -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- 侧边栏 -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h2>历史对话</h2>
+    <button class="new-chat-btn" onclick="newChat()">+ 新建</button>
+  </div>
+  <div class="conv-list" id="conv-list">
+    <div class="conv-empty">加载中...</div>
+  </div>
+</nav>
+
+<!-- 顶部栏 -->
+<header class="topbar">
+  <button class="menu-btn" onclick="toggleSidebar()" title="历史">&#x2630;</button>
+  <h1 id="conv-title">AI Remote</h1>
+  <select id="model-select"><option value="">加载中...</option></select>
+  <button class="refresh-btn" onclick="refreshModels()" title="扫描模型">&#x21bb;</button>
+  <a class="admin-link" id="admin-link" href="/admin.html" style="display:none">管理</a>
+  <span class="user-tag" id="user-tag"></span>
+  <button class="logout-btn" onclick="logout()" title="退出登录">&#x2192;</button>
+</header>
+
+<!-- 消息区 -->
+<div class="chat-area" id="chat-area">
+  <div class="welcome" id="welcome">
+    <h2>AI Remote Compute</h2>
+    <p>选择模型，开始对话</p>
+  </div>
+</div>
+
+<!-- 底部输入栏 -->
+<footer class="bottombar">
+  <textarea id="prompt" rows="1" placeholder="输入消息..." disabled></textarea>
+  <button id="send-btn" disabled>发送</button>
+</footer>
+
+<script>
+// ==================== 认证守卫 ====================
+const TOKEN = localStorage.getItem('token');
+const USER  = JSON.parse(localStorage.getItem('user') || 'null');
+if (!TOKEN || !USER) { window.location.href = '/login.html'; }
+
+// ==================== 全局状态 ====================
+const HOST = '';                         // API 同源，不需要代理
+const OLLAMA = location.protocol + '//' + location.hostname + ':11434';
+
+let currentConvId = null;
+let messages = [];                       // [{role, content}, ...]
+let loading = false;
+let currentModel = '';
+let convLoaded = false;                  // 是否已从 DB 加载过对话
+
+// ==================== DOM ====================
+const el = id => document.getElementById(id);
+const chatArea  = el('chat-area');
+const promptEl  = el('prompt');
+const sendBtn   = el('send-btn');
+const modelSel  = el('model-select');
+const convList  = el('conv-list');
+const overlay   = el('overlay');
+const sidebar   = el('sidebar');
+const convTitle = el('conv-title');
+
+// ==================== Ollama ====================
+async function checkOllama() {
+  try {
+    const r = await fetch(`${OLLAMA}/api/tags`);
+    if (!r.ok) throw new Error('offline');
+    const data = await r.json();
+    modelSel.innerHTML = (data.models || []).map(m =>
+      `<option value="${m.name}">${m.name}</option>`
+    ).join('');
+    if (!currentModel && data.models.length > 0) {
+      currentModel = data.models.length > 0 ? data.models[0].name : '';
+      modelSel.value = currentModel;
+    }
+    promptEl.disabled = false;
+    sendBtn.disabled = false;
+    promptEl.placeholder = '输入消息...';
+    return true;
+  } catch {
+    modelSel.innerHTML = '<option value="">离线</option>';
+    return false;
+  }
+}
+
+function refreshModels() {
+  checkOllama().then(ok => {
+    if (ok) addSysMsg('已扫描模型列表');
+    else addSysMsg('Ollama 离线');
+  });
+}
+
+modelSel.addEventListener('change', () => { currentModel = modelSel.value; });
+
+// ==================== Markdown 渲染 ====================
+function renderMarkdown(text) {
+  if (!text) return '';
+  const placeholders = [];
+
+  // 1. 保护代码块 ```...```
+  let html = text.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => {
+    placeholders.push(`<pre><code>${escHtml(code.trim())}</code></pre>`);
+    return `\x00CODE${placeholders.length - 1}\x00`;
+  });
+
+  // 2. 保护 LaTeX 显示公式 $$...$$
+  html = html.replace(/\$\$([\s\S]*?)\$\$/g, (_, math) => {
+    placeholders.push(`<div class="latex-block">${escHtml(math.trim())}</div>`);
+    return `\x00CODE${placeholders.length - 1}\x00`;
+  });
+
+  // 3. 保护 LaTeX 行内公式 $...$
+  html = html.replace(/\$([^$]+?)\$/g, (_, math) => {
+    placeholders.push(`<span class="latex-inline">${escHtml(math.trim())}</span>`);
+    return `\x00CODE${placeholders.length - 1}\x00`;
+  });
+
+  // 4. 保护行内代码 `...`
+  html = html.replace(/`([^`]+)`/g, (_, code) => {
+    placeholders.push(`<code>${escHtml(code)}</code>`);
+    return `\x00CODE${placeholders.length - 1}\x00`;
+  });
+
+  // 5. Table detection — 连续的 | 行
+  const lines = html.split('\n');
+  const result = [];
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i].trim();
+    // 表格开始: 当前行含 | 且下一行是分隔符 |---|
+    if (line.startsWith('|') && line.endsWith('|') &&
+        i + 1 < lines.length && /^\|[\s\-:|]+\|$/.test(lines[i + 1].trim())) {
+      const headerCells = line.split('|').filter(c => c.trim() !== '');
+      const alignRow = lines[i + 1].trim();
+      const aligns = alignRow.split('|').filter(c => c.trim() !== '').map(c => {
+        if (c.startsWith(':') && c.endsWith(':')) return 'center';
+        if (c.endsWith(':')) return 'right';
+        return 'left';
+      });
+      let tableHtml = '<table><thead><tr>';
+      headerCells.forEach((c, j) => {
+        tableHtml += `<th style="text-align:${aligns[j] || 'left'}">${escHtml(c.trim())}</th>`;
+      });
+      tableHtml += '</tr></thead><tbody>';
+      i += 2;
+      while (i < lines.length && lines[i].trim().startsWith('|') && lines[i].trim().endsWith('|')) {
+        const cells = lines[i].trim().split('|').filter(c => c.trim() !== '');
+        tableHtml += '<tr>';
+        cells.forEach((c, j) => {
+          tableHtml += `<td style="text-align:${aligns[j] || 'left'}">${escHtml(c.trim())}</td>`;
+        });
+        tableHtml += '</tr>';
+        i++;
+      }
+      tableHtml += '</tbody></table>';
+      result.push(tableHtml);
+    } else {
+      // 非表格行
+      result.push(line);
+      i++;
+    }
+  }
+  html = result.join('\n');
+
+  // 6. Headers
+  html = html.replace(/^#### (.+)$/gm, '<h5>$1</h5>');
+  html = html.replace(/^### (.+)$/gm, '<h4>$1</h4>');
+  html = html.replace(/^## (.+)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^# (.+)$/gm, '<h2>$1</h2>');
+
+  // 7. Bold & italic
+  html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  html = html.replace(/\b_(.+?)_\b/g, '<em>$1</em>');
+
+  // 8. 水平线
+  html = html.replace(/^---$/gm, '<hr>');
+
+  // 9. 段落: 双换行 → </p><p>, 单换行 → <br>
+  const paras = html.split('\n\n');
+  html = paras.map(p => {
+    p = p.trim();
+    if (!p) return '';
+    if (p.startsWith('<h') || p.startsWith('<table') || p.startsWith('<pre') || p.startsWith('<hr') || p.startsWith('<div class="latex')) {
+      return p;
+    }
+    return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+  }).join('');
+
+  // 10. 恢复占位符
+  html = html.replace(/\x00CODE(\d+)\x00/g, (_, idx) => placeholders[parseInt(idx)]);
+
+  return html;
+}
+
+// ==================== 聊天 ====================
+function scrollBottom() { chatArea.scrollTop = chatArea.scrollHeight; }
+
+function addMsg(role, content, model) {
+  const wrapper = document.createElement('div');
+  wrapper.className = `msg-wrapper ${role}`;
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  if (role === 'assistant') {
+    div.innerHTML = renderMarkdown(content);
+  } else {
+    div.textContent = content;
+  }
+  if (model && role === 'assistant') {
+    const tag = document.createElement('div');
+    tag.className = 'model-tag';
+    tag.textContent = model;
+    div.appendChild(tag);
+  }
+  wrapper.appendChild(div);
+  chatArea.appendChild(wrapper);
+  scrollBottom();
+  return div;
+}
+
+function addSysMsg(text) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'msg-wrapper system';
+  const div = document.createElement('div');
+  div.className = 'msg system';
+  div.textContent = text;
+  wrapper.appendChild(div);
+  chatArea.appendChild(wrapper);
+  scrollBottom();
+}
+
+function hideWelcome() {
+  const w = document.getElementById('welcome');
+  if (w) w.remove();
+}
+
+function showTyping() {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'msg-wrapper assistant';
+  wrapper.id = 'typing-wrapper';
+  wrapper.innerHTML = '<div class="msg assistant"><div class="typing"><span></span><span></span><span></span></div></div>';
+  chatArea.appendChild(wrapper);
+  scrollBottom();
+}
+
+function hideTyping() {
+  const w = document.getElementById('typing-wrapper');
+  if (w) w.remove();
+}
+
+// ==================== 流式响应 ====================
+async function streamChat(contentDiv) {
+  const body = JSON.stringify({
+    model: currentModel,
+    messages: messages.slice(-20),
+    stream: true
+  });
+  const r = await fetch(`${OLLAMA}/api/chat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body
+  });
+  if (!r.ok) {
+    let msg = `HTTP ${r.status}`;
+    try {
+      const err = await r.json();
+      if (err.error) msg = err.error;
+    } catch {}
+    throw new Error(msg);
+  }
+  const reader = r.body.getReader();
+  const decoder = new TextDecoder();
+  let text = '';
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const lines = decoder.decode(value, { stream: true }).split('\n').filter(Boolean);
+    for (const line of lines) {
+      try {
+        const json = JSON.parse(line);
+        if (json.error) { addSysMsg('Ollama 错误: ' + json.error); return ''; }
+        if (json.message?.content) {
+          text += json.message.content;
+          contentDiv.textContent = text;
+          scrollBottom();
+        }
+      } catch {}
+    }
+  }
+  return text;
+}
+
+// ==================== 发送消息 ====================
+async function send() {
+  const text = promptEl.value.trim();
+  if (!text || loading || !currentModel) return;
+  promptEl.value = '';
+  promptEl.style.height = 'auto';
+  hideWelcome();
+
+  loading = true;
+  sendBtn.disabled = true;
+  promptEl.disabled = true;
+
+  // 没有当前对话则自动创建
+  if (!currentConvId) await createConv(text);
+
+  addMsg('user', text);
+  messages.push({ role: 'user', content: text, model: currentModel });
+
+  showTyping();
+  try {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'msg assistant';
+    const wrapper = document.createElement('div');
+    wrapper.className = 'msg-wrapper assistant';
+    wrapper.appendChild(contentDiv);
+    const typingWrapper = document.getElementById('typing-wrapper');
+    if (typingWrapper) typingWrapper.replaceWith(wrapper);
+    else chatArea.appendChild(wrapper);
+
+    const reply = await streamChat(contentDiv);
+    messages.push({ role: 'assistant', content: reply, model: currentModel });
+    // 替换为渲染后的 Markdown 并添加模型标签
+    contentDiv.innerHTML = renderMarkdown(reply);
+    const tag = document.createElement('div');
+    tag.className = 'model-tag';
+    tag.textContent = currentModel;
+    contentDiv.appendChild(tag);
+    await saveConv();
+    await refreshConvList();
+    scrollBottom();
+  } catch (err) {
+    hideTyping();
+    addSysMsg('错误: ' + err.message);
+  }
+  loading = false;
+  sendBtn.disabled = false;
+  promptEl.disabled = false;
+  promptEl.focus();
+}
+
+sendBtn.addEventListener('click', send);
+promptEl.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+});
+promptEl.addEventListener('input', () => {
+  promptEl.style.height = 'auto';
+  promptEl.style.height = Math.min(promptEl.scrollHeight, 120) + 'px';
+});
+
+// ==================== 对话管理 (DB) ====================
+async function api(url, opts = {}) {
+  const r = await fetch(HOST + url, {
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+    ...opts,
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+  if (r.status === 401) { localStorage.clear(); window.location.href = '/login.html'; return null; }
+  if (!r.ok && r.status !== 201 && r.status !== 200) return null;
+  return r.json();
+}
+
+function logout() {
+  fetch('/api/auth/logout', {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + TOKEN }
+  });
+  localStorage.clear();
+  window.location.href = '/login.html';
+}
+
+async function refreshConvList() {
+  const convs = await api('/api/conversations') || [];
+  convList.innerHTML = convs.length === 0
+    ? '<div class="conv-empty">暂无历史对话</div>'
+    : convs.map(c => `
+      <div class="conv-item${c.id === currentConvId ? ' active' : ''}" onclick="loadConv(${c.id})">
+        <div class="conv-title">${escHtml(c.title)}</div>
+        <div class="conv-meta">
+          <span>${c.model || '--'}</span>
+          <span>${c.created_at?.slice(5,16) || ''}</span>
+          <button class="del-btn" onclick="event.stopPropagation();deleteConv(${c.id})" title="删除">&#x1d5eb;</button>
+        </div>
+      </div>
+    `).join('');
+}
+
+async function createConv(firstMsg) {
+  const title = firstMsg.slice(0, 30) + (firstMsg.length > 30 ? '...' : '');
+  const r = await api('/api/conversations', {
+    method: 'POST',
+    body: { title, model: currentModel }
+  });
+  if (r) {
+    currentConvId = r.id;
+    convTitle.textContent = title;
+    convLoaded = true;
+    await refreshConvList();
+  }
+}
+
+async function saveConv() {
+  if (!currentConvId) return;
+  // 只保存 sent 之后新增的消息（最后 2 条）
+  const newMsgs = messages.slice(-2);
+  await api(`/api/conversations/${currentConvId}`, {
+    method: 'POST',
+    body: { messages: newMsgs, model: currentModel }
+  });
+}
+
+async function loadConv(id) {
+  const conv = await api(`/api/conversations/${id}`);
+  if (!conv) return;
+  currentConvId = conv.id;
+  currentModel = conv.model || currentModel;
+  modelSel.value = currentModel || '';
+  messages = conv.messages || [];
+  convTitle.textContent = conv.title;
+  convLoaded = true;
+
+  // 渲染消息
+  chatArea.innerHTML = '';
+  if (messages.length === 0) {
+    chatArea.innerHTML = '<div class="welcome" id="welcome"><h2>空对话</h2><p>发送消息开始</p></div>';
+  } else {
+    for (const m of messages) addMsg(m.role, m.content, m.model);
+  }
+  closeSidebar();
+  scrollBottom();
+}
+
+async function deleteConv(id) {
+  if (!confirm('删除此对话？')) return;
+  await api(`/api/conversations/${id}`, { method: 'DELETE' });
+  if (currentConvId === id) newChat();
+  await refreshConvList();
+}
+
+function newChat() {
+  currentConvId = null;
+  messages = [];
+  convTitle.textContent = '新对话';
+  chatArea.innerHTML = '<div class="welcome" id="welcome"><h2>新对话</h2><p>选择模型，开始对话</p></div>';
+  closeSidebar();
+  convLoaded = false;
+}
+
+// ==================== 侧边栏 ====================
+function toggleSidebar() { sidebar.classList.toggle('open'); overlay.classList.toggle('show'); }
+function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('show'); }
+
+// ==================== 工具 ====================
+function escHtml(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ==================== 初始化 ====================
+(async () => {
+  document.getElementById('user-tag').textContent = USER.username;
+  if (USER.role === 'admin') {
+    document.getElementById('admin-link').style.display = '';
+  }
+  await checkOllama();
+  await refreshConvList();
+  promptEl.focus();
+  // 后台轮询模型
+  setInterval(() => checkOllama(), 60000);
+  // 后台刷新对话列表
+  setInterval(() => refreshConvList(), 30000);
+})();
+</script>
+</body>
+</html>
