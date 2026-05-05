@@ -1,5 +1,5 @@
 @echo off
-title AI Remote Compute Mesh — 启动中...
+title AI Remote Compute Mesh
 cd /d "%~dp0"
-powershell -NoProfile -ExecutionPolicy Bypass -File "start.ps1"
+python server.py
 pause
