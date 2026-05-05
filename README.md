@@ -1,135 +1,167 @@
 # AI Remote Compute Mesh
 
-**在 iPhone 上使用 PC 的本地大模型，任何网络下都能用，全部加密。**
+**Use your PC's local LLMs from iPhone — works anywhere, always encrypted.**
+
+**在 iPhone 上使用 PC 的本地大模型 — 任何网络下都能用，全部加密。**
 
 ```
-┌─────────────┐    Tailscale WireGuard 加密隧道     ┌──────────────────┐
-│  iPhone      │ ──────── 任何网络下可用 ────────→    │  Windows PC      │
-│  Safari      │     ┌───────────────────────┐      │                  │
-│              │     │ 同一 WiFi → P2P 直连   │      │  python server.py│
-│  无需安装    │     │ 蜂窝数据 → DERP 中继   │      │  ├─ Ollama 模型  │
-│  无需配置    │     │ 自动切换，完全无感      │      │  └─ 网页界面     │
-└─────────────┘     └───────────────────────┘      └──────────────────┘
+┌─────────────┐    Tailscale WireGuard (v1.96.3)      ┌──────────────────┐
+│  iPhone      │ ──────── 任何网络 / any network ────→  │  Windows PC      │
+│  Safari      │     ┌───────────────────────┐        │                  │
+│              │     │ Same WiFi → P2P       │        │  python server.py│
+│  无需安装    │     │ Cellular  → DERP relay│        │  ├─ Ollama 0.23  │
+│  无需配置    │     │ Auto switch, seamless │        │  └─ Web UI       │
+└─────────────┘     └───────────────────────┘        └──────────────────┘
 ```
 
 ---
 
-## 功能
+## Versions / 版本要求
 
-- **多设备支持** — 用户注册/登录，每个用户独立会话，互不干扰
-- **管理员审批** — 新注册用户需管理员在 PC 后台审批后才能使用
-- **聊天气泡** — 自适应移动端，顶部栏/底部栏固定，中间滚动
-- **历史对话** — SQLite 存储全部对话，侧边栏切换/删除/新建
-- **模型标签** — 每条 AI 回复标注使用的模型名称
-- **Markdown 渲染** — 表格、代码块、LaTeX 公式、标题、粗斜体等格式化输出
-- **模型自动扫描** — 进入页面自动检测 Ollama 可用模型，60s 后台轮询
-- **管理员面板** — 仅限本机 localhost 访问，用户审批管理 + 系统日志查看
-- **完整日志** — 滚动日志文件（5MB × 3），记录登录/注册/审批/API 操作
+| Component | Version | Required |
+|-----------|---------|----------|
+| Python | 3.12+ | Required / 必需 |
+| Ollama | 0.23.0 | Required / 必需 |
+| Tailscale | 1.96.3 | Required / 必需 (VPN mesh) |
+| OS | Windows 11 | Server side / 服务端 |
+
+Ollama environment variables / 环境变量 (permanent / 已永久设置):
+```
+OLLAMA_HOST=0.0.0.0
+OLLAMA_ORIGINS=*
+```
 
 ---
 
-## 一键启动
+## Quick Start / 快速启动
 
-### 前提条件
+### 1. Prerequisites / 前提
 
-- Windows PC，已安装 [Python 3.12+](https://www.python.org/downloads/)
-- [Ollama](https://ollama.com/download) 已安装并运行
-- [Tailscale](https://tailscale.com/download) 已安装并登录
-- Ollama 环境变量（已永久设置）：
-  ```
-  OLLAMA_HOST=0.0.0.0
-  OLLAMA_ORIGINS=*
-  ```
+- [Python 3.12+](https://www.python.org/downloads/) installed
+- [Ollama 0.23.0](https://ollama.com/download) installed & running
+- [Tailscale 1.96.3](https://tailscale.com/download) installed & logged in
+- Ollama env vars set permanently (see above)
 
-### 启动
+### 2. Launch / 启动
 
 ```powershell
+# Option A: Double-click / 双击
+app\start.bat
+
+# Option B: Command line / 命令行
 cd app
 python server.py
 ```
 
-输出：
+Output / 输出:
 ```
-AI Remote Mesh — 服务器已启动
-  本机: http://localhost:8080
-  数据库: E:\...\app\history.db
-  日志: E:\...\app\server.log
-  Ctrl+C 停止
+AI Remote Mesh — Server started / 服务器已启动
+  Local:   http://localhost:8080
+  Database: app\history.db
+  Log:      app\server.log
+  Ctrl+C to stop / 停止
 ```
 
-浏览器打开 `http://localhost:8080`，首次启动自动创建管理员账号。
+### 3. Open browser / 打开浏览器
 
-### 在 iPhone 上
+Navigate to `http://localhost:8080` → auto-redirects to login page.
 
-1. App Store 安装 **Tailscale**，登录同账号
-2. 打开 Safari → `http://<PC的TailscaleIP>:8080`
-3. 注册账号 → 等待管理员审批（管理员在 PC 上打开 `http://localhost:8080/admin.html`）
-4. 审批通过后即可开始聊天
+First launch creates default admin account (see below).
+
+### 4. On iPhone
+
+1. Install **Tailscale** from App Store, login with same account
+2. Safari → `http://<PC-Tailscale-IP>:8080`
+3. Register an account → wait for admin approval
+4. Start chatting with your PC's local models
+
+> **How to find PC's Tailscale IP / 如何查看 Tailscale IP:**
+> ```powershell
+> tailscale ip -4
+> ```
+> Example: `100.89.124.123` → Safari: `http://100.89.124.123:8080`
 
 ---
 
-## 默认管理员账号
+## Default Admin / 默认管理员
 
-首次启动自动创建：
-
-| 用户名 | 密码 |
-|--------|------|
+| Username | Password |
+|----------|----------|
 | `admin` | `admin123` |
 
-**请登录后立即修改密码！** 控制面板地址：`http://localhost:8080/admin.html`（仅限本机访问）
+**Change password after first login! / 请登录后立即修改密码！**
+
+Admin panel / 管理面板: `http://localhost:8080/admin.html` (localhost only / 仅限本机)
 
 ---
 
-## 目录结构
+## Features / 功能
+
+| Feature | Description |
+|---------|-------------|
+| Multi-user auth | Register, login, PBKDF2-SHA256 password hashing, 64-char token, 7-day session |
+| Admin approval | New users pending until admin approves via admin panel |
+| Chat history | SQLite (WAL mode), create/read/delete conversations, per-user isolation |
+| Model tags | Each AI response shows which model generated it |
+| Markdown rendering | Tables, code blocks, LaTeX (`$$` `$`), headers, bold/italic |
+| Auto model scan | Detects Ollama models on page load + 60s background polling |
+| Admin panel | Approve/delete users, view system logs (localhost only) |
+| Logging | Rotating file logs (5MB × 3), records auth events & API access |
+| Mobile responsive | Fixed topbar + bottombar, scrollable chat, sidebar overlay |
+| Self-contained | Zero external Python dependencies, zero external JS libraries |
+
+---
+
+## API Routes / API 路由
+
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| POST | `/api/auth/register` | No | Register new user (pending) |
+| POST | `/api/auth/login` | No | Login, returns token + user |
+| POST | `/api/auth/logout` | Yes | Invalidate session |
+| GET | `/api/auth/me` | Yes | Current user info |
+| GET | `/api/admin/users` | Admin | List all users |
+| POST | `/api/admin/users/<id>/approve` | Admin | Approve pending user |
+| DELETE | `/api/admin/users/<id>` | Admin | Delete user |
+| GET | `/api/admin/logs` | Admin | Server logs (last 200 lines) |
+| GET | `/api/conversations` | Yes | List user's conversations |
+| POST | `/api/conversations` | Yes | Create new conversation |
+| GET | `/api/conversations/<id>` | Yes | Get conversation with messages |
+| POST | `/api/conversations/<id>` | Yes | Save messages to conversation |
+| DELETE | `/api/conversations/<id>` | Yes | Delete conversation |
+
+---
+
+## Project Structure / 目录结构
 
 ```
 app/
-├── server.py               ← Python 后端（认证 + API + 静态文件）
-├── config.py               ← 配置常量
-├── db.py                   ← 数据库初始化 + SQL 操作
-├── auth.py                 ← 密码哈希 + Token 管理
-├── logger.py               ← 日志系统
-├── history.db              ← SQLite 数据库（自动创建）
-├── server.log              ← 滚动日志文件（自动创建）
+├── server.py               ← Backend / 后端 (auth + API + static files)
+├── config.py               ← Configuration / 配置常量
+├── db.py                   ← Database init + all SQL / 数据库操作
+├── auth.py                 ← Password hashing + token / 认证模块
+├── logger.py               ← Logging system / 日志系统
+├── history.db              ← SQLite database (auto-created)
+├── server.log              ← Rotating log file (auto-created)
+├── start.bat               ← Double-click to launch / 双击启动
 ├── web/
-│   ├── login.html          ← 登录/注册页面
-│   ├── chat.html           ← 聊天界面（需登录）
-│   ├── admin.html          ← 管理员审批面板（仅限 localhost）
-│   └── index.html          ← 自动跳转到 login.html
-├── start.bat               ← 启动入口
-├── start.ps1               ← 启动器（备用）
+│   ├── login.html          ← Login & register page
+│   ├── chat.html           ← Chat interface (auth required)
+│   ├── admin.html          ← Admin panel (localhost only)
+│   └── index.html          ← Auto-redirect to login
 └── tools/
-    ├── download.bat         ← 下载 Ollama + Tailscale
-    ├── ollama/              ← ollama.exe（自行下载放入）
-    └── tailscale/           ← Tailscale 安装包（自行下载放入）
+    ├── download.bat         ← Download Ollama + Tailscale installers
+    ├── ollama/              ← Place ollama.exe here
+    └── tailscale/           ← Place Tailscale installer here
 ```
 
 ---
 
-## API 路由
+## Security / 安全
 
-| 方法 | 路径 | 认证 | 说明 |
-|------|------|------|------|
-| POST | `/api/auth/register` | 否 | 用户注册（待审批） |
-| POST | `/api/auth/login` | 否 | 登录，返回 Token |
-| POST | `/api/auth/logout` | 是 | 退出登录 |
-| GET | `/api/auth/me` | 是 | 当前用户信息 |
-| GET | `/api/admin/users` | 管理员 | 用户列表 |
-| POST | `/api/admin/users/<id>/approve` | 管理员 | 审批用户 |
-| DELETE | `/api/admin/users/<id>` | 管理员 | 删除用户 |
-| GET | `/api/admin/logs` | 管理员 | 系统日志（最近 200 行） |
-| GET | `/api/conversations` | 是 | 当前用户的对话列表 |
-| POST | `/api/conversations` | 是 | 创建新对话 |
-| GET | `/api/conversations/<id>` | 是 | 获取对话详情（含消息） |
-| POST | `/api/conversations/<id>` | 是 | 保存消息到对话 |
-| DELETE | `/api/conversations/<id>` | 是 | 删除对话 |
-
----
-
-## 安全
-
-- **认证**：PBKDF2-SHA256 密码哈希 + 64 位随机 Token + 7 天过期
-- **加密传输**：所有跨设备流量经 Tailscale WireGuard 加密，不暴露公网端口
-- **管理员隔离**：管理面板仅限 `127.0.0.1` 访问，远程返回 403
-- **用户隔离**：每个用户只能查看自己的对话
-- **日志隐私**：日志仅记录操作（登录/注册/审批），不含聊天消息内容
+- **Auth**: PBKDF2-SHA256 (60,000 iterations) + 64-char random token + 7-day expiry
+- **Transport**: All cross-device traffic encrypted via Tailscale WireGuard, no public ports exposed
+- **Admin isolation**: Admin panel restricted to `127.0.0.1` (+ optional server MAC whitelist), remote access returns 403
+- **User isolation**: Each user sees only their own conversations
+- **Log privacy**: Logs record operations (login/register/approve) only — no chat message content is logged
+- **Zero dependencies**: Python stdlib only, no pip installs needed
