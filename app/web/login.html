@@ -139,7 +139,7 @@ async function handleSubmit(e) {
       if (!r.ok) { showMsg(data.error, 'error'); return; }
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
-      window.location.href = '/chat.html';
+      setTimeout(function(){ window.location.replace('/chat.html'); }, 100);
     } catch { showMsg('网络错误', 'error'); }
     finally { btn.disabled = false; }
   }
@@ -155,7 +155,7 @@ function escHtml(s) {
   if (!token) return;
   try {
     const r = await fetch(API + '/me', { headers: { 'Authorization': 'Bearer ' + token } });
-    if (r.ok) { window.location.href = '/chat.html'; }
+    if (r.ok) { setTimeout(function(){ window.location.replace('/chat.html'); }, 100); }
   } catch {}
 })();
 </script>

@@ -189,7 +189,7 @@
 // ==================== 认证守卫 ====================
 const TOKEN = localStorage.getItem('token');
 const USER  = JSON.parse(localStorage.getItem('user') || 'null');
-if (!TOKEN || !USER) { window.location.href = '/login.html'; }
+if (!TOKEN || !USER) { window.location.replace('/login.html'); }
 
 // ==================== 全局状态 ====================
 const HOST = '';                         // API 同源，不需要代理
@@ -510,7 +510,7 @@ async function api(url, opts = {}) {
     ...opts,
     body: opts.body ? JSON.stringify(opts.body) : undefined
   });
-  if (r.status === 401) { localStorage.clear(); window.location.href = '/login.html'; return null; }
+  if (r.status === 401) { localStorage.clear(); window.location.replace('/login.html'); return null; }
   if (!r.ok && r.status !== 201 && r.status !== 200) return null;
   return r.json();
 }
@@ -521,7 +521,7 @@ function logout() {
     headers: { 'Authorization': 'Bearer ' + TOKEN }
   });
   localStorage.clear();
-  window.location.href = '/login.html';
+  window.location.replace('/login.html');
 }
 
 async function refreshConvList() {

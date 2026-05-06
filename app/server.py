@@ -58,7 +58,10 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
     server_version = "AI-Remote/1.0"
 
     def log_message(self, format, *args):
-        log.info("%s - %s", self.client_address[0], format % args)
+        ua = self.headers.get("User-Agent", "-")
+        b = ua.split(' ')[0][:40]
+        log.info("[%s] %s — %s — %s", self.client_address[0], format % args, b,
+                 self.headers.get("Referer", "-"))
 
     def _add_cors(self):
         self.send_header("Access-Control-Allow-Origin", "*")
@@ -176,8 +179,9 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
                 return
             try:
                 with open(LOG_PATH, "r", encoding="utf-8") as f:
-                    lines = f.readlines()[-200:]  # 最后 200 行
-                return self._json(200, {"lines": [l.rstrip("\n") for l in lines]})
+                    all_lines = [l.rstrip("\n") for l in f.readlines()]
+                # 返回倒序（最新在前），最多 200 条
+                return self._json(200, {"lines": all_lines[-200:][::-1]})
             except FileNotFoundError:
                 return self._json(200, {"lines": []})
 

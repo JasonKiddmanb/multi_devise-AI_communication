@@ -117,7 +117,7 @@
 const TOKEN = localStorage.getItem('token');
 const USER = JSON.parse(localStorage.getItem('user') || '{}');
 
-if (!TOKEN || USER.role !== 'admin') { window.location.href = '/login.html'; }
+if (!TOKEN || USER.role !== 'admin') { document.location.replace('/login.html'); }
 if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
   document.getElementById('warn-banner').style.display = 'block';
 }
@@ -132,7 +132,7 @@ async function adminApi(url, opts = {}) {
   });
   if (r.status === 401 || r.status === 403) {
     alert('访问被拒绝');
-    window.location.href = '/chat.html';
+    document.location.replace('/chat.html');
     return null;
   }
   return r.json();
@@ -184,7 +184,7 @@ async function deleteUser(id, name) {
 function doLogout() {
   fetch('/api/auth/logout', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN } });
   localStorage.clear();
-  window.location.href = '/login.html';
+  document.location.replace('/login.html');
 }
 
 function escHtml(s) {

@@ -165,3 +165,7 @@ app/
 - **User isolation**: Each user sees only their own conversations
 - **Log privacy**: Logs record operations (login/register/approve) only — no chat message content is logged
 - **Zero dependencies**: Python stdlib only, no pip installs needed
+
+# sponse if you like I would really appreciate
+
+![sponse](./alipay-1.jpg)   
