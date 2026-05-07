@@ -3,6 +3,7 @@ import json
 import platform
 import socket
 import subprocess
+import time
 import urllib.request
 from logger import log
 
@@ -55,12 +56,19 @@ def get_tailscale_peers() -> list[dict]:
 def scan_ollama(ip: str) -> list[dict] | None:
     """探测设备上是否运行 Ollama，返回模型列表"""
     url = f"http://{ip}:{OLLAMA_PORT}/api/tags"
+    log.debug("Scanning Ollama at %s", url)
     try:
+        # 创建无代理 opener，避免 Windows 系统代理干扰 localhost 请求
         req = urllib.request.Request(url)
-        with urllib.request.urlopen(req, timeout=3) as resp:
+        proxy_handler = urllib.request.ProxyHandler({})
+        opener = urllib.request.build_opener(proxy_handler)
+        with opener.open(req, timeout=3) as resp:
             data = json.loads(resp.read())
-            return data.get("models", [])
-    except Exception:
+            models = data.get("models", [])
+            log.info("Ollama scan OK %s — %d models", url, len(models))
+            return models
+    except Exception as e:
+        log.warning("Ollama scan FAILED %s — %s: %s", url, type(e).__name__, e)
         return None
 
 def discover() -> dict:
@@ -101,3 +109,36 @@ def discover() -> dict:
                      peer["name"], peer["ip"], len(models))
 
     return {"nodes": nodes}
+
+
+# ==================== Ollama 看门狗 ====================
+
+def is_ollama_running() -> bool:
+    """检查本机 Ollama 是否在运行（TCP 端口检测）"""
+    try:
+        with socket.create_connection(("127.0.0.1", OLLAMA_PORT), timeout=2):
+            return True
+    except (socket.timeout, ConnectionRefusedError, OSError):
+        return False
+
+
+def start_ollama() -> bool:
+    """后台启动 Ollama serve"""
+    try:
+        kwargs = {}
+        if platform.system() == "Windows":
+            kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW | subprocess.DETACHED_PROCESS
+        proc = subprocess.Popen(
+            ["ollama", "serve"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            **kwargs
+        )
+        log.info("Ollama auto-started (PID %d)", proc.pid)
+        return True
+    except FileNotFoundError:
+        log.warning("ollama not found in PATH, cannot auto-start")
+        return False
+    except Exception as e:
+        log.warning("Failed to auto-start Ollama: %s", e)
+        return False

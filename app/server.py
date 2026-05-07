@@ -6,6 +6,8 @@ import http.server
 import json
 import os
 import re
+import threading
+import time
 import urllib.parse
 import mimetypes
 import uuid
@@ -19,7 +21,7 @@ from db import list_users, approve_user, delete_user
 from db import create_session, validate_session, delete_session
 from db import list_conversations, get_conversation, create_conversation, save_messages, delete_conversation
 from auth import hash_password, verify_password, generate_token, make_expires_at
-from discovery import discover
+from discovery import discover, is_ollama_running, start_ollama
 
 # ==================== 管理员 MAC 验证 ====================
 
@@ -353,6 +355,22 @@ def main():
     db = init_db()
     # 将 db 注入到 RequestHandler 类（每个请求共享同一连接）
     RequestHandler.db = db
+
+    # ==================== Ollama 看门狗（后台守护线程） ====================
+    def _ollama_watchdog():
+        first = True
+        while True:
+            if not is_ollama_running():
+                if first:
+                    log.warning("Ollama not running, auto-starting...")
+                else:
+                    log.warning("Ollama 已离线，正在重新启动...")
+                start_ollama()
+                first = False
+            time.sleep(30)
+
+    t = threading.Thread(target=_ollama_watchdog, daemon=True)
+    t.start()
 
     server = http.server.HTTPServer(("0.0.0.0", PORT), RequestHandler)
     log.info("============================================")

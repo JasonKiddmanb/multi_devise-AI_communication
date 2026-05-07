@@ -216,6 +216,13 @@ const convTitle = el('conv-title');
 const OS_ICONS = { windows: '🪟', linux: '🐧', darwin: '🍎', macos: '🍎' };
 
 async function fetchDiscovery() {
+  // 先尝试 API 发现（服务器端扫描 Tailscale 设备）
+  if (await tryApiDiscovery()) return true;
+  // 回退：直接浏览器端扫描本机 Ollama
+  await tryLocalOllama();
+}
+
+async function tryApiDiscovery() {
   try {
     const data = await api('/api/discovery');
     if (!data || !data.nodes || data.nodes.length === 0) throw new Error('no nodes');
@@ -244,6 +251,31 @@ async function fetchDiscovery() {
       currentOllamaUrl = `http://${url}`;
       modelSel.value = firstOpt.value;
     }
+
+    promptEl.disabled = false;
+    sendBtn.disabled = false;
+    promptEl.placeholder = '输入消息...';
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function tryLocalOllama() {
+  try {
+    const hostname = location.hostname;
+    const r = await fetch(`http://${hostname}:11434/api/tags`);
+    if (!r.ok) throw new Error('offline');
+    const data = await r.json();
+    const models = data.models || [];
+    if (models.length === 0) throw new Error('no models');
+
+    modelSel.innerHTML = models.map(m =>
+      `<option value="${m.name}||${hostname}:11434">${escHtml(m.name)}</option>`
+    ).join('');
+    currentModel = models[0].name;
+    currentOllamaUrl = `http://${hostname}:11434`;
+    modelSel.value = `${models[0].name}||${hostname}:11434`;
 
     promptEl.disabled = false;
     sendBtn.disabled = false;

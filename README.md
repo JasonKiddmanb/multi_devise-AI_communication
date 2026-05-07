@@ -105,6 +105,7 @@ Admin panel / 管理面板: `http://localhost:8080/admin.html` (localhost only /
 | Model tags | Each AI response shows which model generated it |
 | Markdown rendering | Tables, code blocks, LaTeX (`$$` `$`), headers, bold/italic |
 | Network discovery | Scans Tailscale peers for Ollama instances, groups models by device (OS icon + hostname), 60s auto-refresh |
+| **Ollama watchdog** | **Server auto-starts Ollama if not running, 30s health check** |
 | Admin panel | Approve/delete users, view system logs (localhost only) |
 | Logging | Rotating file logs (5MB × 3), records auth events & API access |
 | Mobile responsive | Fixed topbar + bottombar, scrollable chat, sidebar overlay |
@@ -167,6 +168,9 @@ app/
 - **Log privacy**: Logs record operations (login/register/approve) only — no chat message content is logged
 - **Zero dependencies**: Python stdlib only, no pip installs needed
 
-# sponse if you like I would really appreciate
+# 赞助 / Sponsor
 
-![sponse](./alipay-1.jpg)   
+如果你觉得这个项目有用，欢迎请我喝杯咖啡。  
+If you find this project useful, feel free to buy me a coffee.
+
+![alipay-1](./alipay-1.jpg)  ![alipay](./alipay.jpg)   
