@@ -142,6 +142,18 @@
     .chat-area { padding: 10px 8px; }
     .msg { max-width: 92%; font-size: 14px; }
   }
+  /* === 滚动到底部按钮 (AI回答时翻页后出现) === */
+  .scroll-bottom-btn {
+    position: fixed; bottom: calc(var(--btm) + 12px); right: 16px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: #4ade80; color: #111; border: none;
+    font-size: 20px; cursor: pointer; z-index: 15;
+    display: none; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.5);
+    transition: opacity .2s, transform .2s;
+  }
+  .scroll-bottom-btn:hover { opacity: 1; transform: scale(1.1); }
+  .scroll-bottom-btn.show { display: flex; }
 </style>
 </head>
 <body>
@@ -178,6 +190,7 @@
     <p>选择模型，开始对话</p>
   </div>
 </div>
+<button class="scroll-bottom-btn" id="scroll-bottom-btn" onclick="document.getElementById('chat-area').scrollTop = document.getElementById('chat-area').scrollHeight;this.classList.remove('show')">↓</button>
 
 <!-- 底部输入栏 -->
 <footer class="bottombar">
@@ -413,7 +426,23 @@ function renderMarkdown(text) {
 }
 
 // ==================== 聊天 ====================
-function scrollBottom() { chatArea.scrollTop = chatArea.scrollHeight; }
+function scrollBottom(force) {
+  if (force || chatArea.scrollHeight - chatArea.scrollTop - chatArea.clientHeight < 100) {
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }
+}
+
+// 滚动监听: AI 回答时翻页显示 ↓ 按钮
+chatArea.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-bottom-btn');
+  if (!btn) return;
+  if (loading) {
+    const atBottom = chatArea.scrollHeight - chatArea.scrollTop - chatArea.clientHeight < 100;
+    btn.classList.toggle('show', !atBottom);
+  } else {
+    btn.classList.remove('show');
+  }
+});
 
 function addMsg(role, content, model) {
   const wrapper = document.createElement('div');
@@ -490,6 +519,7 @@ async function streamChat(contentDiv) {
   const reader = r.body.getReader();
   const decoder = new TextDecoder();
   let text = '';
+  let evalCount = 0;
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
@@ -497,16 +527,19 @@ async function streamChat(contentDiv) {
     for (const line of lines) {
       try {
         const json = JSON.parse(line);
-        if (json.error) { addSysMsg('Ollama 错误: ' + json.error); return ''; }
+        if (json.error) { addSysMsg('Ollama 错误: ' + json.error); return { text: '', evalCount: 0 }; }
+        if (json.done) {
+          evalCount = json.eval_count || 0;
+        }
         if (json.message?.content) {
           text += json.message.content;
           contentDiv.textContent = text;
-          scrollBottom();
+          scrollBottom(); // 用户翻页时不强制滚动
         }
       } catch {}
     }
   }
-  return text;
+  return { text, evalCount };
 }
 
 // ==================== 发送消息 ====================
@@ -538,17 +571,17 @@ async function send() {
     if (typingWrapper) typingWrapper.replaceWith(wrapper);
     else chatArea.appendChild(wrapper);
 
-    const reply = await streamChat(contentDiv);
+    const { text: reply, evalCount } = await streamChat(contentDiv);
     messages.push({ role: 'assistant', content: reply, model: currentModel });
     // 替换为渲染后的 Markdown 并添加模型标签
     contentDiv.innerHTML = renderMarkdown(reply);
     const tag = document.createElement('div');
     tag.className = 'model-tag';
-    tag.textContent = currentModel;
+    tag.textContent = currentModel + (evalCount ? ' · ' + evalCount + ' tok' : '');
     contentDiv.appendChild(tag);
     await saveConv();
     await refreshConvList();
-    scrollBottom();
+    scrollBottom(true);
   } catch (err) {
     hideTyping();
     addSysMsg('错误: ' + err.message);

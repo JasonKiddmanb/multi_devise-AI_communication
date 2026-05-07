@@ -1066,3 +1066,136 @@
 2026-05-07 11:14:20 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
 2026-05-07 11:14:28 [INFO] [127.0.0.1] "POST /api/conversations/2 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
 2026-05-07 11:14:28 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:14:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:14:58 [INFO] [127.0.0.1] "POST /api/conversations/2 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:14:58 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:15:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:15:20 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:15:20 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:15:20 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:15:36 [INFO] [127.0.0.1] "POST /api/conversations/2 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:15:36 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:15:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:16:15 [INFO] [100.89.124.123] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — -
+2026-05-07 11:16:15 [INFO] [100.89.124.123] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/login.html
+2026-05-07 11:16:21 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:16:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:16:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:16:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:16:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:16:50 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:16:50 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:16:50 [INFO] [100.89.124.123] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
+2026-05-07 11:16:51 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:16:51 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:16:51 [INFO] [100.89.124.123] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
+2026-05-07 11:16:56 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
+2026-05-07 11:16:56 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
+2026-05-07 11:17:21 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:17:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:17:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:17:51 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:18:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:18:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:18:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:18:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:19:21 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:19:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:19:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:19:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:20:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:20:53 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:20:53 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:20:53 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:21:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:21:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:21:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:21:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:22:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:22:20 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:22:20 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:22:20 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:22:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:23:21 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:23:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:23:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:23:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:23:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:24:51 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:24:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:24:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:24:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:25:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:25:53 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:25:53 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:25:53 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:26:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:26:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:26:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:26:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:27:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:27:53 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:27:53 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:27:53 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:28:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:28:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:28:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:28:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:30:46 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:30:46 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:30:46 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:30:46 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:30:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:31:21 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:31:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:31:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:31:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:31:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:32:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:32:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:32:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:32:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:32:51 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:33:23 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:33:23 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:33:23 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:33:23 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:33:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:34:21 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:34:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:34:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:34:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:34:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:35:53 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:35:53 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:35:53 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:35:53 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:36:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:36:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:36:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:36:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:37:53 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:37:53 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:37:53 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:37:53 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:38:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:38:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:38:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:38:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:39:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:39:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:39:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:39:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:39:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:40:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-07 11:40:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
+2026-05-07 11:40:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:40:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:40:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-07 11:41:11 [INFO] ============================================
+2026-05-07 11:41:11 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-07 11:41:11 [INFO]   本机: http://localhost:8080
+2026-05-07 11:41:11 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-07 11:41:11 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-07 11:41:11 [INFO]   Ctrl+C 停止
+2026-05-07 11:41:11 [INFO] ============================================
