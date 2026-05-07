@@ -193,7 +193,7 @@ if (!TOKEN || !USER) { window.location.replace('/login.html'); }
 
 // ==================== 全局状态 ====================
 const HOST = '';                         // API 同源，不需要代理
-const OLLAMA = location.protocol + '//' + location.hostname + ':11434';
+let currentOllamaUrl = '';
 
 let currentConvId = null;
 let messages = [];                       // [{role, content}, ...]
@@ -212,37 +212,70 @@ const overlay   = el('overlay');
 const sidebar   = el('sidebar');
 const convTitle = el('conv-title');
 
-// ==================== Ollama ====================
-async function checkOllama() {
+// ==================== 网络发现 (API) ====================
+const OS_ICONS = { windows: '🪟', linux: '🐧', darwin: '🍎', macos: '🍎' };
+
+async function fetchDiscovery() {
   try {
-    const r = await fetch(`${OLLAMA}/api/tags`);
-    if (!r.ok) throw new Error('offline');
-    const data = await r.json();
-    modelSel.innerHTML = (data.models || []).map(m =>
-      `<option value="${m.name}">${m.name}</option>`
-    ).join('');
-    if (!currentModel && data.models.length > 0) {
-      currentModel = data.models.length > 0 ? data.models[0].name : '';
-      modelSel.value = currentModel;
+    const data = await api('/api/discovery');
+    if (!data || !data.nodes || data.nodes.length === 0) throw new Error('no nodes');
+
+    let totalModels = 0;
+    let html = '';
+    for (const node of data.nodes) {
+      if (!node.models || node.models.length === 0) continue;
+      const icon = OS_ICONS[node.os] || '💻';
+      html += `<optgroup label="${icon} ${escHtml(node.name)} (${node.ip})">`;
+      for (const m of node.models) {
+        const modelName = m.name || m;
+        const val = `${modelName}||${node.ip}:11434`;
+        html += `<option value="${val}">${escHtml(modelName)}</option>`;
+        totalModels++;
+      }
+      html += '</optgroup>';
     }
+    if (totalModels === 0) throw new Error('no models');
+
+    modelSel.innerHTML = html;
+    const firstOpt = modelSel.querySelector('option');
+    if (firstOpt) {
+      const [name, url] = firstOpt.value.split('||');
+      currentModel = name;
+      currentOllamaUrl = `http://${url}`;
+      modelSel.value = firstOpt.value;
+    }
+
     promptEl.disabled = false;
     sendBtn.disabled = false;
     promptEl.placeholder = '输入消息...';
     return true;
   } catch {
     modelSel.innerHTML = '<option value="">离线</option>';
+    promptEl.disabled = true;
+    sendBtn.disabled = true;
+    promptEl.placeholder = '未检测到 Ollama 模型';
     return false;
   }
 }
 
 function refreshModels() {
-  checkOllama().then(ok => {
-    if (ok) addSysMsg('已扫描模型列表');
-    else addSysMsg('Ollama 离线');
+  fetchDiscovery().then(ok => {
+    if (ok) addSysMsg('已扫描设备模型');
+    else addSysMsg('未发现可用模型');
   });
 }
 
-modelSel.addEventListener('change', () => { currentModel = modelSel.value; });
+modelSel.addEventListener('change', () => {
+  const val = modelSel.value;
+  if (val && val.includes('||')) {
+    const [name, url] = val.split('||');
+    currentModel = name;
+    currentOllamaUrl = `http://${url}`;
+  } else {
+    currentModel = val;
+    currentOllamaUrl = '';
+  }
+});
 
 // ==================== Markdown 渲染 ====================
 function renderMarkdown(text) {
@@ -409,7 +442,7 @@ async function streamChat(contentDiv) {
     messages: messages.slice(-20),
     stream: true
   });
-  const r = await fetch(`${OLLAMA}/api/chat`, {
+  const r = await fetch(`${currentOllamaUrl}/api/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body
@@ -569,7 +602,20 @@ async function loadConv(id) {
   if (!conv) return;
   currentConvId = conv.id;
   currentModel = conv.model || currentModel;
-  modelSel.value = currentModel || '';
+  // 恢复模型选择及对应的 Ollama URL
+  if (currentModel) {
+    const opts = modelSel.querySelectorAll('option');
+    for (const opt of opts) {
+      if (opt.textContent === currentModel) {
+        modelSel.value = opt.value;
+        if (opt.value.includes('||')) {
+          const [name, url] = opt.value.split('||');
+          currentOllamaUrl = `http://${url}`;
+        }
+        break;
+      }
+    }
+  }
   messages = conv.messages || [];
   convTitle.textContent = conv.title;
   convLoaded = true;
@@ -616,11 +662,11 @@ function escHtml(s) {
   if (USER.role === 'admin') {
     document.getElementById('admin-link').style.display = '';
   }
-  await checkOllama();
+  await fetchDiscovery();
   await refreshConvList();
   promptEl.focus();
-  // 后台轮询模型
-  setInterval(() => checkOllama(), 60000);
+  // 后台轮询发现
+  setInterval(() => fetchDiscovery(), 60000);
   // 后台刷新对话列表
   setInterval(() => refreshConvList(), 30000);
 })();

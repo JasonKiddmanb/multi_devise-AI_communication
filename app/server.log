@@ -816,3 +816,10 @@
 2026-05-06 03:16:55 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
 2026-05-06 03:29:59 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
 2026-05-06 03:33:34 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
+2026-05-07 10:37:16 [INFO] ============================================
+2026-05-07 10:37:16 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-07 10:37:16 [INFO]   本机: http://localhost:8080
+2026-05-07 10:37:16 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-07 10:37:16 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-07 10:37:16 [INFO]   Ctrl+C 停止
+2026-05-07 10:37:16 [INFO] ============================================

@@ -104,7 +104,7 @@ Admin panel / 管理面板: `http://localhost:8080/admin.html` (localhost only /
 | Chat history | SQLite (WAL mode), create/read/delete conversations, per-user isolation |
 | Model tags | Each AI response shows which model generated it |
 | Markdown rendering | Tables, code blocks, LaTeX (`$$` `$`), headers, bold/italic |
-| Auto model scan | Detects Ollama models on page load + 60s background polling |
+| Network discovery | Scans Tailscale peers for Ollama instances, groups models by device (OS icon + hostname), 60s auto-refresh |
 | Admin panel | Approve/delete users, view system logs (localhost only) |
 | Logging | Rotating file logs (5MB × 3), records auth events & API access |
 | Mobile responsive | Fixed topbar + bottombar, scrollable chat, sidebar overlay |
@@ -124,6 +124,7 @@ Admin panel / 管理面板: `http://localhost:8080/admin.html` (localhost only /
 | POST | `/api/admin/users/<id>/approve` | Admin | Approve pending user |
 | DELETE | `/api/admin/users/<id>` | Admin | Delete user |
 | GET | `/api/admin/logs` | Admin | Server logs (last 200 lines) |
+| GET | `/api/discovery` | Yes | Scan Tailscale peers for Ollama models |
 | GET | `/api/conversations` | Yes | List user's conversations |
 | POST | `/api/conversations` | Yes | Create new conversation |
 | GET | `/api/conversations/<id>` | Yes | Get conversation with messages |

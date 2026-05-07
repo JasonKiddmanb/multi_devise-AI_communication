@@ -19,6 +19,7 @@ from db import list_users, approve_user, delete_user
 from db import create_session, validate_session, delete_session
 from db import list_conversations, get_conversation, create_conversation, save_messages, delete_conversation
 from auth import hash_password, verify_password, generate_token, make_expires_at
+from discovery import discover
 
 # ==================== 管理员 MAC 验证 ====================
 
@@ -184,6 +185,14 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
                 return self._json(200, {"lines": all_lines[-200:][::-1]})
             except FileNotFoundError:
                 return self._json(200, {"lines": []})
+
+        # --- Discovery ---
+        if path == "/api/discovery":
+            user = self._require_auth()
+            if not user:
+                return
+            data = discover()
+            return self._json(200, data)
 
         # --- Conversations ---
         m = re.match(r'^/api/conversations/(\d+)$', path)
