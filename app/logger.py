@@ -21,7 +21,9 @@ def setup_logging() -> logging.Logger:
     # 控制台
     ch = logging.StreamHandler(sys.stdout)
     ch.setLevel(logging.INFO)
-    ch.setFormatter(logging.Formatter("[%(levelname)s] %(message)s"))
+    ch.setFormatter(logging.Formatter(
+        "%(asctime)s [%(levelname)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+    ))
     logger.addHandler(ch)
 
     return logger

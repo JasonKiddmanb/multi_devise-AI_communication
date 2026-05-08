@@ -1,1201 +1,290 @@
-2026-05-05 19:33:29 [WARNING] ============================================
-2026-05-05 19:33:29 [WARNING]   已创建默认管理员账号:
-2026-05-05 19:33:29 [WARNING]   用户名: admin
-2026-05-05 19:33:29 [WARNING]   密码:   admin123
-2026-05-05 19:33:29 [WARNING]   请登录后立即修改密码！
-2026-05-05 19:33:29 [WARNING] ============================================
-2026-05-05 19:33:29 [INFO] ============================================
-2026-05-05 19:33:29 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-05 19:33:29 [INFO]   本机: http://localhost:8080
-2026-05-05 19:33:29 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-05 19:33:29 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-05 19:33:29 [INFO]   Ctrl+C 停止
-2026-05-05 19:33:29 [INFO] ============================================
-2026-05-05 19:36:57 [INFO] ============================================
-2026-05-05 19:36:57 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-05 19:36:57 [INFO]   本机: http://localhost:8080
-2026-05-05 19:36:57 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-05 19:36:57 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-05 19:36:57 [INFO]   Ctrl+C 停止
-2026-05-05 19:36:57 [INFO] ============================================
-2026-05-05 19:37:03 [INFO] DEBUG do_POST: path='/api/auth/register', body={'username': 'testuser', 'password': 'test1234'}
-2026-05-05 19:37:04 [INFO] New user 'testuser' registered from 127.0.0.1
-2026-05-05 19:37:04 [INFO] 127.0.0.1 - "POST /api/auth/register HTTP/1.1" 201 -
-2026-05-05 19:37:21 [INFO] DEBUG do_POST: path='/api/auth/login', body={'username': 'testuser', 'password': 'test1234'}
-2026-05-05 19:37:22 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 403 -
-2026-05-05 19:37:22 [INFO] DEBUG do_POST: path='/api/auth/login', body={'username': 'admin', 'password': 'admin123'}
-2026-05-05 19:37:22 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 19:37:22 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 19:37:43 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 19:37:43 [INFO] DEBUG do_POST: path='/api/admin/users/2/approve', body={}
-2026-05-05 19:37:43 [INFO] Admin 'admin' approved user id=2
-2026-05-05 19:37:43 [INFO] 127.0.0.1 - "POST /api/admin/users/2/approve HTTP/1.1" 200 -
-2026-05-05 19:37:43 [INFO] DEBUG do_POST: path='/api/auth/login', body={'username': 'testuser', 'password': 'test1234'}
-2026-05-05 19:37:44 [INFO] User 'testuser' logged in from 127.0.0.1
-2026-05-05 19:37:44 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 19:37:44 [INFO] 127.0.0.1 - "GET /api/auth/me HTTP/1.1" 200 -
-2026-05-05 19:37:44 [INFO] DEBUG do_POST: path='/api/conversations', body={'title': 'test', 'model': 'demo'}
-2026-05-05 19:37:44 [INFO] User 'testuser' created conversation 2
-2026-05-05 19:37:44 [INFO] 127.0.0.1 - "POST /api/conversations HTTP/1.1" 201 -
-2026-05-05 19:38:07 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 19:38:07 [INFO] 127.0.0.1 - "GET /api/conversations/1 HTTP/1.1" 200 -
-2026-05-05 19:38:08 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 403 -
-2026-05-05 19:38:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 401 -
-2026-05-05 19:38:08 [INFO] DEBUG do_POST: path='/api/conversations/2', body={'messages': [{'role': 'user', 'content': 'hello', 'model': 'test'}]}
-2026-05-05 19:38:08 [INFO] 127.0.0.1 - "POST /api/conversations/2 HTTP/1.1" 200 -
-2026-05-05 19:38:08 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
-2026-05-05 19:38:57 [INFO] ============================================
-2026-05-05 19:38:57 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-05 19:38:57 [INFO]   本机: http://localhost:8080
-2026-05-05 19:38:57 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-05 19:38:57 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-05 19:38:57 [INFO]   Ctrl+C 停止
-2026-05-05 19:38:57 [INFO] ============================================
-2026-05-05 19:39:08 [INFO] 127.0.0.1 - "GET /api/conversations/1 HTTP/1.1" 404 -
-2026-05-05 19:39:08 [INFO] 127.0.0.1 - "GET /api/conversations/1 HTTP/1.1" 200 -
-2026-05-05 19:39:23 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
-2026-05-05 19:39:24 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 19:39:24 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
-2026-05-05 19:39:24 [INFO] 127.0.0.1 - "GET /api/auth/me HTTP/1.1" 401 -
-2026-05-05 19:40:37 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-05 19:40:38 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 19:41:02 [INFO] 100.89.124.123 - "GET /admin.html HTTP/1.1" 403 -
-2026-05-05 19:41:08 [INFO] 100.89.124.123 - "GET /admin.html HTTP/1.1" 403 -
-2026-05-05 19:41:34 [INFO] 127.0.0.1 - "GET / HTTP/1.1" 200 -
-2026-05-05 19:41:35 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 19:41:35 [INFO] 127.0.0.1 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-05 19:41:46 [WARNING] Failed login for 'admin' from 127.0.0.1
-2026-05-05 19:41:46 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 401 -
-2026-05-05 19:41:57 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 19:41:57 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 19:41:57 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 19:41:57 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 19:42:27 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 19:42:54 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 19:42:54 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
-2026-05-05 19:42:55 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 19:42:55 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 19:42:56 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 19:42:56 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 19:43:00 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 19:43:00 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 19:43:06 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 19:43:31 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 19:43:32 [INFO] New user 'Young' registered from 100.89.124.123
-2026-05-05 19:43:32 [INFO] 100.89.124.123 - "POST /api/auth/register HTTP/1.1" 201 -
-2026-05-05 19:43:32 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 19:43:32 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 19:43:44 [INFO] New user 'young' registered from 100.89.124.123
-2026-05-05 19:43:44 [INFO] 100.89.124.123 - "POST /api/auth/register HTTP/1.1" 201 -
-2026-05-05 19:43:47 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 19:43:47 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 19:43:48 [INFO] Admin 'admin' approved user id=4
-2026-05-05 19:43:48 [INFO] 127.0.0.1 - "POST /api/admin/users/4/approve HTTP/1.1" 200 -
-2026-05-05 19:43:48 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 19:45:44 [INFO] User 'young' logged in from 100.89.124.123
-2026-05-05 19:45:44 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 19:45:44 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 19:45:44 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 19:45:44 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 19:45:44 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 19:45:44 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 19:47:37 [INFO] User 'young' logged in from 100.89.124.123
-2026-05-05 19:47:37 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 19:47:37 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 19:47:37 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 19:58:46 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 19:58:46 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 19:59:47 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-05 19:59:47 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-05 19:59:48 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:00:02 [INFO] 100.89.124.123 - "POST /api/auth/register HTTP/1.1" 409 -
-2026-05-05 20:00:15 [INFO] Admin 'admin' approved user id=3
-2026-05-05 20:00:15 [INFO] 127.0.0.1 - "POST /api/admin/users/3/approve HTTP/1.1" 200 -
-2026-05-05 20:00:15 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 20:01:18 [INFO] User 'young' logged in from 100.89.124.123
-2026-05-05 20:01:18 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:01:18 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:01:18 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-05 20:02:41 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:02:41 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:02:41 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-05 20:02:43 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:02:48 [INFO] User 'young' logged in from 100.89.124.123
-2026-05-05 20:02:48 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:02:49 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:02:52 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:03:17 [INFO] User 'young' created conversation 3
-2026-05-05 20:03:17 [INFO] 100.89.124.123 - "POST /api/conversations HTTP/1.1" 201 -
-2026-05-05 20:03:19 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:03:24 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:03:53 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:04:23 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:04:26 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:04:30 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:04:31 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:04:35 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:04:35 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:04:36 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:04:36 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:04:36 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:04:36 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:04:36 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:04:57 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:05:00 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:05:01 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:05:18 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:05:27 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:05:57 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:06:28 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:06:57 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:07:29 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:08:00 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:08:18 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:08:18 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 20:08:20 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 20:08:22 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 20:08:22 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 20:08:22 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 20:09:55 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:09:56 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:10:00 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:10:03 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:10:06 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:10:07 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:10:34 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:11:05 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:11:30 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:11:37 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:12:06 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:12:36 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:12:39 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:12:42 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:12:44 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:12:45 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:12:45 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:12:47 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:12:49 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:12:49 [INFO] 100.89.124.123 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:12:56 [INFO] User 'young' created conversation 4
-2026-05-05 20:12:56 [INFO] 100.89.124.123 - "POST /api/conversations HTTP/1.1" 201 -
-2026-05-05 20:12:57 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:13:13 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:13:43 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:15:07 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:15:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:15:18 [INFO] User 'admin' created conversation 5
-2026-05-05 20:15:18 [INFO] 127.0.0.1 - "POST /api/conversations HTTP/1.1" 201 -
-2026-05-05 20:15:18 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:15:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:16:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:16:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:17:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:17:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:18:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:18:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:19:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:19:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:20:24 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:20:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:20:52 [WARNING] ============================================
-2026-05-05 20:20:52 [WARNING]   已创建默认管理员账号:
-2026-05-05 20:20:52 [WARNING]   用户名: admin
-2026-05-05 20:20:52 [WARNING]   密码:   admin123
-2026-05-05 20:20:52 [WARNING]   请登录后立即修改密码！
-2026-05-05 20:20:52 [WARNING] ============================================
-2026-05-05 20:20:52 [INFO] ============================================
-2026-05-05 20:20:52 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-05 20:20:52 [INFO]   本机: http://localhost:8080
-2026-05-05 20:20:52 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-05 20:20:52 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-05 20:20:52 [INFO]   Ctrl+C 停止
-2026-05-05 20:20:52 [INFO] ============================================
-2026-05-05 20:21:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 401 -
-2026-05-05 20:21:09 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:22:10 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 20:22:10 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:22:10 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 20:22:10 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:22:11 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-05 20:23:35 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:23:38 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 20:23:38 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:23:38 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:23:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:23:58 [INFO] User 'admin' created conversation 1
-2026-05-05 20:23:58 [INFO] 127.0.0.1 - "POST /api/conversations HTTP/1.1" 201 -
-2026-05-05 20:23:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:24:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:24:36 [INFO] 127.0.0.1 - "POST /api/conversations/1 HTTP/1.1" 200 -
-2026-05-05 20:24:37 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:24:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:24:43 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:25:03 [INFO] User 'admin' created conversation 2
-2026-05-05 20:25:03 [INFO] 127.0.0.1 - "POST /api/conversations HTTP/1.1" 201 -
-2026-05-05 20:25:04 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:25:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:25:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:26:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:26:17 [INFO] 127.0.0.1 - "POST /api/conversations/2 HTTP/1.1" 200 -
-2026-05-05 20:26:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:26:39 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:27:08 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:27:09 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:27:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:27:58 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:27:58 [INFO] 100.89.124.123 - "GET /api/auth/me HTTP/1.1" 401 -
-2026-05-05 20:27:58 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:28:49 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 401 -
-2026-05-05 20:28:51 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:28:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:29:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:29:58 [WARNING] Failed login for 'young' from 100.89.124.123
-2026-05-05 20:29:58 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 401 -
-2026-05-05 20:30:08 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:30:11 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
-2026-05-05 20:30:12 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:14 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 20:30:14 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:30:14 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:30:14 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:30:16 [INFO] 127.0.0.1 - "GET /api/conversations/1 HTTP/1.1" 200 -
-2026-05-05 20:30:17 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
-2026-05-05 20:30:19 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
-2026-05-05 20:30:19 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:20 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:21 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:22 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:22 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:23 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:24 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:24 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 20:30:24 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:30:25 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:30:25 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:30:26 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
-2026-05-05 20:30:26 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:27 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:27 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:28 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:28 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:28 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:29 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:30 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:30 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:30 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:31 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:31 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:32 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:32 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:32 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:33 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:34 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 20:30:34 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:30:35 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:30:35 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:30:36 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
-2026-05-05 20:30:36 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:39 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:39 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:39 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:40 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:30:40 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:30:40 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:31:42 [WARNING] Failed login for 'young' from 100.89.124.123
-2026-05-05 20:31:42 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 401 -
-2026-05-05 20:31:42 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:31:52 [INFO] New user 'young' registered from 100.89.124.123
-2026-05-05 20:31:52 [INFO] 100.89.124.123 - "POST /api/auth/register HTTP/1.1" 201 -
-2026-05-05 20:32:02 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:32:02 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:32:03 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:32:04 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:32:04 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 20:32:04 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:32:05 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:32:05 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:32:09 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
-2026-05-05 20:32:09 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:32:11 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 20:32:11 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:32:11 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:32:11 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:32:14 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
-2026-05-05 20:32:15 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 20:32:16 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 20:32:16 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:32:16 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:32:16 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:32:22 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
-2026-05-05 20:32:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:33:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:33:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:34:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:34:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:35:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:35:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:36:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:36:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:37:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:37:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:38:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:38:47 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:39:17 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:39:47 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:40:48 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:41:49 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:42:50 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:43:51 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:44:52 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:44:52 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:44:52 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 20:44:52 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:45:53 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:45:53 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:46:54 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:47:55 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:48:56 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:49:57 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:50:57 [INFO] ============================================
-2026-05-05 20:50:57 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-05 20:50:57 [INFO]   本机: http://localhost:8080
-2026-05-05 20:50:57 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-05 20:50:57 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-05 20:50:57 [INFO]   Ctrl+C 停止
-2026-05-05 20:50:57 [INFO] ============================================
-2026-05-05 20:50:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:51:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:51:58 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-05 20:51:58 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:51:58 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:51:59 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:52:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:53:14 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:53:15 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:53:20 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:53:20 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 20:53:21 [INFO] Admin 'admin' approved user id=2
-2026-05-05 20:53:21 [INFO] 127.0.0.1 - "POST /api/admin/users/2/approve HTTP/1.1" 200 -
-2026-05-05 20:53:22 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 20:53:36 [INFO] User 'admin' created conversation 3
-2026-05-05 20:53:36 [INFO] 127.0.0.1 - "POST /api/conversations HTTP/1.1" 201 -
-2026-05-05 20:53:36 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:53:45 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:54:06 [INFO] 127.0.0.1 - "POST /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 20:54:06 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:54:15 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:54:45 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:54:56 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
-2026-05-05 20:55:15 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:55:45 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:55:45 [WARNING] Failed login for 'young' from 100.89.124.123
-2026-05-05 20:55:45 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 401 -
-2026-05-05 20:56:06 [INFO] User 'young' logged in from 100.89.124.123
-2026-05-05 20:56:06 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 20:56:07 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:56:10 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:56:10 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-05 20:56:10 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-05 20:56:15 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-05 20:56:27 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 20:56:27 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:56:30 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
-2026-05-05 20:56:41 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:56:44 [INFO] User 'young' created conversation 4
-2026-05-05 20:56:44 [INFO] 100.89.124.123 - "POST /api/conversations HTTP/1.1" 201 -
-2026-05-05 20:56:46 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:56:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:57:27 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:57:27 [INFO] 100.89.124.123 - "POST /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 20:57:27 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:57:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:58:28 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:58:34 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:58:34 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:58:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:59:28 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 20:59:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:00:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:01:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:02:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:02:58 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
-2026-05-05 21:02:58 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:02:58 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-05 21:02:58 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
-2026-05-05 21:02:58 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:03:04 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:03:04 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
-2026-05-05 21:03:04 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 21:03:04 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
-2026-05-05 21:03:04 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-05 21:03:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:04:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:05:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:06:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:07:20 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:07:27 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
-2026-05-05 21:07:28 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-05 21:07:28 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
-2026-05-05 21:07:28 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-05 21:07:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:08:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:08:58 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:08:58 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
-2026-05-05 21:08:58 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
-2026-05-05 21:08:58 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-05 21:09:21 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:09:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:10:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:11:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:12:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:13:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:14:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
-2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
-2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
-2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
-2026-05-05 21:15:44 [INFO] 100.125.82.117 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-05 21:15:54 [INFO] User 'young' logged in from 100.125.82.117
-2026-05-05 21:15:54 [INFO] 100.125.82.117 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-05 21:15:54 [INFO] 100.125.82.117 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 21:15:54 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:15:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:16:58 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:17:23 [INFO] 100.125.82.117 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:17:24 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:17:54 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:17:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:18:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:18:58 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:18:58 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:19:24 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:19:54 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:19:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:20:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:20:58 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:20:58 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:21:24 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:21:54 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:21:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:22:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:22:58 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:22:58 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:23:01 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 21:23:01 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:23:05 [INFO] 127.0.0.1 - "GET /api/conversations/3 HTTP/1.1" 200 -
-2026-05-05 21:23:08 [INFO] 127.0.0.1 - "GET /api/conversations/2 HTTP/1.1" 200 -
-2026-05-05 21:23:09 [INFO] 127.0.0.1 - "GET /api/conversations/1 HTTP/1.1" 200 -
-2026-05-05 21:23:24 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:23:31 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:24:01 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:24:01 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:24:24 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:24:31 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:25:01 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:25:01 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:25:24 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:25:31 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:26:01 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:26:01 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:26:24 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:26:31 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:27:32 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:27:32 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:27:32 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:28:33 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:28:33 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:28:33 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:29:34 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:29:34 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:29:34 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:30:35 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:30:35 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:30:35 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:31:23 [INFO] ============================================
-2026-05-05 21:31:23 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-05 21:31:23 [INFO]   本机: http://localhost:8080
-2026-05-05 21:31:23 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-05 21:31:23 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-05 21:31:23 [INFO]   Ctrl+C 停止
-2026-05-05 21:31:23 [INFO] ============================================
-2026-05-05 21:31:36 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:32:01 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:32:31 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:33:32 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:34:32 [INFO] 127.0.0.1 - "GET / HTTP/1.1" 200 -
-2026-05-05 21:34:32 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-05 21:34:32 [INFO] 127.0.0.1 - "GET /api/auth/me HTTP/1.1" 200 -
-2026-05-05 21:34:33 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 21:34:33 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:34:33 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:34:49 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:34:50 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
-2026-05-05 21:34:50 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:34:50 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 21:34:50 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
-2026-05-05 21:34:50 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-05 21:35:03 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:35:33 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:35:34 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:36:03 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:36:33 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:36:35 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:37:01 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:37:31 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:38:32 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:39:33 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:40:34 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:40:34 [INFO] 100.89.124.123 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:40:34 [INFO] 100.89.124.123 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:40:34 [INFO] 100.89.124.123 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:40:34 [INFO] 100.89.124.123 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:40:34 [INFO] 100.89.124.123 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:40:34 [INFO] 100.89.124.123 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:40:34 [INFO] 100.89.124.123 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:40:34 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:41:35 [INFO] 100.89.124.123 - "GET /api/conversations/4 HTTP/1.1" 200 -
-2026-05-05 21:41:35 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:41:35 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:41:35 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:42:36 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:43:37 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:44:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:45:39 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:46:40 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:47:41 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:47:41 [INFO] 100.125.82.117 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:47:41 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:48:42 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:49:43 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:50:44 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:51:45 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:52:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:53:47 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:54:01 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:54:31 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:55:01 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:55:31 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:56:32 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:57:33 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:58:34 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 21:59:35 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:00:36 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:01:37 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:02:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:03:39 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:04:40 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:05:41 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:06:42 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:07:43 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:08:44 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:09:45 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:10:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:11:47 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:12:48 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:13:49 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:14:50 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:15:51 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:16:52 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:17:53 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:18:54 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:19:55 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:20:56 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:21:57 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:22:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:23:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:24:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:25:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:26:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:27:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:28:58 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:29:33 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:30:33 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:31:34 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:32:35 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:33:36 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:34:37 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:35:38 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:36:39 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:37:40 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:38:41 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:39:42 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:40:43 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
-2026-05-05 22:40:43 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
-2026-05-05 22:40:43 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-05 22:40:43 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:40:43 [INFO] 100.89.124.123 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-05 22:40:43 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:41:44 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:42:45 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:43:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:44:47 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:45:48 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:46:49 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:47:50 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:48:51 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:49:52 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:50:53 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:51:54 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:52:55 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-05 22:53:56 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-06 02:26:42 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-06 02:26:45 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-06 02:26:45 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-06 02:26:46 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-06 02:26:48 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-06 02:26:48 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 02:26:55 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-06 02:29:21 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
-2026-05-06 02:29:21 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
-2026-05-06 02:29:21 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-06 02:29:21 [INFO] 100.89.124.123 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-06 02:29:21 [INFO] 100.89.124.123 - "POST /api/auth/logout HTTP/1.1" 200 -
-2026-05-06 02:29:22 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-06 02:29:22 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 02:29:23 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-06 02:29:23 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 02:29:25 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-06 02:29:25 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 02:33:43 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 02:33:43 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 02:33:43 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 02:33:43 [INFO] 127.0.0.1 - "POST /api/auth/logout HTTP/1.1" 200 -
-2026-05-06 02:42:55 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 02:42:56 [INFO] New user 'user01' registered from 127.0.0.1
-2026-05-06 02:42:56 [INFO] 127.0.0.1 - "POST /api/auth/register HTTP/1.1" 201 -
-2026-05-06 02:43:13 [INFO] New user 'user00' registered from 127.0.0.1
-2026-05-06 02:43:13 [INFO] 127.0.0.1 - "POST /api/auth/register HTTP/1.1" 201 -
-2026-05-06 02:43:13 [INFO] 100.125.82.117 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 02:43:13 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-06 02:43:22 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-06 02:43:22 [INFO] 100.125.82.117 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
-2026-05-06 02:43:22 [INFO] 100.125.82.117 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
-2026-05-06 02:43:22 [INFO] 100.125.82.117 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-06 02:43:23 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-06 02:43:23 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 02:43:24 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-06 02:43:24 [INFO] 127.0.0.1 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-06 02:43:24 [INFO] 127.0.0.1 - "GET /chat.html HTTP/1.1" 200 -
-2026-05-06 02:43:24 [INFO] 127.0.0.1 - "GET /api/conversations HTTP/1.1" 200 -
-2026-05-06 02:43:26 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-06 02:43:26 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 02:43:29 [WARNING] Admin 'admin' deleted user id=4
-2026-05-06 02:43:29 [INFO] 127.0.0.1 - "DELETE /api/admin/users/4 HTTP/1.1" 200 -
-2026-05-06 02:43:29 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 02:43:30 [WARNING] Admin 'admin' deleted user id=3
-2026-05-06 02:43:30 [INFO] 127.0.0.1 - "DELETE /api/admin/users/3 HTTP/1.1" 200 -
-2026-05-06 02:43:30 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 02:46:58 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-06 02:46:58 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-06 02:46:58 [INFO] New user 'user00' registered from 100.89.124.123
-2026-05-06 02:46:58 [INFO] 100.89.124.123 - "POST /api/auth/register HTTP/1.1" 201 -
-2026-05-06 02:46:58 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 02:46:58 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-06 02:46:58 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-06 02:46:58 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 02:52:18 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
-2026-05-06 02:52:18 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 02:52:18 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
-2026-05-06 02:52:18 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-06 02:52:18 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-06 02:52:21 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-06 02:52:22 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-06 02:52:23 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-06 02:52:23 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-06 02:52:23 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-06 02:53:25 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-06 02:53:25 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-06 02:53:25 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-06 02:53:25 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 02:53:26 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-06 02:53:26 [INFO] 100.89.124.123 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
-2026-05-06 02:53:26 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-06 02:53:26 [INFO] 100.89.124.123 - "GET /apple-touch-icon.png HTTP/1.1" 404 -
-2026-05-06 02:53:26 [INFO] 100.89.124.123 - "GET /favicon.ico HTTP/1.1" 404 -
-2026-05-06 02:53:27 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-06 03:00:58 [INFO] ============================================
-2026-05-06 03:00:58 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-06 03:00:58 [INFO]   本机: http://localhost:8080
-2026-05-06 03:00:58 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-06 03:00:58 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-06 03:00:58 [INFO]   Ctrl+C 停止
-2026-05-06 03:00:58 [INFO] ============================================
-2026-05-06 03:01:41 [INFO] ============================================
-2026-05-06 03:01:41 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-06 03:01:41 [INFO]   本机: http://localhost:8080
-2026-05-06 03:01:41 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-06 03:01:41 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-06 03:01:41 [INFO]   Ctrl+C 停止
-2026-05-06 03:01:41 [INFO] ============================================
-2026-05-06 03:02:20 [INFO] ============================================
-2026-05-06 03:02:20 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-06 03:02:20 [INFO]   本机: http://localhost:8080
-2026-05-06 03:02:20 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-06 03:02:20 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-06 03:02:20 [INFO]   Ctrl+C 停止
-2026-05-06 03:02:20 [INFO] ============================================
-2026-05-06 03:03:12 [INFO] ============================================
-2026-05-06 03:03:12 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-06 03:03:12 [INFO]   本机: http://localhost:8080
-2026-05-06 03:03:12 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-06 03:03:12 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-06 03:03:12 [INFO]   Ctrl+C 停止
-2026-05-06 03:03:12 [INFO] ============================================
-2026-05-06 03:03:18 [INFO] 127.0.0.1 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 03:03:41 [INFO] 100.89.124.123 - "GET / HTTP/1.1" 200 -
-2026-05-06 03:03:43 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 03:03:47 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 03:03:55 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-06 03:03:55 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 03:03:56 [WARNING] Admin 'admin' deleted user id=5
-2026-05-06 03:03:56 [INFO] 127.0.0.1 - "DELETE /api/admin/users/5 HTTP/1.1" 200 -
-2026-05-06 03:03:57 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 03:04:19 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-06 03:04:19 [INFO] New user 'user00' registered from 100.89.124.123
-2026-05-06 03:04:19 [INFO] 100.89.124.123 - "POST /api/auth/register HTTP/1.1" 201 -
-2026-05-06 03:04:29 [INFO] 127.0.0.1 - "GET /admin.html HTTP/1.1" 200 -
-2026-05-06 03:04:29 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 03:04:45 [INFO] Admin 'admin' approved user id=6
-2026-05-06 03:04:45 [INFO] 127.0.0.1 - "POST /api/admin/users/6/approve HTTP/1.1" 200 -
-2026-05-06 03:04:45 [INFO] 127.0.0.1 - "GET /api/admin/users HTTP/1.1" 200 -
-2026-05-06 03:06:35 [INFO] User 'user00' logged in from 100.89.124.123
-2026-05-06 03:06:35 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-06 03:06:35 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 03:06:35 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 03:06:35 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 03:06:35 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-06 03:09:28 [INFO] User 'user00' logged in from 100.89.124.123
-2026-05-06 03:09:28 [INFO] 100.89.124.123 - "POST /api/auth/login HTTP/1.1" 200 -
-2026-05-06 03:09:28 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 03:09:28 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 03:09:28 [INFO] 100.89.124.123 - "GET /login.html HTTP/1.1" 200 -
-2026-05-06 03:09:29 [INFO] 127.0.0.1 - "GET /api/admin/logs HTTP/1.1" 200 -
-2026-05-06 03:13:51 [INFO] ============================================
-2026-05-06 03:13:51 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-06 03:13:51 [INFO]   本机: http://localhost:8080
-2026-05-06 03:13:51 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-06 03:13:51 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-06 03:13:51 [INFO]   Ctrl+C 停止
-2026-05-06 03:13:51 [INFO] ============================================
-2026-05-06 03:14:01 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-06 03:14:01 [INFO] [127.0.0.1] "POST /api/auth/login HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-06 03:14:01 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-06 03:14:01 [INFO] [127.0.0.1] "POST /api/auth/login HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-06 03:14:01 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-06 03:15:06 [INFO] [100.89.124.123] "GET /login.html HTTP/1.1" 200 - — Mozilla/5.0 — -
-2026-05-06 03:15:09 [INFO] [127.0.0.1] "GET /admin.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-06 03:15:09 [INFO] [127.0.0.1] "GET /api/admin/users HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-06 03:15:11 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-06 03:15:21 [INFO] User 'user00' logged in from 100.89.124.123
-2026-05-06 03:15:21 [INFO] [100.89.124.123] "POST /api/auth/login HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/login.html
-2026-05-06 03:15:22 [INFO] [100.89.124.123] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/login.html
-2026-05-06 03:15:24 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-06 03:15:55 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-06 03:16:11 [INFO] User 'user00' created conversation 5
-2026-05-06 03:16:11 [INFO] [100.89.124.123] "POST /api/conversations HTTP/1.1" 201 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-06 03:16:12 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-06 03:16:25 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-06 03:16:36 [INFO] [100.89.124.123] "POST /api/conversations/5 HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-06 03:16:36 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-06 03:16:55 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-06 03:29:59 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-06 03:33:34 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:37:16 [INFO] ============================================
-2026-05-07 10:37:16 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-07 10:37:16 [INFO]   本机: http://localhost:8080
-2026-05-07 10:37:16 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-07 10:37:16 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-07 10:37:16 [INFO]   Ctrl+C 停止
-2026-05-07 10:37:16 [INFO] ============================================
-2026-05-07 10:38:11 [INFO] ============================================
-2026-05-07 10:38:11 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-07 10:38:11 [INFO]   本机: http://localhost:8080
-2026-05-07 10:38:11 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-07 10:38:11 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-07 10:38:11 [INFO]   Ctrl+C 停止
-2026-05-07 10:38:11 [INFO] ============================================
-2026-05-07 10:38:14 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-07 10:38:14 [INFO] [127.0.0.1] "POST /api/auth/login HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-07 10:38:18 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:38:18 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-07 10:39:00 [INFO] [127.0.0.1] "GET / HTTP/1.1" 200 - — Mozilla/5.0 — -
-2026-05-07 10:39:00 [INFO] [127.0.0.1] "GET /login.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/
-2026-05-07 10:39:00 [INFO] [127.0.0.1] "GET /api/auth/me HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
-2026-05-07 10:39:01 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
-2026-05-07 10:39:05 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:39:05 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:39:05 [INFO] [127.0.0.1] "GET /favicon.ico HTTP/1.1" 404 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:39:05 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:39:11 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:39:11 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:39:16 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:39:16 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:39:36 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:40:10 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:40:10 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:40:10 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:40:36 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:41:10 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:41:10 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:41:10 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:41:24 [INFO] [127.0.0.1] "GET /admin.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:41:24 [INFO] [127.0.0.1] "GET /api/admin/users HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:41:26 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:41:40 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:41:45 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:41:45 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:41:45 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:42:12 [INFO] [100.89.124.123] "GET /login.html HTTP/1.1" 200 - — Mozilla/5.0 — -
-2026-05-07 10:42:12 [INFO] [100.89.124.123] "GET /api/auth/me HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/login.html
-2026-05-07 10:42:14 [INFO] [100.89.124.123] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 - — NetworkingExtension/8621.3.11.10.3 — -
-2026-05-07 10:42:14 [INFO] [100.89.124.123] "GET /apple-touch-icon.png HTTP/1.1" 404 - — NetworkingExtension/8621.3.11.10.3 — -
-2026-05-07 10:42:14 [INFO] [100.89.124.123] "GET /favicon.ico HTTP/1.1" 404 - — NetworkingExtension/8621.3.11.10.3 — -
-2026-05-07 10:42:14 [INFO] [100.89.124.123] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/login.html
-2026-05-07 10:42:15 [INFO] [100.89.124.123] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 - — NetworkingExtension/8621.3.11.10.3 — -
-2026-05-07 10:42:15 [INFO] [100.89.124.123] "GET /apple-touch-icon.png HTTP/1.1" 404 - — NetworkingExtension/8621.3.11.10.3 — -
-2026-05-07 10:42:15 [INFO] [100.89.124.123] "GET /favicon.ico HTTP/1.1" 404 - — NetworkingExtension/8621.3.11.10.3 — -
-2026-05-07 10:42:15 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:42:49 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:42:49 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:42:53 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:42:53 [INFO] [100.89.124.123] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-07 10:42:53 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:42:54 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-07 10:43:15 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:43:49 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:43:49 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:43:49 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-07 10:43:49 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:43:58 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:43:58 [INFO] [100.89.124.123] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-07 10:44:15 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:44:49 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:44:49 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:44:49 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:45:15 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:45:49 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:45:49 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:45:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:46:03 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:46:03 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:49:18 [INFO] [127.0.0.1] "GET / HTTP/1.1" 200 - — Mozilla/5.0 — -
-2026-05-07 10:49:19 [INFO] [127.0.0.1] "GET /login.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/
-2026-05-07 10:49:19 [INFO] [127.0.0.1] "GET /api/auth/me HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
-2026-05-07 10:49:19 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
-2026-05-07 10:49:23 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:49:23 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:49:26 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:49:31 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:49:31 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:49:56 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:50:23 [INFO] [127.0.0.1] "GET /admin.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:50:23 [INFO] [127.0.0.1] "GET /api/admin/users HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:50:25 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:54:17 [INFO] [127.0.0.1] "GET / HTTP/1.1" 200 - — Mozilla/5.0 — -
-2026-05-07 10:54:17 [INFO] [127.0.0.1] "GET /login.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/
-2026-05-07 10:54:17 [INFO] [127.0.0.1] "GET /api/auth/me HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
-2026-05-07 10:54:18 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
-2026-05-07 10:54:22 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:54:22 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:54:25 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:54:26 [INFO] [127.0.0.1] "GET /admin.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:54:27 [INFO] [127.0.0.1] "GET /api/admin/users HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:54:29 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:55:35 [INFO] [127.0.0.1] "GET /admin.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:55:35 [INFO] [127.0.0.1] "GET /api/admin/users HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:55:38 [INFO] [127.0.0.1] "GET /admin.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:55:38 [INFO] [127.0.0.1] "GET /api/admin/users HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:55:38 [INFO] [127.0.0.1] "GET /favicon.ico HTTP/1.1" 404 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:55:42 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:55:46 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:55:46 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:55:49 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:55:51 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:55:55 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:55:55 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:55:55 [INFO] [127.0.0.1] "GET /favicon.ico HTTP/1.1" 404 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:55:58 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:55:58 [INFO] [127.0.0.1] "GET /admin.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:55:59 [INFO] [127.0.0.1] "GET /api/admin/users HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:56:00 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:56:09 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:56:13 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:56:13 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:56:13 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:56:18 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:56:18 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:56:18 [INFO] [127.0.0.1] "GET /favicon.ico HTTP/1.1" 404 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:56:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:56:23 [INFO] [127.0.0.1] "GET /admin.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 10:56:23 [INFO] [127.0.0.1] "GET /api/admin/users HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:56:24 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 10:59:25 [INFO] ============================================
-2026-05-07 10:59:25 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-07 10:59:25 [INFO]   本机: http://localhost:8080
-2026-05-07 10:59:25 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-07 10:59:25 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-07 10:59:25 [INFO]   Ctrl+C 停止
-2026-05-07 10:59:25 [INFO] ============================================
-2026-05-07 10:59:27 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-07 10:59:27 [INFO] [127.0.0.1] "POST /api/auth/login HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-07 10:59:30 [WARNING] Ollama scan FAILED http://127.0.0.1:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 10:59:32 [WARNING] Ollama scan FAILED http://100.118.175.65:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 10:59:32 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:59:32 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-07 10:59:35 [WARNING] Ollama scan FAILED http://127.0.0.1:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 10:59:37 [WARNING] Ollama scan FAILED http://100.118.175.65:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 10:59:37 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 10:59:37 [INFO] [100.89.124.123] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-07 10:59:37 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-07 11:00:42 [INFO] [127.0.0.1] "GET / HTTP/1.1" 200 - — Mozilla/5.0 — -
-2026-05-07 11:00:42 [INFO] [127.0.0.1] "GET /login.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/
-2026-05-07 11:00:42 [INFO] [127.0.0.1] "GET /api/auth/me HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
-2026-05-07 11:00:43 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
-2026-05-07 11:00:45 [WARNING] Ollama scan FAILED http://127.0.0.1:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:00:47 [WARNING] Ollama scan FAILED http://100.118.175.65:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:00:48 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:00:48 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:00:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:01:20 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:01:52 [WARNING] Ollama scan FAILED http://127.0.0.1:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:01:54 [WARNING] Ollama scan FAILED http://100.118.175.65:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:01:54 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:01:54 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:01:54 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:02:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:02:53 [WARNING] Ollama scan FAILED http://127.0.0.1:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:02:55 [WARNING] Ollama scan FAILED http://100.118.175.65:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:02:56 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:02:56 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:02:56 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:03:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:03:53 [WARNING] Ollama scan FAILED http://127.0.0.1:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:03:55 [WARNING] Ollama scan FAILED http://100.118.175.65:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:03:56 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:03:56 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:03:56 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:04:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:04:53 [WARNING] Ollama scan FAILED http://127.0.0.1:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:04:56 [WARNING] Ollama scan FAILED http://100.118.175.65:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:04:56 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:04:56 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:04:56 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:05:54 [WARNING] Ollama scan FAILED http://127.0.0.1:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:05:56 [WARNING] Ollama scan FAILED http://100.118.175.65:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:05:56 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:05:56 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:05:56 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:06:53 [WARNING] Ollama scan FAILED http://127.0.0.1:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:06:55 [WARNING] Ollama scan FAILED http://100.118.175.65:11434/api/tags — URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
-2026-05-07 11:06:55 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:06:55 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:06:55 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:07:01 [INFO] ============================================
-2026-05-07 11:07:01 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-07 11:07:01 [INFO]   本机: http://localhost:8080
-2026-05-07 11:07:01 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-07 11:07:01 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-07 11:07:01 [INFO]   Ctrl+C 停止
-2026-05-07 11:07:01 [INFO] ============================================
-2026-05-07 11:07:03 [WARNING] Ollama not running, auto-starting...
-2026-05-07 11:07:04 [INFO] Ollama auto-started (PID 23176)
-2026-05-07 11:07:14 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-07 11:07:14 [INFO] [127.0.0.1] "POST /api/auth/login HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-07 11:07:15 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:07:15 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:07:15 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-07 11:10:30 [INFO] ============================================
-2026-05-07 11:10:30 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-07 11:10:30 [INFO]   本机: http://localhost:8080
-2026-05-07 11:10:30 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-07 11:10:30 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-07 11:10:30 [INFO]   Ctrl+C 停止
-2026-05-07 11:10:30 [INFO] ============================================
-2026-05-07 11:10:51 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-07 11:10:51 [INFO] [127.0.0.1] "POST /api/auth/login HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-07 11:10:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:10:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:10:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-07 11:10:54 [INFO] [127.0.0.1] "GET / HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-07 11:11:09 [INFO] [100.118.175.65] "GET / HTTP/1.1" 200 - — Mozilla/5.0 — -
-2026-05-07 11:11:09 [INFO] [100.118.175.65] "GET /login.html HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/
-2026-05-07 11:11:14 [INFO] User 'admin' logged in from 100.118.175.65
-2026-05-07 11:11:14 [INFO] [100.118.175.65] "POST /api/auth/login HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/login.html
-2026-05-07 11:13:05 [INFO] [127.0.0.1] "GET / HTTP/1.1" 200 - — Mozilla/5.0 — -
-2026-05-07 11:13:06 [INFO] [127.0.0.1] "GET /login.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/
-2026-05-07 11:13:06 [INFO] [127.0.0.1] "GET /api/auth/me HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
-2026-05-07 11:13:06 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
-2026-05-07 11:13:06 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:13:06 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:13:06 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:13:06 [INFO] [127.0.0.1] "GET /favicon.ico HTTP/1.1" 404 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:13:06 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:13:10 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:13:10 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:13:10 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:13:13 [INFO] [127.0.0.1] "GET /admin.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:13:13 [INFO] [127.0.0.1] "GET /api/admin/users HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 11:13:14 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 11:13:19 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-07 11:13:19 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:13:20 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:13:20 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:13:20 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:13:23 [INFO] [127.0.0.1] "GET /api/conversations/3 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:13:25 [INFO] [127.0.0.1] "GET /api/conversations/2 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:13:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:14:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:14:20 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:14:20 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:14:20 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:14:28 [INFO] [127.0.0.1] "POST /api/conversations/2 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:14:28 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:14:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:14:58 [INFO] [127.0.0.1] "POST /api/conversations/2 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:14:58 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:15:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:15:20 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:15:20 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:15:20 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:15:36 [INFO] [127.0.0.1] "POST /api/conversations/2 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:15:36 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:15:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:16:15 [INFO] [100.89.124.123] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — -
-2026-05-07 11:16:15 [INFO] [100.89.124.123] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/login.html
-2026-05-07 11:16:21 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:16:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:16:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:16:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:16:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:16:50 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:16:50 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:16:50 [INFO] [100.89.124.123] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-07 11:16:51 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:16:51 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:16:51 [INFO] [100.89.124.123] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-07 11:16:56 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-07 11:16:56 [INFO] [100.89.124.123] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html
-2026-05-07 11:17:21 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:17:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:17:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:17:51 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:18:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:18:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:18:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:18:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:19:21 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:19:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:19:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:19:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:20:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:20:53 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:20:53 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:20:53 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:21:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:21:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:21:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:21:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:22:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:22:20 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:22:20 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:22:20 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:22:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:23:21 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:23:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:23:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:23:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:23:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:24:51 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:24:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:24:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:24:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:25:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:25:53 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:25:53 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:25:53 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:26:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:26:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:26:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:26:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:27:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:27:53 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:27:53 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:27:53 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:28:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:28:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:28:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:28:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:30:46 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:30:46 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:30:46 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:30:46 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:30:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:31:21 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:31:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:31:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:31:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:31:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:32:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:32:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:32:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:32:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:32:51 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:33:23 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:33:23 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:33:23 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:33:23 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:33:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:34:21 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:34:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:34:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:34:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:34:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:35:53 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:35:53 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:35:53 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:35:53 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:36:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:36:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:36:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:36:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:37:53 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:37:53 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:37:53 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:37:53 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:38:52 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:38:52 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:38:52 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:38:52 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:39:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:39:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:39:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:39:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:39:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:40:20 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
-2026-05-07 11:40:21 [WARNING] Tailscale peer discovery failed: the JSON object must be str, bytes or bytearray, not NoneType
-2026-05-07 11:40:21 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:40:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:40:50 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-07 11:41:11 [INFO] ============================================
-2026-05-07 11:41:11 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-07 11:41:11 [INFO]   本机: http://localhost:8080
-2026-05-07 11:41:11 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-07 11:41:11 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-07 11:41:11 [INFO]   Ctrl+C 停止
-2026-05-07 11:41:11 [INFO] ============================================
+
+2026-05-08 11:19:18 [INFO] ============================================
+2026-05-08 11:19:18 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-08 11:19:18 [INFO]   本机: http://localhost:8080
+2026-05-08 11:19:18 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-08 11:19:18 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-08 11:19:18 [INFO]   Ctrl+C 停止
+2026-05-08 11:19:18 [INFO] ============================================
+2026-05-08 11:19:25 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-08 11:19:25 [INFO] [127.0.0.1] "POST /api/auth/login HTTP/1.1" 200 - — Python-urllib/3.12 — -
+2026-05-08 11:19:27 [INFO] [127.0.0.1] "POST /api/search HTTP/1.1" 200 - — Python-urllib/3.12 — -
+2026-05-08 11:19:37 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — curl/8.14.1 — -
+2026-05-08 11:19:44 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — curl/8.14.1 — -
+2026-05-08 11:30:44 [INFO] ============================================
+2026-05-08 11:30:44 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-08 11:30:44 [INFO]   本机: http://localhost:8080
+2026-05-08 11:30:44 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-08 11:30:44 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-08 11:30:44 [INFO]   Ctrl+C 停止
+2026-05-08 11:30:44 [INFO] ============================================
+2026-05-08 11:30:44 [WARNING] Tailscale not running, auto-starting...
+2026-05-08 11:30:56 [INFO] Tailscale auto-started successfully
+2026-05-08 11:31:20 [WARNING] Tailscale not running, auto-starting...
+2026-05-08 11:31:26 [WARNING] Tailscale not running, auto-starting...
+2026-05-08 11:31:30 [INFO] Tailscale auto-started successfully
+2026-05-08 11:31:39 [INFO] Tailscale auto-started successfully
+2026-05-08 11:31:56 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:32:07 [INFO] Tailscale auto-started successfully
+2026-05-08 11:32:30 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:32:43 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:32:43 [INFO] Tailscale auto-started successfully
+2026-05-08 11:32:58 [INFO] Tailscale auto-started successfully
+2026-05-08 11:33:07 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:33:19 [INFO] Tailscale auto-started successfully
+2026-05-08 11:33:43 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:33:54 [INFO] Tailscale auto-started successfully
+2026-05-08 11:33:58 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:34:11 [INFO] Tailscale auto-started successfully
+2026-05-08 11:34:20 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:34:31 [INFO] Tailscale auto-started successfully
+2026-05-08 11:34:54 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:35:04 [INFO] Tailscale auto-started successfully
+2026-05-08 11:35:11 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:35:23 [INFO] Tailscale auto-started successfully
+2026-05-08 11:35:31 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:35:45 [INFO] Tailscale auto-started successfully
+2026-05-08 11:36:04 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:36:15 [INFO] Tailscale auto-started successfully
+2026-05-08 11:36:24 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:36:35 [INFO] Tailscale auto-started successfully
+2026-05-08 11:36:45 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:36:59 [INFO] Tailscale auto-started successfully
+2026-05-08 11:37:15 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:37:29 [INFO] Tailscale auto-started successfully
+2026-05-08 11:37:35 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:37:49 [INFO] Tailscale auto-started successfully
+2026-05-08 11:37:59 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:38:13 [INFO] Tailscale auto-started successfully
+2026-05-08 11:38:29 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:38:50 [INFO] Tailscale auto-started successfully
+2026-05-08 11:38:50 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:39:12 [INFO] Tailscale auto-started successfully
+2026-05-08 11:39:13 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:39:37 [INFO] Tailscale auto-started successfully
+2026-05-08 11:39:50 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:40:03 [INFO] Tailscale auto-started successfully
+2026-05-08 11:40:12 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:40:25 [INFO] Tailscale auto-started successfully
+2026-05-08 11:40:37 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:40:49 [INFO] Tailscale auto-started successfully
+2026-05-08 11:41:03 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:41:19 [INFO] Tailscale auto-started successfully
+2026-05-08 11:41:25 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:41:41 [INFO] Tailscale auto-started successfully
+2026-05-08 11:41:50 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:42:04 [INFO] Tailscale auto-started successfully
+2026-05-08 11:42:19 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:42:30 [INFO] Tailscale auto-started successfully
+2026-05-08 11:42:41 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:42:52 [INFO] Tailscale auto-started successfully
+2026-05-08 11:43:04 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:43:19 [INFO] Tailscale auto-started successfully
+2026-05-08 11:43:31 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:43:44 [INFO] Tailscale auto-started successfully
+2026-05-08 11:43:52 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:44:04 [INFO] Tailscale auto-started successfully
+2026-05-08 11:44:20 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:44:31 [INFO] Tailscale auto-started successfully
+2026-05-08 11:44:44 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:45:00 [INFO] Tailscale auto-started successfully
+2026-05-08 11:45:05 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:45:18 [INFO] Tailscale auto-started successfully
+2026-05-08 11:45:31 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:45:43 [INFO] Tailscale auto-started successfully
+2026-05-08 11:46:00 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:46:12 [INFO] Tailscale auto-started successfully
+2026-05-08 11:46:19 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:46:30 [INFO] Tailscale auto-started successfully
+2026-05-08 11:46:43 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:46:55 [INFO] Tailscale auto-started successfully
+2026-05-08 11:47:12 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:47:22 [INFO] Tailscale auto-started successfully
+2026-05-08 11:47:30 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:47:42 [INFO] Tailscale auto-started successfully
+2026-05-08 11:47:55 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:48:10 [INFO] Tailscale auto-started successfully
+2026-05-08 11:48:23 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:48:36 [INFO] Tailscale auto-started successfully
+2026-05-08 11:48:43 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:49:02 [INFO] Tailscale auto-started successfully
+2026-05-08 11:49:10 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:49:22 [INFO] Tailscale auto-started successfully
+2026-05-08 11:49:36 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:50:00 [INFO] Tailscale auto-started successfully
+2026-05-08 11:50:02 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:50:22 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:50:36 [WARNING] Failed to auto-start Tailscale: Command '['tailscale', 'up', '--accept-routes']' timed out after 30.0 seconds
+2026-05-08 11:50:48 [INFO] Tailscale auto-started successfully
+2026-05-08 11:51:00 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:51:23 [INFO] Tailscale auto-started successfully
+2026-05-08 11:51:36 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:51:53 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:51:53 [INFO] Tailscale auto-started successfully
+2026-05-08 11:52:13 [INFO] Tailscale auto-started successfully
+2026-05-08 11:52:23 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:52:35 [INFO] Tailscale auto-started successfully
+2026-05-08 11:52:53 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:53:05 [INFO] Tailscale auto-started successfully
+2026-05-08 11:53:13 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:53:25 [INFO] Tailscale auto-started successfully
+2026-05-08 11:53:35 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:53:46 [INFO] Tailscale auto-started successfully
+2026-05-08 11:54:05 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:54:15 [INFO] Tailscale auto-started successfully
+2026-05-08 11:54:25 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:54:37 [INFO] Tailscale auto-started successfully
+2026-05-08 11:54:46 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:54:57 [INFO] Tailscale auto-started successfully
+2026-05-08 11:55:16 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:55:26 [INFO] Tailscale auto-started successfully
+2026-05-08 11:55:37 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:55:48 [INFO] Tailscale auto-started successfully
+2026-05-08 11:55:58 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:56:08 [INFO] Tailscale auto-started successfully
+2026-05-08 11:56:27 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:56:38 [INFO] Tailscale auto-started successfully
+2026-05-08 11:56:48 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:57:00 [INFO] Tailscale auto-started successfully
+2026-05-08 11:57:08 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:57:21 [INFO] Tailscale auto-started successfully
+2026-05-08 11:57:38 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:57:49 [INFO] Tailscale auto-started successfully
+2026-05-08 11:58:00 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:58:11 [INFO] Tailscale auto-started successfully
+2026-05-08 11:58:21 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:58:32 [INFO] Tailscale auto-started successfully
+2026-05-08 11:58:49 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:59:01 [INFO] Tailscale auto-started successfully
+2026-05-08 11:59:12 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:59:24 [INFO] Tailscale auto-started successfully
+2026-05-08 11:59:32 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 11:59:44 [INFO] Tailscale auto-started successfully
+2026-05-08 12:00:01 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:00:12 [INFO] Tailscale auto-started successfully
+2026-05-08 12:00:24 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:00:34 [INFO] Tailscale auto-started successfully
+2026-05-08 12:00:44 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:01:18 [WARNING] Failed to auto-start Tailscale: Command '['tailscale', 'up', '--accept-routes']' timed out after 30.0 seconds
+2026-05-08 12:03:16 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:03:17 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:03:17 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:03:33 [INFO] Tailscale auto-started successfully
+2026-05-08 12:03:36 [INFO] Tailscale auto-started successfully
+2026-05-08 12:03:36 [INFO] Tailscale auto-started successfully
+2026-05-08 12:04:33 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:04:36 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:04:36 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:04:43 [INFO] Tailscale auto-started successfully
+2026-05-08 12:04:43 [INFO] Tailscale auto-started successfully
+2026-05-08 12:04:43 [INFO] Tailscale auto-started successfully
+2026-05-08 12:04:47 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — -
+2026-05-08 12:04:47 [INFO] [127.0.0.1] "GET /favicon.ico HTTP/1.1" 404 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:05:43 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:05:43 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:05:43 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:05:54 [INFO] Tailscale auto-started successfully
+2026-05-08 12:05:54 [INFO] Tailscale auto-started successfully
+2026-05-08 12:05:54 [INFO] Tailscale auto-started successfully
+2026-05-08 12:06:27 [INFO] ============================================
+2026-05-08 12:06:27 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-08 12:06:27 [INFO]   本机: http://localhost:8080
+2026-05-08 12:06:27 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-08 12:06:27 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-08 12:06:27 [INFO]   Ctrl+C 停止
+2026-05-08 12:06:27 [INFO] ============================================
+2026-05-08 12:06:27 [WARNING] Tailscale not running, auto-starting...
+2026-05-08 12:06:38 [INFO] Tailscale auto-started successfully
+2026-05-08 12:06:47 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — -
+2026-05-08 12:06:54 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:06:54 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:07:04 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — -
+2026-05-08 12:07:12 [INFO] Tailscale auto-started successfully
+2026-05-08 12:07:12 [INFO] Tailscale auto-started successfully
+2026-05-08 12:07:38 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:07:46 [INFO] Tailscale auto-started successfully
+2026-05-08 12:08:12 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:08:12 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:08:19 [INFO] Tailscale auto-started successfully
+2026-05-08 12:08:20 [INFO] Tailscale auto-started successfully
+2026-05-08 12:18:20 [INFO] ============================================
+2026-05-08 12:18:20 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-08 12:18:20 [INFO]   本机: http://localhost:8080
+2026-05-08 12:18:20 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-08 12:18:20 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-08 12:18:20 [INFO]   Ctrl+C 停止
+2026-05-08 12:18:20 [INFO] ============================================
+2026-05-08 12:18:20 [WARNING] Tailscale not running, auto-starting...
+2026-05-08 12:18:22 [WARNING] Ollama not running, auto-starting...
+2026-05-08 12:18:22 [INFO] Ollama auto-started (PID 29244)
+2026-05-08 12:18:27 [INFO] Tailscale auto-started successfully
+2026-05-08 12:18:34 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — -
+2026-05-08 12:18:35 [INFO] [127.0.0.1] "GET /favicon.ico HTTP/1.1" 404 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:19:27 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:19:37 [INFO] Tailscale auto-started successfully
+2026-05-08 12:20:37 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:20:47 [INFO] Tailscale auto-started successfully
+2026-05-08 12:21:08 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — -
+2026-05-08 12:21:47 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:21:56 [INFO] Tailscale auto-started successfully
+2026-05-08 12:22:56 [WARNING] Tailscale 已离线，正在重新启动...
+2026-05-08 12:23:04 [INFO] Tailscale auto-started successfully
+2026-05-08 12:26:23 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — -
+2026-05-08 12:33:34 [INFO] ============================================
+2026-05-08 12:33:34 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-08 12:33:34 [INFO]   本机: http://localhost:8080
+2026-05-08 12:33:34 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-08 12:33:34 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-08 12:33:34 [INFO]   Ctrl+C 停止
+2026-05-08 12:33:34 [INFO] ============================================
+2026-05-08 12:33:47 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — -
+2026-05-08 12:33:47 [INFO] [127.0.0.1] "GET /favicon.ico HTTP/1.1" 404 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:33:50 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — -
+2026-05-08 12:34:44 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — -
+2026-05-08 12:34:46 [INFO] [127.0.0.1] "GET /admin.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:34:46 [INFO] [127.0.0.1] "GET /api/admin/users HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
+2026-05-08 12:34:48 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
+2026-05-08 12:35:02 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
+2026-05-08 12:35:03 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-08 12:35:03 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:35:04 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-08 12:35:04 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:35:05 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-08 12:35:05 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:35:06 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-08 12:35:06 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:35:06 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-08 12:35:06 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:35:07 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-08 12:35:07 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:35:08 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-08 12:35:08 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:35:21 [INFO] User 'admin' created conversation 17
+2026-05-08 12:35:21 [INFO] [127.0.0.1] "POST /api/conversations HTTP/1.1" 201 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:35:21 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:35:46 [INFO] [127.0.0.1] "POST /api/conversations/17 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:35:46 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:36:10 [INFO] [127.0.0.1] "POST /api/search HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:36:37 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
+2026-05-08 12:37:27 [INFO] [127.0.0.1] "GET /admin.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:37:27 [INFO] [127.0.0.1] "GET /api/admin/users HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
+2026-05-08 12:38:45 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-08 12:38:45 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:38:46 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-08 12:38:46 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:40:15 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
+2026-05-08 12:40:44 [INFO] ============================================
+2026-05-08 12:40:44 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-08 12:40:44 [INFO]   本机: http://localhost:8080
+2026-05-08 12:40:44 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-08 12:40:44 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-08 12:40:44 [INFO]   Ctrl+C 停止
+2026-05-08 12:40:44 [INFO] ============================================
+2026-05-08 12:40:46 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
+2026-05-08 12:40:54 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-08 12:40:54 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:41:36 [INFO] User 'admin' created conversation 18
+2026-05-08 12:41:36 [INFO] [127.0.0.1] "POST /api/conversations HTTP/1.1" 201 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:41:36 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:42:18 [INFO] [127.0.0.1] "POST /api/conversations/18 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-08 12:42:19 [INFO] [127.0.0.1] "GET /api/conversations HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html

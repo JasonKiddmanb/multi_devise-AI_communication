@@ -32,7 +32,7 @@ def get_tailscale_peers() -> list[dict]:
     """通过 tailscale status --json 获取所有设备"""
     try:
         r = subprocess.run(["tailscale", "status", "--json"],
-                          capture_output=True, text=True, timeout=5)
+                          capture_output=True, timeout=5)
         if r.returncode != 0:
             return []
         data = json.loads(r.stdout)
@@ -141,4 +141,52 @@ def start_ollama() -> bool:
         return False
     except Exception as e:
         log.warning("Failed to auto-start Ollama: %s", e)
+        return False
+
+
+# ==================== Tailscale 看门狗 ====================
+
+def is_tailscale_running() -> bool:
+    """检查 Tailscale 是否已连接（双重检测，提高可靠性）"""
+    try:
+        # 方法 1: tailscale status 文本模式——退出码 0 即表示运行中
+        r1 = subprocess.run(
+            ["tailscale", "status"],
+            capture_output=True, timeout=5
+        )
+        if r1.returncode == 0:
+            return True
+
+        # 方法 2: tailscale status --json 检查 BackendState
+        r2 = subprocess.run(
+            ["tailscale", "status", "--json"],
+            capture_output=True, timeout=5
+        )
+        if r2.returncode == 0:
+            data = json.loads(r2.stdout.decode("utf-8", errors="replace"))
+            return data.get("BackendState") == "Running"
+    except Exception:
+        pass
+    return False
+
+
+def start_tailscale() -> bool:
+    """启动 Tailscale 连接（直接使用 tailscale up）"""
+    try:
+        # tailscale up 在 Windows 上会自动启动后台服务，无需先执行 sc start
+        subprocess.run(
+            ["tailscale", "up", "--accept-routes"],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            timeout=30
+        )
+        log.info("Tailscale auto-started successfully")
+        return True
+    except FileNotFoundError:
+        log.warning("tailscale not found in PATH, cannot auto-start")
+        return False
+    except subprocess.TimeoutExpired:
+        log.warning("tailscale up timed out after 30s")
+        return False
+    except Exception as e:
+        log.warning("Failed to auto-start Tailscale: %s", e)
         return False

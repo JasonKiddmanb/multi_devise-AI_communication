@@ -45,8 +45,9 @@ def init_db():
 
     # 迁移：为旧数据库补充列
     for col, ddl in [
-        ("model",   "ALTER TABLE messages ADD COLUMN model TEXT NOT NULL DEFAULT ''"),
-        ("user_id", "ALTER TABLE conversations ADD COLUMN user_id INTEGER REFERENCES users(id) ON DELETE SET NULL"),
+        ("model",      "ALTER TABLE messages ADD COLUMN model TEXT NOT NULL DEFAULT ''"),
+        ("user_id",    "ALTER TABLE conversations ADD COLUMN user_id INTEGER REFERENCES users(id) ON DELETE SET NULL"),
+        ("eval_count", "ALTER TABLE messages ADD COLUMN eval_count INTEGER NOT NULL DEFAULT 0"),
     ]:
         try:
             db.execute(ddl)
@@ -173,8 +174,8 @@ def list_conversations(db, user_id: int) -> list[dict]:
     return [{"id": r[0], "title": r[1], "model": r[2], "created_at": r[3]} for r in cur]
 
 def get_conversation(db, conv_id: int) -> dict | None:
-    cur = db.execute("SELECT role, content, model FROM messages WHERE conversation_id=? ORDER BY id ASC", (conv_id,))
-    msgs = [{"role": r[0], "content": r[1], "model": r[2]} for r in cur]
+    cur = db.execute("SELECT role, content, model, eval_count FROM messages WHERE conversation_id=? ORDER BY id ASC", (conv_id,))
+    msgs = [{"role": r[0], "content": r[1], "model": r[2], "eval_count": r[3]} for r in cur]
     meta = db.execute("SELECT title, model, user_id FROM conversations WHERE id=?", (conv_id,)).fetchone()
     if not meta:
         return None
@@ -191,8 +192,8 @@ def create_conversation(db, title: str, model: str, user_id: int) -> int:
 def save_messages(db, conv_id: int, msgs: list, title: str = None, model: str = None):
     for msg in msgs:
         db.execute(
-            "INSERT INTO messages (conversation_id, role, content, model) VALUES (?, ?, ?, ?)",
-            (conv_id, msg.get("role"), msg.get("content"), msg.get("model", ""))
+            "INSERT INTO messages (conversation_id, role, content, model, eval_count) VALUES (?, ?, ?, ?, ?)",
+            (conv_id, msg.get("role"), msg.get("content"), msg.get("model", ""), msg.get("eval_count", 0))
         )
     if title:
         db.execute("UPDATE conversations SET title=? WHERE id=?", (title, conv_id))

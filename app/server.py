@@ -9,6 +9,7 @@ import re
 import threading
 import time
 import urllib.parse
+import urllib.request
 import mimetypes
 import uuid
 import subprocess
@@ -21,7 +22,7 @@ from db import list_users, approve_user, delete_user
 from db import create_session, validate_session, delete_session
 from db import list_conversations, get_conversation, create_conversation, save_messages, delete_conversation
 from auth import hash_password, verify_password, generate_token, make_expires_at
-from discovery import discover, is_ollama_running, start_ollama
+from discovery import discover, is_ollama_running, start_ollama, is_tailscale_running, start_tailscale
 
 # ==================== 管理员 MAC 验证 ====================
 
@@ -54,6 +55,35 @@ def is_admin_allowed(client_ip: str) -> bool:
             log.warning("Admin MAC check failed: local=%s, whitelist=%s", local_macs, ADMIN_MAC_WHITELIST)
             return False
     return True
+
+# ==================== 联网搜索 ====================
+
+def web_search(query: str) -> dict:
+    """使用 Bing 搜索（无 API Key，解析 HTML）"""
+    encoded = urllib.parse.quote(query)
+    url = f"https://www.bing.com/search?q={encoded}&count=8"
+    ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": ua})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            html = resp.read().decode("utf-8", errors="replace")
+        results = []
+        # 解析 <li class="b_algo"> 块
+        for block in re.findall(r'<li[^>]*class="b_algo"[^>]*>(.*?)</li>', html, re.DOTALL)[:10]:
+            title_m = re.search(r'<h2[^>]*>.*?<a[^>]*href="(.*?)"[^>]*>(.*?)</a>', block, re.DOTALL)
+            snippet_m = re.search(r'<p[^>]*>(.*?)</p>', block, re.DOTALL)
+            if title_m:
+                title = re.sub(r'<[^>]+>', '', title_m.group(2)).strip()
+                link = title_m.group(1)
+                snippet = ""
+                if snippet_m:
+                    snippet = re.sub(r'<[^>]+>', '', snippet_m.group(1)).strip()
+                if title:
+                    results.append({"title": title, "snippet": snippet, "link": link})
+        return {"query": query, "results": results}
+    except Exception as e:
+        log.warning("Web search failed: %s", e)
+        return {"query": query, "results": [], "error": str(e)}
 
 # ==================== 请求处理 ====================
 
@@ -264,6 +294,17 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
                 delete_session(self.db, auth[7:])
             return self._json(200, {"ok": True})
 
+        # --- Search ---
+        if path == "/api/search":
+            user = self._require_auth()
+            if not user:
+                return
+            query = (body.get("query") or "").strip()
+            if not query:
+                return self._json(400, {"error": "query required"})
+            results = web_search(query)
+            return self._json(200, results)
+
         # --- Admin API ---
         m = re.match(r'^/api/admin/users/(\d+)/approve$', path)
         if m:
@@ -371,6 +412,27 @@ def main():
 
     t = threading.Thread(target=_ollama_watchdog, daemon=True)
     t.start()
+
+    # ==================== Tailscale 看门狗（后台守护线程） ====================
+    def _tailscale_watchdog():
+        first = True
+        while True:
+            if not is_tailscale_running():
+                if first:
+                    log.warning("Tailscale not running, auto-starting...")
+                else:
+                    log.warning("Tailscale 已离线，正在重新启动...")
+                # 等待数秒再次确认，避免误判（如用户正在手动启动中）
+                time.sleep(5)
+                if not is_tailscale_running():
+                    start_tailscale()
+                else:
+                    log.info("Tailscale is now running (manual start detected)")
+                first = False
+            time.sleep(60)
+
+    t2 = threading.Thread(target=_tailscale_watchdog, daemon=True)
+    t2.start()
 
     server = http.server.HTTPServer(("0.0.0.0", PORT), RequestHandler)
     log.info("============================================")
