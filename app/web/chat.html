@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>AI Remote Chat</title>
+<meta http-equiv="Cache-Control" content="no-store">
+<title>AI Remote Chat v1.1</title>
 <style>
   :root { --hdr: 52px; --btm: 72px; }
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -164,6 +165,10 @@
   .think-content { padding: 0 10px 8px; font-size: 12px; color: #8bc88b; line-height: 1.6; white-space: pre-wrap; word-break: break-word; display: none; }
   .think-content.open { display: block; }
 
+  /* === 文件传输按钮 === */
+  .file-btn { background: #1a1a1a; color: #555; border: 1px solid #333; border-radius: 8px; font-size: 20px; padding: 6px 8px; cursor: pointer; line-height: 1; flex-shrink: 0; transition: all .2s; }
+  .file-btn:hover { border-color: #666; color: #888; }
+
   /* === 联网搜索按钮 (active=亮绿, inactive=暗灰) === */
   .search-btn { background: #1a1a1a; color: #555; border: 1px solid #333; border-radius: 8px; font-size: 20px; padding: 6px 8px; cursor: pointer; line-height: 1; flex-shrink: 0; transition: all .2s; }
   .search-btn:hover { border-color: #666; color: #888; }
@@ -252,10 +257,95 @@
   body.light .setting-row label { color: #333; }
   body.light .switch .slider { background: #ccc; }
   body.light .switch input:checked + .slider { background: #16a34a; }
+  body.light .file-btn { background: #e8eaed; border-color: #dadce0; color: #999; }
   body.light .search-btn { background: #e8eaed; border-color: #dadce0; color: #999; }
   body.light .search-btn.active { background: #dcfce7; border-color: #16a34a; color: #16a34a; box-shadow: 0 0 8px rgba(22,163,74,.2); }
   body.light ::-webkit-scrollbar-track { background: #f0f2f5; }
   body.light ::-webkit-scrollbar-thumb { background: #ccc; }
+
+  /* === Action Sheet (iOS 风格) === */
+  .action-sheet-overlay { position: fixed; inset:0; background: rgba(0,0,0,.5); z-index: 50; display: none; }
+  .action-sheet-overlay.show { display: block; }
+  .action-sheet {
+    position: fixed; bottom:0; left:0; right:0;
+    background: #1a1a1a; border-radius: 16px 16px 0 0;
+    padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom,0px));
+    z-index: 55; animation: sheetUp .3s ease;
+  }
+  @keyframes sheetUp { from { transform:translateY(100%); } to { transform:translateY(0); } }
+  .action-sheet-title { text-align:center; font-size:13px; color:#888; padding:8px 0 16px; border-bottom:1px solid #2a2a2a; margin-bottom:12px; }
+  .action-sheet-btn {
+    width:100%; padding:14px; background:#252525; border:none; color:#e0e0e0;
+    font-size:16px; border-radius:10px; margin-bottom:8px; cursor:pointer; display:flex; align-items:center; gap:10px;
+  }
+  .action-sheet-btn.cancel { background:#333; color:#f87171; font-weight:600; justify-content:center; }
+  .action-sheet-btn:hover { background:#333; }
+  .as-icon { font-size:20px; }
+  body.light .action-sheet { background:#fff; }
+  body.light .action-sheet-title { color:#888; border-bottom-color:#e0e0e0; }
+  body.light .action-sheet-btn { background:#f1f3f4; color:#1a1a1a; }
+  body.light .action-sheet-btn:hover { background:#e8eaed; }
+  body.light .action-sheet-btn.cancel { background:#f1f3f4; color:#dc2626; }
+
+  /* === Bottom Sheet (文件预览) === */
+  .bottom-sheet-overlay { position: fixed; inset:0; background: rgba(0,0,0,.5); z-index: 60; display: none; }
+  .bottom-sheet-overlay.show { display: block; }
+  .bottom-sheet {
+    position: fixed; bottom:0; left:0; right:0;
+    background: #1a1a1a; border-radius: 16px 16px 0 0;
+    padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom,0px));
+    z-index: 65; max-height: 80vh; overflow-y: auto; animation: sheetUp .3s ease;
+  }
+  body.light .bottom-sheet { background:#fff; }
+  .bs-header { display:flex; align-items:center; justify-content:space-between; font-size:16px; font-weight:600; margin-bottom:16px; }
+  .bs-close-btn { background:none; border:none; color:#888; font-size:24px; cursor:pointer; padding:0 4px; }
+  .bs-close-btn:hover { color:#fff; }
+  body.light .bs-close-btn:hover { color:#000; }
+  .bs-preview { display:flex; align-items:center; justify-content:center; min-height:120px; background:#0d0d0d; border-radius:12px; margin-bottom:12px; overflow:hidden; }
+  body.light .bs-preview { background:#f5f5f5; }
+  .bs-preview-img { max-width:100%; max-height:250px; object-fit:contain; border-radius:8px; }
+  .bs-preview-icon { font-size:48px; }
+  .bs-info { margin-bottom:16px; text-align:center; }
+  .bs-filename { font-size:15px; font-weight:500; word-break:break-all; margin-bottom:4px; }
+  .bs-filesize { font-size:12px; color:#888; }
+  .bs-progress { height:6px; background:#333; border-radius:3px; margin-bottom:16px; overflow:hidden; }
+  body.light .bs-progress { background:#ddd; }
+  .bs-progress-bar { height:100%; width:0%; background:#4ade80; border-radius:3px; transition:width .3s; }
+  .bs-error { color:#f87171; font-size:13px; text-align:center; padding:8px; background:#2d1515; border-radius:8px; margin-bottom:12px; display:none; }
+  body.light .bs-error { background:#fef2f2; }
+  .bs-upload-btn { width:100%; padding:14px; background:#4ade80; color:#111; border:none; border-radius:10px; font-size:16px; font-weight:600; cursor:pointer; }
+  .bs-upload-btn:disabled { opacity:0.5; cursor:default; }
+  .bs-upload-btn:hover:not(:disabled) { opacity:0.9; }
+
+  /* === 文件消息 === */
+  .msg.file-msg { padding:10px; cursor:default; }
+  .file-card { display:flex; align-items:center; gap:10px; }
+  .file-card-icon { font-size:32px; flex-shrink:0; }
+  .file-card-info { flex:1; min-width:0; }
+  .file-card-name { font-size:14px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .file-card-size { font-size:11px; color:#888; margin-top:2px; }
+  .file-card-status { font-size:11px; margin-top:2px; }
+  .file-card-status.success { color:#4ade80; }
+  .file-card-status.error { color:#f87171; }
+  .file-image-preview { max-width:200px; max-height:200px; border-radius:8px; display:block; margin-bottom:6px; cursor:zoom-in; }
+  .file-image-preview:hover { opacity:.9; }
+
+  /* === 图片放大查看 === */
+  .img-overlay {
+    position: fixed; inset:0; background:rgba(0,0,0,.85); z-index:70;
+    display:none; align-items:center; justify-content:center; cursor:zoom-out;
+  }
+  .img-overlay.show { display:flex; }
+  .img-overlay img { max-width:95vw; max-height:95vh; object-fit:contain; border-radius:8px; }
+
+  /* === Ollama 错误消息 === */
+  .msg.error-msg { background:#2d1515!important; border:1px solid #5a2020; }
+  .msg.error-msg .error-header { color:#f87171; font-weight:600; font-size:14px; margin-bottom:4px; }
+  .msg.error-msg .error-body { color:#fca5a5; font-size:13px; }
+  .msg.error-msg .error-hint { color:#888; font-size:11px; margin-top:6px; font-style:italic; }
+  body.light .msg.error-msg { background:#fef2f2!important; border-color:#fecaca; }
+  body.light .msg.error-msg .error-header { color:#dc2626; }
+  body.light .msg.error-msg .error-body { color:#b91c1c; }
 </style>
 </head>
 <body>
@@ -297,6 +387,7 @@
 
 <!-- 底部输入栏 -->
 <footer class="bottombar">
+  <button class="file-btn" id="file-btn" onclick="showFilePicker()" title="传输文件">📎</button>
   <button class="search-btn" id="search-btn" onclick="toggleSearch()" title="联网搜索">🌐</button>
   <textarea id="prompt" rows="1" placeholder="输入消息..." disabled></textarea>
   <button id="send-btn" disabled>发送</button>
@@ -332,33 +423,41 @@ const overlay   = el('overlay');
 const sidebar   = el('sidebar');
 const convTitle = el('conv-title');
 
+// ==================== iOS 检测 & 文件上传事件 ====================
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
 // ==================== 网络发现 (API) ====================
 const OS_ICONS = { windows: '🪟', linux: '🐧', darwin: '🍎', macos: '🍎' };
 
 async function fetchDiscovery() {
-  // 整体超时：12 秒后显示离线（防止无限等待）
-  const timeoutFallback = setTimeout(() => {
-    if (modelSel.innerHTML.includes('加载中')) {
-      modelSel.innerHTML = '<option value="">离线</option>';
-      promptEl.disabled = true;
-      sendBtn.disabled = true;
-      promptEl.placeholder = '未检测到 Ollama 模型';
-    }
-  }, 12000);
+  // 同时启动两种发现方式
+  const p1 = tryApiDiscovery().catch(() => false);
+  const p2 = tryLocalOllama().catch(() => false);
 
-  try {
-    // 先尝试 API 发现（服务器端扫描 Tailscale 设备）
-    if (await tryApiDiscovery()) return true;
-    // 回退：直接浏览器端扫描本机 Ollama
-    await tryLocalOllama();
-  } finally {
-    clearTimeout(timeoutFallback);
+  // 等本地扫描完成（最快 2-5s），同时 API 在后台跑
+  const localOk = await p2;
+  if (localOk) {
+    // 本地扫描已经设好了模型
+    return true;
   }
+
+  // 本地失败，等 API 完成（最多再等 5s）
+  const apiOk = await p1;
+  if (apiOk) return true;
+
+  // 都失败了，显示离线
+  if (modelSel.innerHTML.includes('加载中')) {
+    modelSel.innerHTML = '<option value="">离线</option>';
+    promptEl.disabled = true;
+    sendBtn.disabled = true;
+    promptEl.placeholder = '未检测到 Ollama 模型';
+  }
+  return false;
 }
 
 async function tryApiDiscovery() {
   try {
-    const data = await api('/api/discovery');
+    const data = await api('/api/discovery', {}, 5000);
     if (!data || !data.nodes || data.nodes.length === 0) throw new Error('no nodes');
 
     let totalModels = 0;
@@ -396,34 +495,39 @@ async function tryApiDiscovery() {
 }
 
 async function tryLocalOllama() {
-  try {
-    const hostname = location.hostname;
-    const r = await fetch(`http://${hostname}:11434/api/tags`, {
-      signal: AbortSignal.timeout(5000)
-    });
-    if (!r.ok) throw new Error('offline');
-    const data = await r.json();
-    const models = data.models || [];
-    if (models.length === 0) throw new Error('no models');
+  // 尝试多个地址连本机 Ollama（覆盖 Tailscale IP、localhost、局域网 IP）
+  const hosts = [...new Set([location.hostname, location.hostname === 'localhost' ? '127.0.0.1' : 'localhost', '127.0.0.1'])];
+  for (const host of hosts) {
+    try {
+      const r = await fetch(`http://${host}:11434/api/tags`, {
+        signal: AbortSignal.timeout(2500)
+      });
+      if (!r.ok) continue;
+      const data = await r.json();
+      const models = data.models || [];
+      if (models.length === 0) continue;
 
-    modelSel.innerHTML = models.map(m =>
-      `<option value="${m.name}||${hostname}:11434">${escHtml(m.name)}</option>`
-    ).join('');
-    currentModel = models[0].name;
-    currentOllamaUrl = `http://${hostname}:11434`;
-    modelSel.value = `${models[0].name}||${hostname}:11434`;
+      modelSel.innerHTML = models.map(m =>
+        `<option value="${m.name}||${host}:11434">${escHtml(m.name)}</option>`
+      ).join('');
+      currentModel = models[0].name;
+      currentOllamaUrl = `http://${host}:11434`;
+      modelSel.value = `${models[0].name}||${host}:11434`;
 
-    promptEl.disabled = false;
-    sendBtn.disabled = false;
-    promptEl.placeholder = '输入消息...';
-    return true;
-  } catch {
-    modelSel.innerHTML = '<option value="">离线</option>';
-    promptEl.disabled = true;
-    sendBtn.disabled = true;
-    promptEl.placeholder = '未检测到 Ollama 模型';
-    return false;
+      promptEl.disabled = false;
+      sendBtn.disabled = false;
+      promptEl.placeholder = '输入消息...';
+      return true;
+    } catch {
+      // 跳过，试下一个地址
+    }
   }
+  // 全部失败
+  modelSel.innerHTML = '<option value="">离线</option>';
+  promptEl.disabled = true;
+  sendBtn.disabled = true;
+  promptEl.placeholder = '未检测到 Ollama 模型';
+  return false;
 }
 
 function refreshModels() {
@@ -568,6 +672,31 @@ chatArea.addEventListener('scroll', () => {
 });
 
 function addMsg(role, content, model, evalCount) {
+  // 检测文件消息（从历史加载时用到）
+  try {
+    const fd = JSON.parse(content);
+    if (fd && fd.type === 'file' && fd.name && fd.url) {
+      const w = document.createElement('div');
+      w.className = `msg-wrapper ${role}`;
+      const d = document.createElement('div');
+      d.className = `msg ${role} file-msg`;
+      if (fd.mime && fd.mime.startsWith('image/')) {
+        d.innerHTML =
+          '<img class="file-image-preview" src="' + escHtml(fd.url) + '" alt="' + escHtml(fd.name) + '" onclick="zoomImage(\'' + escHtml(fd.url) + '\')">' +
+          '<div class="file-card"><div class="file-card-icon image-icon">🖼️</div><div class="file-card-info"><div class="file-card-name">' + escHtml(fd.name) + '</div><div class="file-card-size">' + formatFileSize(fd.size) + '</div><div class="file-card-status success">✅ 已发送</div></div></div>';
+      } else {
+        d.innerHTML =
+          '<div class="file-card" onclick="window.open(\'' + escHtml(fd.url) + '\', \'_blank\')">' +
+          '<div class="file-card-icon">' + getFileIcon(fd.name) + '</div>' +
+          '<div class="file-card-info"><div class="file-card-name">' + escHtml(fd.name) + '</div><div class="file-card-size">' + formatFileSize(fd.size) + '</div><div class="file-card-status success">✅ 已发送</div></div></div>';
+      }
+      w.appendChild(d);
+      chatArea.appendChild(w);
+      scrollBottom(true);
+      return d;
+    }
+  } catch {}
+
   const wrapper = document.createElement('div');
   wrapper.className = `msg-wrapper ${role}`;
   const div = document.createElement('div');
@@ -642,18 +771,35 @@ async function streamChat(msgDiv) {
     messages: messages.slice(-20),
     stream: true
   });
-  const r = await fetch(`${currentOllamaUrl}/api/chat`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body
-  });
+  // 优先通过服务器代理（同源，无 CORS 问题），失败时直连 Ollama
+  let r;
+  try {
+    r = await fetch(HOST + '/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+      body
+    });
+  } catch {
+    try {
+      r = await fetch(`${currentOllamaUrl}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body
+      });
+    } catch {
+      msgDiv.className = 'msg assistant error-msg';
+      msgDiv.innerHTML = '<div class="error-header">⚠️ 无法连接 Ollama</div><div class="error-body">服务器代理和直连均失败</div><div class="error-hint">请确认 Ollama 正在运行</div>';
+      scrollBottom(true);
+      return { text: '', evalCount: 0 };
+    }
+  }
   if (!r.ok) {
     let msg = `HTTP ${r.status}`;
-    try {
-      const err = await r.json();
-      if (err.error) msg = err.error;
-    } catch {}
-    throw new Error(msg);
+    try { const err = await r.json(); if (err.error) msg = err.error; } catch {}
+    msgDiv.className = 'msg assistant error-msg';
+    msgDiv.innerHTML = '<div class="error-header">⚠️ Ollama 连接失败</div><div class="error-body">' + escHtml(msg) + '</div><div class="error-hint">请确认 Ollama 正在运行且模型名称正确</div>';
+    scrollBottom(true);
+    return { text: '', evalCount: 0 };
   }
   const reader = r.body.getReader();
   const decoder = new TextDecoder();
@@ -674,7 +820,12 @@ async function streamChat(msgDiv) {
     for (const line of lines) {
       try {
         const json = JSON.parse(line);
-        if (json.error) { addSysMsg('Ollama 错误: ' + json.error); return { text: '', evalCount: 0 }; }
+        if (json.error) {
+          msgDiv.className = 'msg assistant error-msg';
+          msgDiv.innerHTML = '<div class="error-header">⚠️ Ollama 错误</div><div class="error-body">' + escHtml(json.error) + '</div><div class="error-hint">请检查模型设置或服务器状态</div>';
+          scrollBottom(true);
+          return { text: '', evalCount: 0 };
+        }
         if (json.done) {
           evalCount = json.eval_count || 0;
         }
@@ -735,7 +886,12 @@ async function streamChat(msgDiv) {
 // ==================== 发送消息 ====================
 async function send() {
   const text = promptEl.value.trim();
-  if (!text || loading || !currentModel) return;
+  if (!text || loading || !currentModel) {
+    // 如果被阻塞，在界面上显示原因（方便调试）
+    if (!currentModel) addSysMsg('⚠️ 未选择模型，请在顶部下拉菜单选择模型');
+    else if (loading) addSysMsg('⏳ 正在处理上一条消息，请稍候');
+    return;
+  }
   promptEl.value = '';
   promptEl.style.height = 'auto';
   hideWelcome();
@@ -744,8 +900,8 @@ async function send() {
   sendBtn.disabled = true;
   promptEl.disabled = true;
 
-  // 没有当前对话则自动创建
-  if (!currentConvId) await createConv(text);
+  // 没有当前对话则自动创建（失败不阻塞发送）
+  if (!currentConvId) { try { await createConv(text); } catch {} }
 
   addMsg('user', text);
   messages.push({ role: 'user', content: text, model: currentModel });
@@ -814,7 +970,11 @@ async function send() {
     else chatArea.appendChild(wrapper);
 
     const { text: reply, evalCount } = await streamChat(msgDiv);
-    messages.push({ role: 'assistant', content: reply, model: currentModel, eval_count: evalCount });
+    // 如果 streamChat 中发生了错误（error-msg），不保存空回复
+    if (msgDiv.classList.contains('error-msg')) {
+      scrollBottom(true);
+    } else {
+      messages.push({ role: 'assistant', content: reply, model: currentModel, eval_count: evalCount });
     // 添加模型标签
     const tag = document.createElement('div');
     tag.className = 'model-tag';
@@ -823,6 +983,7 @@ async function send() {
     await saveConv();
     await refreshConvList();
     scrollBottom(true);
+    }
   } catch (err) {
     hideTyping();
     addSysMsg('错误: ' + err.message);
@@ -856,9 +1017,9 @@ async function api(url, opts = {}, timeoutMs = 10000) {
     if (r.status === 401) { localStorage.clear(); window.location.replace('/login.html'); return null; }
     if (!r.ok && r.status !== 201 && r.status !== 200) return null;
     return r.json();
-  } catch (e) {
-    if (e.name === 'AbortError') throw new Error('timeout');
-    throw e;
+  } catch {
+    // 所有网络/超时错误都返回 null，不抛出（调用者已处理 null 情况）
+    return null;
   } finally {
     clearTimeout(timer);
   }
@@ -874,7 +1035,7 @@ function logout() {
 }
 
 async function refreshConvList() {
-  const convs = await api('/api/conversations') || [];
+  const convs = await api('/api/conversations', {}, 5000) || [];
   convList.innerHTML = convs.length === 0
     ? '<div class="conv-empty">暂无历史对话</div>'
     : convs.map(c => `
@@ -914,7 +1075,7 @@ async function saveConv() {
 }
 
 async function loadConv(id) {
-  const conv = await api(`/api/conversations/${id}`);
+  const conv = await api(`/api/conversations/${id}`, {}, 5000);
   if (!conv) return;
   currentConvId = conv.id;
   currentModel = conv.model || currentModel;
@@ -973,6 +1134,174 @@ function toggleSearch() {
   document.getElementById('search-btn').classList.toggle('active', searchEnabled);
 }
 
+// ==================== 文件传输 ====================
+let selectedFile = null;
+
+function showFilePicker() {
+  if (isIOS) {
+    document.getElementById('action-sheet-overlay').classList.add('show');
+  } else {
+    document.getElementById('file-input-general').click();
+  }
+}
+
+function hideActionSheet() {
+  document.getElementById('action-sheet-overlay').classList.remove('show');
+}
+
+function pickImage() {
+  hideActionSheet();
+  document.getElementById('file-input-image').click();
+}
+
+function pickFile() {
+  hideActionSheet();
+  document.getElementById('file-input-general').click();
+}
+
+function onFileSelected(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  selectedFile = file;
+
+  el('bs-filename').textContent = file.name;
+  el('bs-filesize').textContent = formatFileSize(file.size);
+
+  const previewImg = el('bs-preview-img');
+  const previewIcon = el('bs-preview-icon');
+
+  if (file.type.startsWith('image/')) {
+    previewIcon.style.display = 'none';
+    previewImg.style.display = 'block';
+    const reader = new FileReader();
+    reader.onload = function(e) { previewImg.src = e.target.result; };
+    reader.readAsDataURL(file);
+  } else {
+    previewImg.style.display = 'none';
+    previewIcon.style.display = 'block';
+    previewIcon.textContent = getFileIcon(file.name);
+  }
+
+  el('bs-progress').style.display = 'none';
+  el('bs-progress-bar').style.width = '0%';
+  el('bs-error').style.display = 'none';
+  el('bs-upload-btn').disabled = false;
+  el('bs-upload-btn').textContent = '上传';
+  el('bottom-sheet-overlay').classList.add('show');
+  event.target.value = '';
+}
+
+function formatFileSize(bytes) {
+  if (!bytes || bytes < 1024) return (bytes || 0) + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
+function getFileIcon(filename) {
+  const ext = filename.split('.').pop().toLowerCase();
+  if (['jpg','jpeg','png','gif','webp','bmp','svg'].includes(ext)) return '🖼️';
+  if (['pdf'].includes(ext)) return '📕';
+  if (['doc','docx'].includes(ext)) return '📘';
+  if (['xls','xlsx'].includes(ext)) return '📊';
+  if (['zip','rar','7z','tar','gz'].includes(ext)) return '🗜️';
+  if (['mp4','mov','avi','mkv'].includes(ext)) return '🎬';
+  if (['mp3','wav','flac','ogg'].includes(ext)) return '🎵';
+  if (['py','js','ts','html','css','sh','bat','ps1'].includes(ext)) return '💻';
+  return '📄';
+}
+
+async function uploadFile() {
+  if (!selectedFile) return;
+  const btn = el('bs-upload-btn');
+  const progress = el('bs-progress');
+  const progressBar = el('bs-progress-bar');
+  const errorDiv = el('bs-error');
+
+  btn.disabled = true;
+  btn.textContent = '上传中...';
+  progress.style.display = 'block';
+  errorDiv.style.display = 'none';
+
+  const formData = new FormData();
+  formData.append('file', selectedFile);
+
+  try {
+    const result = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/api/upload');
+      xhr.setRequestHeader('Authorization', 'Bearer ' + TOKEN);
+      xhr.upload.onprogress = function(e) {
+        if (e.lengthComputable) progressBar.style.width = Math.round((e.loaded / e.total) * 100) + '%';
+      };
+      xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(JSON.parse(xhr.responseText));
+        } else {
+          try { reject(new Error(JSON.parse(xhr.responseText).error || '上传失败')); }
+          catch { reject(new Error('上传失败 (HTTP ' + xhr.status + ')')); }
+        }
+      };
+      xhr.onerror = function() { reject(new Error('网络错误')); };
+      xhr.ontimeout = function() { reject(new Error('上传超时')); };
+      xhr.timeout = 120000;
+      xhr.send(formData);
+    });
+
+    progressBar.style.width = '100%';
+    btn.textContent = '已完成';
+    addFileMessage(selectedFile.name, result.size, result.url, result.mime);
+    setTimeout(() => { hideBottomSheet(); selectedFile = null; }, 500);
+  } catch (err) {
+    errorDiv.textContent = err.message;
+    errorDiv.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = '重试';
+    progressBar.style.width = '0%';
+  }
+}
+
+function hideBottomSheet() {
+  el('bottom-sheet-overlay').classList.remove('show');
+  selectedFile = null;
+}
+
+function addFileMessage(filename, fileSize, fileUrl, mimeType) {
+  hideWelcome();
+  const fileData = { type: 'file', name: filename, url: fileUrl, size: fileSize, mime: mimeType };
+  const content = JSON.stringify(fileData);
+  messages.push({ role: 'user', content: content, model: '' });
+  renderFileMessage('user', fileData);
+  scrollBottom(true);
+  saveConv();
+}
+
+function renderFileMessage(role, fileData) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'msg-wrapper ' + role;
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'msg ' + role + ' file-msg';
+
+  if (fileData.mime && fileData.mime.startsWith('image/')) {
+    msgDiv.innerHTML =
+      '<img class="file-image-preview" src="' + escHtml(fileData.url) + '" alt="' + escHtml(fileData.name) + '" onclick="zoomImage(\'' + escHtml(fileData.url) + '\')">' +
+      '<div class="file-card"><div class="file-card-icon image-icon">🖼️</div><div class="file-card-info"><div class="file-card-name">' + escHtml(fileData.name) + '</div><div class="file-card-size">' + formatFileSize(fileData.size) + '</div><div class="file-card-status success">✅ 已发送</div></div></div>';
+  } else {
+    msgDiv.innerHTML =
+      '<div class="file-card" onclick="window.open(\'' + escHtml(fileData.url) + '\', \'_blank\')">' +
+      '<div class="file-card-icon">' + getFileIcon(fileData.name) + '</div>' +
+      '<div class="file-card-info"><div class="file-card-name">' + escHtml(fileData.name) + '</div><div class="file-card-size">' + formatFileSize(fileData.size) + '</div><div class="file-card-status success">✅ 已发送</div></div></div>';
+  }
+
+  wrapper.appendChild(msgDiv);
+  chatArea.appendChild(wrapper);
+  return msgDiv;
+}
+
+function zoomImage(url) {
+  el('img-overlay-img').src = url;
+  el('img-overlay').classList.add('show');
+}
+
 function toggleThink(headerEl) {
   const content = headerEl.parentElement.querySelector('.think-content');
   const arrow = headerEl.querySelector('.arrow');
@@ -1014,8 +1343,8 @@ function toggleTheme() {
 }
 
 function loadTheme() {
-  const theme = localStorage.getItem('theme') || 'dark';
-  const isDark = theme !== 'light';
+  const theme = localStorage.getItem('theme') || 'light';
+  const isDark = theme === 'dark';
   document.getElementById('theme-switch').checked = isDark;
   document.body.classList.toggle('light', !isDark);
 }
@@ -1027,22 +1356,74 @@ function loadTheme() {
     document.getElementById('admin-link').style.display = '';
   }
   loadTheme();
-  await fetchDiscovery();
-  await refreshConvList();
-  promptEl.focus();
-  // 后台轮询发现
+  addSysMsg('正在扫描模型...');
+  // 首次发现 —— 如果失败 3 秒后自动重试
+  fetchDiscovery().then(ok => {
+    if (!ok) {
+      addSysMsg('扫描失败，3 秒后重试...');
+      setTimeout(() => fetchDiscovery(), 3000);
+    }
+  });
+  // 对话列表同步加载
+  refreshConvList().finally(() => promptEl.focus());
+  // 后台轮询
   setInterval(() => fetchDiscovery(), 60000);
-  // 后台刷新对话列表
   setInterval(() => refreshConvList(), 30000);
 })();
+
+// DOM 就绪后注册文件上传事件
+setTimeout(function() {
+  var fi = document.getElementById('file-input-image');
+  var fg = document.getElementById('file-input-general');
+  if (fi) fi.addEventListener('change', onFileSelected);
+  if (fg) fg.addEventListener('change', onFileSelected);
+}, 0);
 </script>
+<!-- 隐藏的文件输入 -->
+<input type="file" id="file-input-image" accept="image/*" hidden>
+<input type="file" id="file-input-general" accept="*/*" hidden>
+
+<!-- Action Sheet (iOS) -->
+<div class="action-sheet-overlay" id="action-sheet-overlay" onclick="hideActionSheet()">
+  <div class="action-sheet" onclick="event.stopPropagation()">
+    <div class="action-sheet-title">传输文件</div>
+    <button class="action-sheet-btn" onclick="pickImage()"><span class="as-icon">🖼️</span> 传输图片</button>
+    <button class="action-sheet-btn" onclick="pickFile()"><span class="as-icon">📄</span> 传输文件</button>
+    <button class="action-sheet-btn cancel" onclick="hideActionSheet()">取消</button>
+  </div>
+</div>
+
+<!-- Bottom Sheet (文件预览) -->
+<div class="bottom-sheet-overlay" id="bottom-sheet-overlay" onclick="hideBottomSheet()">
+  <div class="bottom-sheet" onclick="event.stopPropagation()">
+    <div class="bs-header">
+      <span>传输文件</span>
+      <button class="bs-close-btn" onclick="hideBottomSheet()">&times;</button>
+    </div>
+    <div class="bs-preview">
+      <div class="bs-preview-icon" id="bs-preview-icon">📄</div>
+      <img class="bs-preview-img" id="bs-preview-img" style="display:none" alt="preview">
+    </div>
+    <div class="bs-info">
+      <div class="bs-filename" id="bs-filename"></div>
+      <div class="bs-filesize" id="bs-filesize"></div>
+    </div>
+    <div class="bs-progress" id="bs-progress" style="display:none"><div class="bs-progress-bar" id="bs-progress-bar"></div></div>
+    <div class="bs-error" id="bs-error"></div>
+    <button class="bs-upload-btn" id="bs-upload-btn" onclick="uploadFile()">上传</button>
+  </div>
+</div>
+
+<!-- 图片放大查看 -->
+<div class="img-overlay" id="img-overlay" onclick="this.classList.remove('show')"><img id="img-overlay-img"></div>
+
 <!-- 设置面板 -->
 <div class="settings-overlay" id="settings-overlay" onclick="closeSettings()"></div>
 <div class="settings-panel" id="settings-panel">
   <button class="close-btn" onclick="closeSettings()">&#x2715;</button>
   <h2>用户设置</h2>
   <div class="setting-row">
-    <label>&#x1f311; 暗色主题</label>
+    <label>&#x1f311; 主题</label>
     <label class="switch">
       <input type="checkbox" id="theme-switch" onchange="toggleTheme()">
       <span class="slider"></span>

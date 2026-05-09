@@ -20,3 +20,17 @@ ADMIN_MAC_WHITELIST = [
     .lower().replace(":", "").replace("-", "").split(",")
     if len(m) == 12
 ]
+
+# 文件上传
+UPLOAD_DIR      = os.path.join(APP_DIR, "uploads")
+MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB
+ALLOWED_EXTENSIONS = {
+    'jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg',
+    'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx',
+    'txt', 'md', 'csv', 'json', 'xml', 'yaml', 'yml',
+    'zip', 'tar', 'gz', 'rar', '7z',
+    'py', 'js', 'ts', 'html', 'css', 'sh', 'bat', 'ps1',
+    'log', 'cfg', 'ini',
+    'mp4', 'mov', 'avi', 'mkv',
+    'mp3', 'wav', 'flac', 'ogg',
+}

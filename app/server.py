@@ -15,7 +15,7 @@ import uuid
 import subprocess
 import platform
 
-from config import PORT, WEB_DIR, LOG_PATH, ADMIN_MAC_WHITELIST
+from config import PORT, WEB_DIR, LOG_PATH, ADMIN_MAC_WHITELIST, UPLOAD_DIR, MAX_UPLOAD_SIZE, ALLOWED_EXTENSIONS
 from logger import log
 from db import init_db, create_user, get_user_by_username, get_user_by_id
 from db import list_users, approve_user, delete_user
@@ -115,6 +115,54 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
             return {}
         return json.loads(self.rfile.read(length))
 
+    def _read_multipart_file(self) -> dict | None:
+        """解析 multipart/form-data，返回 {filename, content_type, body(bytes)}"""
+        ct = self.headers.get("Content-Type", "")
+        m = re.search(r'boundary=(.+)', ct)
+        if not m:
+            return None
+        boundary = m.group(1).strip().strip('"').encode()
+        length = int(self.headers.get("Content-Length", 0))
+        if length == 0 or length > MAX_UPLOAD_SIZE:
+            return None
+
+        raw = self.rfile.read(length)
+        # 拆分 boundary 块
+        parts = raw.split(b'--' + boundary)
+        for part in parts:
+            if b'Content-Disposition' not in part:
+                continue
+            header_end = part.find(b'\r\n\r\n')
+            if header_end == -1:
+                continue
+            header_text = part[:header_end].decode("utf-8", errors="replace")
+            body = part[header_end + 4:]
+            # 去掉尾部的 \r\n--
+            if body.endswith(b'\r\n'):
+                body = body[:-2]
+            elif body.endswith(b'--\r\n'):
+                body = body[:-4]
+
+            # 从 Content-Disposition 提取 filename
+            disp_m = re.search(r'filename="(.*?)"', header_text, re.IGNORECASE)
+            if not disp_m:
+                continue
+            filename = os.path.basename(disp_m.group(1))
+            if not filename:
+                continue
+
+            content_type = ""
+            type_m = re.search(r'Content-Type:\s*(\S+)', header_text, re.IGNORECASE)
+            if type_m:
+                content_type = type_m.group(1)
+
+            return {
+                "filename": filename,
+                "content_type": content_type,
+                "body": body,
+            }
+        return None
+
     # ==================== Auth Helpers ====================
 
     def _get_user(self) -> dict | None:
@@ -148,6 +196,9 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
     # ==================== 静态文件 ====================
 
     def _serve_file(self, path):
+        # 去除 ?v= 缓存破坏参数
+        if "?" in path:
+            path = path.split("?")[0]
         file_path = path.lstrip("/") or "index.html"
         full_path = os.path.abspath(os.path.join(WEB_DIR, file_path))
         if not full_path.startswith(os.path.abspath(WEB_DIR)):
@@ -176,9 +227,36 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
         self.send_response(200)
         self._add_cors()
         self.send_header("Content-Type", ct or "application/octet-stream")
-        self.send_header("Cache-Control", "no-cache")
+        # HTML 文件禁止缓存（保证前端始终最新）
+        cache_value = "no-store" if ct and "html" in ct else "no-cache"
+        self.send_header("Cache-Control", cache_value)
         self.end_headers()
         with open(full_path, "rb") as f:
+            self.wfile.write(f.read())
+
+    def _serve_upload(self, path):
+        """提供上传的文件（需要认证）"""
+        log.debug("_serve_upload called: path=%s", path)
+        user = self._require_auth()
+        if not user:
+            return
+        # 安全提取文件名
+        raw = path.replace("/uploads/", "", 1)
+        if ".." in raw or "/" in raw or "\\" in raw:
+            return self._json(400, {"error": "invalid filename"})
+        file_path = os.path.normpath(os.path.join(UPLOAD_DIR, raw))
+        if not file_path.startswith(os.path.abspath(UPLOAD_DIR)):
+            return self._json(400, {"error": "invalid filename"})
+        if not os.path.isfile(file_path):
+            return self._json(404, {"error": "file not found"})
+        ct, _ = mimetypes.guess_type(file_path)
+        self.send_response(200)
+        self._add_cors()
+        self.send_header("Content-Type", ct or "application/octet-stream")
+        self.send_header("Content-Disposition", f'inline; filename="{raw}"')
+        self.send_header("Cache-Control", "private, max-age=3600")
+        self.end_headers()
+        with open(file_path, "rb") as f:
             self.wfile.write(f.read())
 
     # ==================== HTTP 方法 ====================
@@ -247,12 +325,97 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
             convs = list_conversations(self.db, user["id"])
             return self._json(200, convs)
 
+        # --- favicon（静默返回空，避免 404 日志噪音） ---
+        if path == "/favicon.ico":
+            self.send_response(200)
+            self.send_header("Content-Type", "image/x-icon")
+            self.send_header("Cache-Control", "public, max-age=86400")
+            self.end_headers()
+            return
+
+        # --- Uploaded files ---
+        if path.startswith("/uploads/"):
+            self._serve_upload(path)
+            return
+
         # --- Static ---
         self._serve_file(path)
 
     def do_POST(self):
         path   = urllib.parse.urlparse(self.path).path
+
+        # --- File upload（需要原始 body，必须在 _read_body 之前处理） ---
+        if path == "/api/upload":
+            try:
+                user = self._require_auth()
+                if not user:
+                    return
+                file_info = self._read_multipart_file()
+                if not file_info:
+                    return self._json(400, {"error": "no file provided or invalid upload"})
+                filename = file_info["filename"]
+                ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
+                if ext not in ALLOWED_EXTENSIONS:
+                    return self._json(400, {"error": f"file type .{ext} not allowed"})
+                import uuid
+                unique_name = f"{uuid.uuid4().hex[:12]}_{filename}"
+                dest = os.path.join(UPLOAD_DIR, unique_name)
+                with open(dest, "wb") as f:
+                    f.write(file_info["body"])
+                log.info("User '%s' uploaded: %s (%d bytes)",
+                         user["username"], filename, len(file_info["body"]))
+                return self._json(201, {
+                    "ok": True,
+                    "filename": filename,
+                    "url": f"/uploads/{unique_name}",
+                    "size": len(file_info["body"]),
+                    "mime": file_info["content_type"],
+                })
+            except Exception as e:
+                log.error("Upload failed: %s", e, exc_info=True)
+                return self._json(500, {"error": f"upload failed: {e}"})
+
         body   = self._read_body()
+
+        # --- Ollama Chat Proxy（解决前端 CORS 问题） ---
+        if path == "/api/chat":
+            if not self._require_auth():
+                return
+            try:
+                ollama_host = os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434")
+                if not ollama_host.startswith("http"):
+                    ollama_host = "http://" + ollama_host
+                ollama_host = ollama_host.rstrip("/")
+                # 0.0.0.0 是监听地址，不能作为连接目标，替换为 127.0.0.1
+                ollama_host = ollama_host.replace("://0.0.0.0", "://127.0.0.1")
+                # 如果 OLLAMA_HOST 未指定端口（如 "0.0.0.0"），补上默认 11434
+                # 如果 OLLAMA_HOST 未指定端口，补上默认 11434
+                parsed = urllib.parse.urlparse(ollama_host)
+                if not parsed.port:
+                    ollama_host += ":11434"
+                import urllib.request as _ur
+                target_url = f"{ollama_host}/api/chat"
+                req = _ur.Request(
+                    target_url,
+                    data=json.dumps(body).encode(),
+                    headers={"Content-Type": "application/json"},
+                )
+                resp = _ur.urlopen(req, timeout=120)
+                # 流式转发
+                self.send_response(200)
+                self._add_cors()
+                self.send_header("Content-Type", "application/x-ndjson")
+                self.end_headers()
+                while True:
+                    chunk = resp.read(4096)
+                    if not chunk:
+                        break
+                    self.wfile.write(chunk)
+                    self.wfile.flush()
+                return
+            except Exception as e:
+                log.error("Chat proxy failed: %s", e, exc_info=True)
+                return self._json(502, {"error": f"Ollama proxy failed: {e}"})
 
         # --- Auth API ---
         if path == "/api/auth/register":
@@ -394,42 +557,50 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
 
 def main():
     db = init_db()
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
     # 将 db 注入到 RequestHandler 类（每个请求共享同一连接）
     RequestHandler.db = db
 
     # ==================== Ollama 看门狗（后台守护线程） ====================
     def _ollama_watchdog():
-        first = True
+        was_offline = False
         while True:
-            if not is_ollama_running():
-                if first:
+            if is_ollama_running():
+                if was_offline:
+                    log.info("Ollama is running again")
+                else:
+                    log.info("Ollama is running")
+                was_offline = False
+            else:
+                if not was_offline:
                     log.warning("Ollama not running, auto-starting...")
                 else:
-                    log.warning("Ollama 已离线，正在重新启动...")
+                    log.warning("Ollama still offline, retrying...")
                 start_ollama()
-                first = False
+                was_offline = True
             time.sleep(30)
 
     t = threading.Thread(target=_ollama_watchdog, daemon=True)
     t.start()
 
-    # ==================== Tailscale 看门狗（后台守护线程） ====================
+    # ==================== Tailscale 守护（只启动一次，避免反复 tailscale up 打断连接） ====================
     def _tailscale_watchdog():
         first = True
         while True:
-            if not is_tailscale_running():
+            running = is_tailscale_running()
+            if not running:
                 if first:
                     log.warning("Tailscale not running, auto-starting...")
-                else:
-                    log.warning("Tailscale 已离线，正在重新启动...")
-                # 等待数秒再次确认，避免误判（如用户正在手动启动中）
-                time.sleep(5)
-                if not is_tailscale_running():
                     start_tailscale()
+                    first = False
                 else:
-                    log.info("Tailscale is now running (manual start detected)")
+                    # 非首次离线 —— 只警告，不自动重启（避免 tailscale up 反复调用打断已有连接）
+                    log.warning("Tailscale is offline (auto-restart disabled to avoid connection cycling)")
+            else:
+                if first:
+                    log.info("Tailscale is running")
                 first = False
-            time.sleep(60)
+            time.sleep(120)  # 每 2 分钟检查一次
 
     t2 = threading.Thread(target=_tailscale_watchdog, daemon=True)
     t2.start()
