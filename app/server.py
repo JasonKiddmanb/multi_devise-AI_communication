@@ -563,21 +563,17 @@ def main():
 
     # ==================== Ollama 看门狗（后台守护线程） ====================
     def _ollama_watchdog():
-        was_offline = False
+        logged_running = False
         while True:
             if is_ollama_running():
-                if was_offline:
-                    log.info("Ollama is running again")
-                else:
+                if not logged_running:
                     log.info("Ollama is running")
-                was_offline = False
+                    logged_running = True
             else:
-                if not was_offline:
+                if logged_running:
                     log.warning("Ollama not running, auto-starting...")
-                else:
-                    log.warning("Ollama still offline, retrying...")
                 start_ollama()
-                was_offline = True
+                logged_running = False
             time.sleep(30)
 
     t = threading.Thread(target=_ollama_watchdog, daemon=True)

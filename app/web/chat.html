@@ -169,10 +169,10 @@
   .file-btn { background: #1a1a1a; color: #555; border: 1px solid #333; border-radius: 8px; font-size: 20px; padding: 6px 8px; cursor: pointer; line-height: 1; flex-shrink: 0; transition: all .2s; }
   .file-btn:hover { border-color: #666; color: #888; }
 
-  /* === 联网搜索按钮 (active=亮绿, inactive=暗灰) === */
-  .search-btn { background: #1a1a1a; color: #555; border: 1px solid #333; border-radius: 8px; font-size: 20px; padding: 6px 8px; cursor: pointer; line-height: 1; flex-shrink: 0; transition: all .2s; }
-  .search-btn:hover { border-color: #666; color: #888; }
-  .search-btn.active { background: #064e3b; border-color: #4ade80; color: #4ade80; box-shadow: 0 0 10px rgba(74,222,128,.3); }
+  /* === 联网搜索按钮 (active=亮绿, inactive=灰色轮廓) === */
+  .search-btn { background: #1a1a1a; color: #444; border: 1px dashed #444; border-radius: 8px; font-size: 20px; padding: 6px 8px; cursor: pointer; line-height: 1; flex-shrink: 0; transition: all .2s; opacity: .6; }
+  .search-btn:hover { border-color: #666; color: #888; opacity: .8; }
+  .search-btn.active { background: #064e3b; border-color: #4ade80; color: #4ade80; border-style: solid; box-shadow: 0 0 10px rgba(74,222,128,.3); opacity: 1; }
 
   /* === 搜索结果 (collapsible) === */
   .search-results { margin-bottom: 8px; border-left: 3px solid #f59e0b; background: #1f1a0d; border-radius: 0 6px 6px 0; overflow: hidden; }
@@ -258,8 +258,9 @@
   body.light .switch .slider { background: #ccc; }
   body.light .switch input:checked + .slider { background: #16a34a; }
   body.light .file-btn { background: #e8eaed; border-color: #dadce0; color: #999; }
-  body.light .search-btn { background: #e8eaed; border-color: #dadce0; color: #999; }
-  body.light .search-btn.active { background: #dcfce7; border-color: #16a34a; color: #16a34a; box-shadow: 0 0 8px rgba(22,163,74,.2); }
+  body.light .search-btn { background: #e8eaed; border-color: #dadce0; color: #999; border-style: dashed; opacity: .65; }
+  body.light .search-btn:hover { border-color: #aaa; color: #666; opacity: .85; }
+  body.light .search-btn.active { background: #dcfce7; border-color: #16a34a; color: #16a34a; border-style: solid; box-shadow: 0 0 8px rgba(22,163,74,.2); opacity: 1; }
   body.light ::-webkit-scrollbar-track { background: #f0f2f5; }
   body.light ::-webkit-scrollbar-thumb { background: #ccc; }
 
@@ -348,7 +349,7 @@
   body.light .msg.error-msg .error-body { color:#b91c1c; }
 </style>
 </head>
-<body>
+<body class="light">
 
 <!-- 遮罩层 -->
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>

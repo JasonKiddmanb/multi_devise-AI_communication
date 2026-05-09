@@ -1,27 +1,23 @@
-2026-05-09 21:14:50 [INFO] Ollama is running
-2026-05-09 21:14:50 [INFO] ============================================
-2026-05-09 21:14:50 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-09 21:14:50 [INFO]   本机: http://localhost:8080
-2026-05-09 21:14:50 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-09 21:14:50 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-09 21:14:50 [INFO]   Ctrl+C 停止
-2026-05-09 21:14:50 [INFO] ============================================
-2026-05-09 21:14:50 [INFO] Tailscale is running
-2026-05-09 21:14:52 [INFO] User 'admin' logged in from 127.0.0.1
-2026-05-09 21:14:52 [INFO] [127.0.0.1] "POST /api/auth/login HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-09 21:14:55 [INFO] [127.0.0.1] "POST /api/chat HTTP/1.1" 200 - — curl/8.14.1 — -
-2026-05-09 21:15:20 [INFO] Ollama is running
-2026-05-09 21:15:50 [INFO] Ollama is running
-2026-05-09 21:15:55 [INFO] Ollama is running
-2026-05-09 21:15:55 [INFO] ============================================
-2026-05-09 21:15:55 [INFO] AI Remote Mesh — 服务器已启动
-2026-05-09 21:15:55 [INFO]   本机: http://localhost:8080
-2026-05-09 21:15:55 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
-2026-05-09 21:15:55 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
-2026-05-09 21:15:55 [INFO]   Ctrl+C 停止
-2026-05-09 21:15:55 [INFO] ============================================
-2026-05-09 21:15:55 [INFO] Tailscale is running
-2026-05-09 21:16:01 [INFO] [127.0.0.1] "GET /admin.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
-2026-05-09 21:16:01 [INFO] [127.0.0.1] "GET /api/admin/users HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-09 21:16:02 [INFO] [127.0.0.1] "GET /favicon.ico HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
-2026-05-09 21:16:04 [INFO] [127.0.0.1] "GET /api/admin/logs HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
+2026-05-09 21:49:43 [INFO] Ollama is running
+2026-05-09 21:49:43 [INFO] ============================================
+2026-05-09 21:49:43 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-09 21:49:43 [INFO]   本机: http://localhost:8080
+2026-05-09 21:49:43 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-09 21:49:43 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-09 21:49:43 [INFO]   Ctrl+C 停止
+2026-05-09 21:49:43 [INFO] ============================================
+2026-05-09 21:49:43 [INFO] Tailscale is running
+2026-05-09 21:49:47 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — curl/8.14.1 — -
+2026-05-09 21:49:47 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — curl/8.14.1 — -
+2026-05-09 21:50:05 [INFO] [127.0.0.1] "GET /chat.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/admin.html
+2026-05-09 21:50:18 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-09 21:50:18 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-09 21:50:29 [INFO] Ollama is running
+2026-05-09 21:50:30 [INFO] ============================================
+2026-05-09 21:50:30 [INFO] AI Remote Mesh — 服务器已启动
+2026-05-09 21:50:30 [INFO]   本机: http://localhost:8080
+2026-05-09 21:50:30 [INFO]   数据库: E:\my_1st_claudeCode_prjt\app\history.db
+2026-05-09 21:50:30 [INFO]   日志: E:\my_1st_claudeCode_prjt\app\server.log
+2026-05-09 21:50:30 [INFO]   Ctrl+C 停止
+2026-05-09 21:50:30 [INFO] ============================================
+2026-05-09 21:50:30 [INFO] Tailscale is running
