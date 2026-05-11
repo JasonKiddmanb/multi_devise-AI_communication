@@ -244,4 +244,4 @@ Docker 方案通过 `host.docker.internal:11434` 连接本机 Ollama，适合偏
 如果你觉得这个项目有用，欢迎请我喝杯咖啡。  
 If you find this project useful, feel free to buy me a coffee.
 
-![alipay-1](./alipay-1.jpg)  ![alipay](./alipay.jpg)
+![alipay](./alipay.jpg)
