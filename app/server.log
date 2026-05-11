@@ -21,3 +21,42 @@
 2026-05-09 21:50:30 [INFO]   Ctrl+C 停止
 2026-05-09 21:50:30 [INFO] ============================================
 2026-05-09 21:50:30 [INFO] Tailscale is running
+2026-05-09 21:50:31 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-09 21:50:31 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-09 22:03:04 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-09 22:03:04 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-09 22:03:07 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-09 22:03:07 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html
+2026-05-10 11:20:18 [INFO] [100.125.82.117] "GET /login.html HTTP/1.1" 200 - — Mozilla/5.0 — -
+2026-05-10 11:20:18 [INFO] [100.125.82.117] "GET /favicon.ico HTTP/1.1" 200 - — NetworkingExtension/8623.1.14.10.9 — -
+2026-05-10 11:20:18 [INFO] [100.125.82.117] "GET /apple-touch-icon.png HTTP/1.1" 404 - — NetworkingExtension/8623.1.14.10.9 — -
+2026-05-10 11:20:26 [WARNING] Failed login for 'user00' from 100.125.82.117
+2026-05-10 11:20:26 [INFO] [100.125.82.117] "POST /api/auth/login HTTP/1.1" 401 - — Mozilla/5.0 — http://100.118.175.65:8080/login.html
+2026-05-10 11:20:29 [WARNING] Failed login for 'user00' from 100.125.82.117
+2026-05-10 11:20:29 [INFO] [100.125.82.117] "POST /api/auth/login HTTP/1.1" 401 - — Mozilla/5.0 — http://100.118.175.65:8080/login.html
+2026-05-10 11:20:30 [INFO] User 'user00' logged in from 100.125.82.117
+2026-05-10 11:20:30 [INFO] [100.125.82.117] "POST /api/auth/login HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/login.html
+2026-05-10 11:20:31 [INFO] [100.125.82.117] "GET /chat.html?v=1778383231705 HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/login.html
+2026-05-10 11:20:35 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-10 11:20:35 [INFO] Scanning Ollama on localhost (nodekey:8d5c583af208ef90f4005fb8e516a3184c205d04e46ba8ad74e993d9dcfd5274)
+2026-05-10 11:20:35 [WARNING] Ollama scan FAILED http://nodekey:8d5c583af208ef90f4005fb8e516a3184c205d04e46ba8ad74e993d9dcfd5274:11434/api/tags — UnicodeError: label too long
+2026-05-10 11:20:35 [INFO] [100.125.82.117] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://100.118.175.65:8080/chat.html?v=1778383231705
+2026-05-10 12:56:40 [INFO] [127.0.0.1] "GET / HTTP/1.1" 200 - — Mozilla/5.0 — -
+2026-05-10 12:56:40 [INFO] [127.0.0.1] "GET /login.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/
+2026-05-10 12:56:40 [INFO] [127.0.0.1] "GET /api/auth/me HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
+2026-05-10 12:56:40 [INFO] [127.0.0.1] "GET /chat.html?v=1778389000688 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
+2026-05-10 12:56:41 [INFO] [127.0.0.1] "GET /favicon.ico HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html?v=1778389000688
+2026-05-10 12:56:45 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-10 12:56:45 [INFO] Scanning Ollama on localhost (nodekey:8d5c583af208ef90f4005fb8e516a3184c205d04e46ba8ad74e993d9dcfd5274)
+2026-05-10 12:56:46 [WARNING] Ollama scan FAILED http://nodekey:8d5c583af208ef90f4005fb8e516a3184c205d04e46ba8ad74e993d9dcfd5274:11434/api/tags — UnicodeError: label too long
+2026-05-10 12:56:46 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html?v=1778389000688
+2026-05-10 12:56:48 [INFO] Ollama scan OK http://127.0.0.1:11434/api/tags — 3 models
+2026-05-10 12:56:48 [INFO] Scanning Ollama on localhost (nodekey:8d5c583af208ef90f4005fb8e516a3184c205d04e46ba8ad74e993d9dcfd5274)
+2026-05-10 12:56:48 [WARNING] Ollama scan FAILED http://nodekey:8d5c583af208ef90f4005fb8e516a3184c205d04e46ba8ad74e993d9dcfd5274:11434/api/tags — UnicodeError: label too long
+2026-05-10 12:56:48 [INFO] [127.0.0.1] "GET /api/discovery HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html?v=1778389000688
+2026-05-10 12:56:48 [INFO] [127.0.0.1] "GET /chat.html?v=1778389000688 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
+2026-05-10 12:56:52 [INFO] [127.0.0.1] "POST /api/auth/logout HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html?v=1778389000688
+2026-05-10 12:56:53 [INFO] [127.0.0.1] "GET /login.html HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/chat.html?v=1778389000688
+2026-05-10 12:56:55 [INFO] User 'admin' logged in from 127.0.0.1
+2026-05-10 12:56:55 [INFO] [127.0.0.1] "POST /api/auth/login HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
+2026-05-10 12:56:55 [INFO] [127.0.0.1] "GET /chat.html?v=1778389015470 HTTP/1.1" 200 - — Mozilla/5.0 — http://localhost:8080/login.html
